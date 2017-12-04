@@ -1,14 +1,10 @@
 package com.example.evanalmonte.stepitup.HelloWorld.ui.shop;
 
-import android.util.Log;
-
 import com.example.evanalmonte.stepitup.HelloWorld.model.Avatar;
 import com.example.evanalmonte.stepitup.HelloWorld.model.Item;
 import com.example.evanalmonte.stepitup.HelloWorld.model.ItemInteractor;
 
 import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by evanalmonte on 12/2/17.
@@ -48,10 +44,9 @@ public class ShopPresenter {
     }
 
     public void buyItem(Item item) {
-        Log.d(TAG, item.getName() + " " + item.getId() + " " + item.isAnimated());
         if (!avatar.buyItem(item)) { return; }
-
         avatar.wearItem(item);
+
         int id = item.getId();
         boolean isAnimated = item.isAnimated();
         switch (item.getType()) {
@@ -69,5 +64,31 @@ public class ShopPresenter {
                 break;
         }
         shopView.setCurrencyText(String.valueOf(avatar.getCurrency()));
+        shopView.reloadAdapter();
+    }
+
+    public boolean checkForItem(Item item) {
+        return avatar.hasItem(item);
+    }
+
+    public void equipItem(Item item) {
+        avatar.wearItem(item);
+
+        int id = item.getId();
+        boolean isAnimated = item.isAnimated();
+        switch (item.getType()) {
+            case PANTS:
+                shopView.setPantsImage(id, isAnimated);
+                break;
+            case SHOES:
+                shopView.setShoesImage(id, isAnimated);
+                break;
+            case SHIRT:
+                shopView.setShirtImage(id, isAnimated);
+                break;
+            case HAT:
+                shopView.setHatImage(id, isAnimated);
+                break;
+        }
     }
 }
