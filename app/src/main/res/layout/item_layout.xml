@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,8 @@
     android:layout_marginEnd="32dp"
     android:layout_marginStart="32dp"
     android:layout_marginTop="4dp"
-    android:background="@drawable/shape_shop_item_border">
+    android:background="@drawable/shape_shop_item_border"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
 
     <ImageView
         android:id="@+id/shop_item_image"
@@ -34,42 +35,39 @@
         app:layout_constraintStart_toEndOf="@+id/shop_item_image"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Santa Hat" />
+    <!--
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/shop_item_footprint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.143"
+            app:layout_constraintStart_toEndOf="@+id/shop_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/shop_item_name"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/footprint_icon" />
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/shop_item_footprint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.143"
-        app:layout_constraintStart_toEndOf="@+id/shop_item_image"
-        app:layout_constraintTop_toBottomOf="@+id/shop_item_name"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/footprint_icon" />
+        <TextView
+            android:id="@+id/shop_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/shop_item_footprint"
+            app:layout_constraintStart_toEndOf="@+id/shop_item_footprint"
+            app:layout_constraintTop_toTopOf="@+id/shop_item_footprint"
+            tools:text="x1500" />
 
-    <TextView
-        android:id="@+id/shop_item_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/shop_item_footprint"
-        app:layout_constraintStart_toEndOf="@+id/shop_item_footprint"
-        app:layout_constraintTop_toTopOf="@+id/shop_item_footprint"
-        tools:text="x1500" />
-
-    <Button
-        android:id="@+id/buy_button"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="56dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/shape_buy_button"
-        android:text="Buy"
-        android:textColor="#fff"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shop_item_name"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Buy" />
-
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/buy_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="56dp"
+            android:layout_height="30dp"
+            android:background="@drawable/shape_buy_button"
+            android:text="Buy"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            tools:layout_editor_absoluteX="224dp"
+            tools:layout_editor_absoluteY="36dp"
+            tools:text="Buy" />
+    -->
+</merge>

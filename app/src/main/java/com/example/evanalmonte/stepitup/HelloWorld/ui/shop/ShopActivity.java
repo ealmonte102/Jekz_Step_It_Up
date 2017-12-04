@@ -94,11 +94,6 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
         }
     }
 
-    @Override
-    public void setCurrencyText(String text) {
-        currencyText.setText(text);
-    }
-
     public void setShirtImage(int id, boolean animateable) {
         shirtImage.setImageResource(id);
         if (animateable) {
@@ -114,10 +109,30 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
             ((AnimationDrawable) pantsImage.getDrawable()).start();
         }
     }
+    @Override
+    public void setCurrencyText(String text) {
+        currencyText.setText(text);
+    }
 
     @Override
-    public void onItemClicked(Item item) {
+    public void reloadAdapter() {
+        itemsListAdapater.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void buyItem(Item item) {
         shopPresenter.buyItem(item);
+    }
+
+    @Override
+    public void equipItem(Item item) {
+        shopPresenter.equipItem(item);
+    }
+
+    @Override
+    public boolean isItemOwned(Item item) {
+        return shopPresenter.checkForItem(item);
     }
 
     @Override

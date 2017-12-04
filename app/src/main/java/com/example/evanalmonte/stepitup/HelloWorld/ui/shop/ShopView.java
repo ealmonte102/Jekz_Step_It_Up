@@ -21,4 +21,6 @@ public interface ShopView {
     void setShoesImage(int id, boolean animateable);
 
     void setCurrencyText(String text);
+
+    void reloadAdapter();
 }

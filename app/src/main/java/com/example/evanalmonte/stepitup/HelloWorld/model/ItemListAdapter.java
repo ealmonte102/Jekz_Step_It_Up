@@ -37,38 +37,32 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout
-                .item_layout, parent, false);
-        return new ItemViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View itemView;
+        ItemOwned type = ItemOwned.values()[viewType];
+        switch (type) {
+            case OWNED:
+                itemView = inflater.inflate(R.layout.layout_owned_item, parent, false);
+                return new OwnedItemViewHolder(itemView);
+            case NOT_OWNED:
+                itemView = inflater.inflate(R.layout.layout_unowned_item, parent, false);
+                return new UnownedItemViewHolder(itemView);
+            default:
+                return null;
+        }
     }
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        Item item = itemList.get(position);
-        float yPosition = 0;
-        switch (item.getType()) {
-            case HAT:
-                yPosition = 0;
-                break;
-            case SHIRT:
-                yPosition = -100;
-                break;
-            case SHOES:
-                yPosition = -230;
-                break;
-            case PANTS:
-                yPosition = -180;
-                break;
-        }
-        holder.itemImage.setY(yPosition);
-        holder.itemImage.setImageResource(item.getId());
-        holder.itemName.setText(item.getName());
-        holder.itemPrice.setText(String.format(Locale.US, "x%d", item.getPrice()));
+        holder.bind(position);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+        if (listener.isItemOwned(itemList.get(position))) {
+            return ItemOwned.OWNED.ordinal();
+        }
+        return ItemOwned.NOT_OWNED.ordinal();
     }
 
     @Override
@@ -76,16 +70,72 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         return itemList.size();
     }
 
-    public interface ShopItemListener {
-        void onItemClicked(Item item);
+
+    public enum ItemOwned {
+        OWNED, NOT_OWNED
     }
 
-    final class ItemViewHolder extends RecyclerView.ViewHolder {
+    public interface ShopItemListener {
+        void buyItem(Item item);
+
+        void equipItem(Item item);
+
+        boolean isItemOwned(Item item);
+    }
+
+    abstract class ItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.shop_item_image)
         ImageView itemImage;
 
         @BindView(R.id.shop_item_name)
         TextView itemName;
+
+        ItemViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        public void bind(int position) {
+            Item item = itemList.get(position);
+            float yPosition = 0;
+            switch (item.getType()) {
+                case HAT:
+                    yPosition = 0;
+                    break;
+                case SHIRT:
+                    yPosition = -100;
+                    break;
+                case SHOES:
+                    yPosition = -230;
+                    break;
+                case PANTS:
+                    yPosition = -180;
+                    break;
+            }
+            itemImage.setY(yPosition);
+            itemImage.setImageResource(item.getId());
+            itemName.setText(item.getName());
+        }
+    }
+
+    class OwnedItemViewHolder extends ItemViewHolder {
+        OwnedItemViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @OnClick(R.id.equip_button)
+        void itemClicked() {
+            Item item = itemList.get(getAdapterPosition());
+            listener.equipItem(item);
+        }
+
+        @Override
+        public void bind(int position) {
+            super.bind(position);
+        }
+    }
+
+    class UnownedItemViewHolder extends ItemViewHolder {
 
         @BindView(R.id.shop_item_price)
         TextView itemPrice;
@@ -93,7 +143,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         @BindView(R.id.shop_item_footprint)
         ImageView footprint;
 
-        ItemViewHolder(View itemView) {
+        UnownedItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -101,7 +151,14 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         @OnClick(R.id.buy_button)
         void itemClicked() {
             Item item = itemList.get(getAdapterPosition());
-            listener.onItemClicked(item);
+            listener.buyItem(item);
+        }
+
+        @Override
+        public void bind(int position) {
+            super.bind(position);
+            Item item = itemList.get(position);
+            itemPrice.setText(String.format(Locale.US, "x%d", item.getPrice()));
         }
     }
 }
