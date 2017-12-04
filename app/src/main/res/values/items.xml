@@ -62,20 +62,57 @@
     <array name="shirts">
 
         <item>@drawable/spotpjshirtpink_animation</item>
-        <item>"Pink Spotted Pajama Shirt"</item>
+        <item>"Pink Spotted PJ's"</item>
         <item>true</item>
         <item>300</item>
 
 
         <item>@drawable/spotpjshirtyellow_animation</item>
-        <item>"Beige Spotted Pajama Shirt</item>
+        <item>"Beige Spotted PJ's</item>
         <item>true</item>
         <item>1500</item>
 
         <item>@drawable/spotpjshirtblue_animation</item>
-        <item>"Blue Spotted Pajama Shirt</item>
+        <item>"Blue Spotted PJ's</item>
         <item>true</item>
         <item>1000</item>
+
+        <item>@drawable/blackdeviltshirt_animation</item>
+        <item>"Black Devil T-Shirt</item>
+        <item>true</item>
+        <item>3200</item>
+
+
+        <item>@drawable/bluesuntshirt_animation</item>
+        <item>"Blue Sun T-Shirt</item>
+        <item>true</item>
+        <item>3200</item>
+
+        <item>@drawable/dressshirt_animation</item>
+        <item>"Dress Shirt</item>
+        <item>true</item>
+        <item>5000</item>
+
+        <item>@drawable/stripepjshirtblue_animation</item>
+        <item>"Stripped Blue PJ's</item>
+        <item>true</item>
+        <item>1200</item>
+
+        <item>@drawable/stripepjshirtpink_animation</item>
+        <item>"Stripped Pink PJ's</item>
+        <item>true</item>
+        <item>900</item>
+
+        <item>@drawable/stripepjshirtyellow_animation</item>
+        <item>"Stripped Yellow PJ's</item>
+        <item>true</item>
+        <item>900</item>
+
+        <item>@drawable/whitetshirt_animation</item>
+        <item>"White Shirt</item>
+        <item>true</item>
+        <item>900</item>
+
 
     </array>
 
