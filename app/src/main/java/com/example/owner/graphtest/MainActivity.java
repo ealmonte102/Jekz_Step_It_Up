@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,10 +17,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
 import static android.content.ContentValues.TAG;
-import static com.example.owner.graphtest.DBTest.convertStreamToString;
-import static java.lang.System.in;
 
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
@@ -40,25 +38,23 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             postData.put("start_time", "'2017-13-03 22:05:00 -5:00'");
             postData.put("end_time", "'2017-12-03 22:05:30 -5:00'");
             postData.put("steps", 70000);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        } catch (JSONException e) {e.printStackTrace();}
 
         //DBTest test = new DBTest(postData);
         //test.execute("https://jekz.herokuapp.com/db/session");
         asyncTask.postData = postData;
         asyncTask.execute("https://jekz.herokuapp.com/db/session");
-        //asyncTask.execute("https://jekz.herokuapp.com/db");
-        //Log.d("myTest", convertStreamToString(in));
-        asyncTask.onPostExecute(convertStreamToString(in));
     }
 
     @Override
-    public void processFinish(String output){
+    public void processFinish(JSONArray output){
         //Here you will receive the result fired from async class
         //of onPostExecute(result) method.
 
-        Log.d("myTest", output);
-        //Log.d("myTest", "Test Test")
-;    }
+        try {
+            //Log.d("myTest", "Test Test")
+            JSONObject r = output.getJSONObject(0);
+            Log.d("myTest", "value: " + r.getInt("userid"));
+        }catch (JSONException e){e.printStackTrace();}
+    }
 }
