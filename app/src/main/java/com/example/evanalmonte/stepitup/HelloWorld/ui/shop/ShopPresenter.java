@@ -23,7 +23,7 @@ public class ShopPresenter {
         this.shopView = view;
         this.itemInteractor = instance;
         this.avatar = new Avatar();
-        avatar.addCurrency(300);
+        avatar.addCurrency(11300);
     }
 
     public void loadAvatar() {
@@ -47,8 +47,10 @@ public class ShopPresenter {
         shopView.showItems(new ArrayList<>(itemInteractor.getItems(Item.Item_Type.SHOES)));
     }
 
-    public void shopItemClicked(Item item) {
+    public void buyItem(Item item) {
         Log.d(TAG, item.getName() + " " + item.getId() + " " + item.isAnimated());
+        if (!avatar.buyItem(item)) { return; }
+
         avatar.wearItem(item);
         int id = item.getId();
         boolean isAnimated = item.isAnimated();
@@ -66,5 +68,6 @@ public class ShopPresenter {
                 shopView.setHatImage(id, isAnimated);
                 break;
         }
+        shopView.setCurrencyText(String.valueOf(avatar.getCurrency()));
     }
 }

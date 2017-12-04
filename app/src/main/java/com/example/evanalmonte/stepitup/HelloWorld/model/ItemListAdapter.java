@@ -98,7 +98,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick(R.id.shop_item_image)
+        @OnClick(R.id.buy_button)
         void itemClicked() {
             Item item = itemList.get(getAdapterPosition());
             listener.onItemClicked(item);

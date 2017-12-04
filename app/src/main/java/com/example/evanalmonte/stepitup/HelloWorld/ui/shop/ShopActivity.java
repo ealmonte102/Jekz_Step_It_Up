@@ -117,7 +117,7 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
 
     @Override
     public void onItemClicked(Item item) {
-        shopPresenter.shopItemClicked(item);
+        shopPresenter.buyItem(item);
     }
 
     @Override
