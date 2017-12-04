@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.example.evanalmonte.stepitup.HelloWorld.model.Item;
 import com.example.evanalmonte.stepitup.HelloWorld.model.ItemInteractor;
@@ -47,6 +48,9 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @BindView(R.id.avatar)
     ImageView avatarImage;
 
+    @BindView(R.id.text_view_currency)
+    TextView currencyText;
+
     ItemListAdapter itemsListAdapater;
     ShopPresenter shopPresenter;
 
@@ -62,6 +66,7 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @Override
     protected void onResume() {
         super.onResume();
+        shopPresenter.loadAvatar();
         int checked = categoryRadioGroup.getCheckedRadioButtonId();
         categoryRadioGroup.clearCheck();
         categoryRadioGroup.check(checked);
@@ -87,6 +92,11 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
         if (animateable) {
             ((AnimationDrawable) shoesImage.getDrawable()).start();
         }
+    }
+
+    @Override
+    public void setCurrencyText(String text) {
+        currencyText.setText(text);
     }
 
     public void setShirtImage(int id, boolean animateable) {
