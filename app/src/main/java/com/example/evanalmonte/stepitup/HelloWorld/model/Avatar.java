@@ -9,6 +9,7 @@ public class Avatar {
     Item pants;
     Item shoes;
     Set<Item> inventory = new HashSet<>();
+
     int currency;
 
     public Item getHat() {
@@ -25,6 +26,21 @@ public class Avatar {
 
     public Item getShoes() {
         return shoes;
+    }
+
+
+    public int getCurrency() {
+        return currency;
+    }
+
+    public void addCurrency(int x) {
+        if (x <= 0) { x = 0; }
+        currency += x;
+    }
+
+    public void removeCurrency(int x) {
+        if (x <= 0) { x = 0; }
+        currency -= x;
     }
 
     public boolean wearItem(Item item) {

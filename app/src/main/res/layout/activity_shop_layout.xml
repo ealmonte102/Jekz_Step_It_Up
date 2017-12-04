@@ -150,5 +150,30 @@
         app:layout_constraintVertical_bias="1.0"
         tools:src="@drawable/snorkel_1" />
 
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/imageView"
+        android:layout_width="31dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="56dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_currency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_view_currency"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/footprint_icon" />
+
+    <TextView
+        android:id="@+id/text_view_currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="casual"
+        android:text="TextView"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="x1200" />
+
 
 </android.support.constraint.ConstraintLayout>

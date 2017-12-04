@@ -80,7 +80,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         void onItemClicked(Item item);
     }
 
-    final class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    final class ItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.shop_item_image)
         ImageView itemImage;
 
@@ -96,17 +96,10 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
         }
 
         @OnClick(R.id.shop_item_image)
         void itemClicked() {
-            Item item = itemList.get(getAdapterPosition());
-            listener.onItemClicked(item);
-        }
-
-        @Override
-        public void onClick(View view) {
             Item item = itemList.get(getAdapterPosition());
             listener.onItemClicked(item);
         }

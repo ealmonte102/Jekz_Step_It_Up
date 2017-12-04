@@ -23,6 +23,11 @@ public class ShopPresenter {
         this.shopView = view;
         this.itemInteractor = instance;
         this.avatar = new Avatar();
+        avatar.addCurrency(300);
+    }
+
+    public void loadAvatar() {
+        shopView.setCurrencyText("x" + String.valueOf(avatar.getCurrency()));
     }
 
     public void loadHats() {
