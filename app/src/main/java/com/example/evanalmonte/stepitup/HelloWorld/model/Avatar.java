@@ -40,7 +40,17 @@ public class Avatar {
 
     public void removeCurrency(int x) {
         if (x <= 0) { x = 0; }
+        if (x >= currency) { x = currency; }
         currency -= x;
+    }
+
+    public boolean buyItem(Item item) {
+        if (item.getPrice() > currency) {
+            return false;
+        }
+        removeCurrency(item.getPrice());
+        addItem(item);
+        return true;
     }
 
     public void addItem(Item item) {
