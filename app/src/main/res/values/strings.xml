@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">StepItUp</string>
+    <string name="animate">animate</string>
+    <string name="title_activity_character">CharacterActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="category_hats">Hats</string>
+    <string name="category_shirts">Shirts</string>
+    <string name="category_pants">Pants</string>
+    <string name="category_shoes">Shoes</string>
+</resources>

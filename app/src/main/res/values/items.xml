@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="attributes">4</integer>
+    <array name="hats">
+        <item>@drawable/cap_0</item>
+        <item>"Blue Cap"</item>
+        <item>false</item>
+        <item>150</item>
+
+        <item>@drawable/cowboy_0</item>
+        <item>"Cowboy Hat"</item>
+        <item>false</item>
+        <item>1000</item>
+
+        <item>@drawable/heli_animation</item>
+        <item>"Helihat"</item>
+        <item>true</item>
+        <item>8000</item>
+
+        <item>@drawable/paperbag_0</item>
+        <item>"Paper Bag"</item>
+        <item>false</item>
+        <item>1200</item>
+
+        <item>@drawable/santa_0</item>
+        <item>"Santa Hat"</item>
+        <item>false</item>
+        <item>3000</item>
+
+        <item>@drawable/snorkel_animation</item>
+        <item>"Snorkel"</item>
+        <item>true</item>
+        <item>10000</item>
+
+        <item>@drawable/jesterhat_0</item>
+        <item>"Jester Hat"</item>
+        <item>false</item>
+        <item>10000</item>
+
+        <item>@drawable/skullcapred_0</item>
+        <item>"Red Skullcap"</item>
+        <item>false</item>
+        <item>10000</item>
+
+        <item>@drawable/skullcapblue_0</item>
+        <item>"Blue Skullcap"</item>
+        <item>false</item>
+        <item>10000</item>
+
+        <item>@drawable/skullcapgreen_0</item>
+        <item>"Green Skullcap"</item>
+        <item>false</item>
+        <item>10000</item>
+
+        <item>@drawable/skullcapsanta_0</item>
+        <item>"Santa Skullcap"</item>
+        <item>false</item>
+        <item>10000</item>
+
+    </array>
+
+    <array name="shirts">
+
+        <item>@drawable/spotpjshirtpink_animation</item>
+        <item>"Pink Spotted Pajama Shirt"</item>
+        <item>true</item>
+        <item>300</item>
+
+
+        <item>@drawable/spotpjshirtyellow_animation</item>
+        <item>"Beige Spotted Pajama Shirt</item>
+        <item>true</item>
+        <item>1500</item>
+
+        <item>@drawable/spotpjshirtblue_animation</item>
+        <item>"Blue Spotted Pajama Shirt</item>
+        <item>true</item>
+        <item>1000</item>
+
+    </array>
+
+    <array name="pants">
+
+        <item>@drawable/spotpjpantspink_0</item>
+        <item>"Pink Spotted Pajama Pants"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/stripepjpantspink_0</item>
+        <item>"Pink Striped Pajama Pants"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/spotpjpantsblue_0</item>
+        <item>"Blue Spotted Pajama Pants"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/stripepjpantsblue_0</item>
+        <item>"Blue Stripedd Pajama Pants"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/spotpjpantsyellow_0</item>
+        <item>"Beige Spotted Pajama Pants"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/stripepjpantsyellow_0</item>
+        <item>"Beige Striped Pajama Pants"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/jeans_0</item>
+        <item>"Blue Jeans"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/dresspants_0</item>
+        <item>"Dress Pants"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/runningshortsblue_0</item>
+        <item>"Blue Running Shorts"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/runningshortsgray_0</item>
+        <item>"Gray Running Shorts"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/sweatpantsblue_0</item>
+        <item>"Blue Sweat Pants"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/sweatpantsgray_0</item>
+        <item>"Gray Sweat Pants"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/sweatpantsred_0</item>
+        <item>"Red Sweat Pants"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/sweatpantsbrown_0</item>
+        <item>"Brown Sweat Pants"</item>
+        <item>false</item>
+        <item>300</item>
+
+    </array>
+
+    <array name="shoes">
+
+        <item>@drawable/boots_0</item>
+        <item>"Boots"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/sandal_0</item>
+        <item>"Sandals"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/flipflop_0</item>
+        <item>"Blue Flip Flops"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/stocking_0</item>
+        <item>"Stockings"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/sneaker_0</item>
+        <item>"Sneakers"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/slipperblue_0</item>
+        <item>"Blue Slippers"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/slipperred_0</item>
+        <item>"Red Slippers"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/slippergreen_0</item>
+        <item>"Green Slippers"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/slippershark_0</item>
+        <item>"Shark Slippers"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/slipperduck_0</item>
+        <item>"Duck Slippers"</item>
+        <item>false</item>
+        <item>300</item>
+
+        <item>@drawable/slipperbunny_0</item>
+        <item>"Bunny Slippers"</item>
+        <item>false</item>
+        <item>300</item>
+    </array>
+</resources>

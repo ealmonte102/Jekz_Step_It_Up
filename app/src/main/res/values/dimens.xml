@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="thin_border">1dp</dimen>
+    <dimen name="thick_border">2dp</dimen>
+    <dimen name="avatar_item_width">107dp</dimen>
+    <dimen name="avatar_item_height">170dp</dimen>
+</resources>

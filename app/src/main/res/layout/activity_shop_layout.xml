@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/shop_background"
+    tools:layout_editor_absoluteY="25dp">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_shop"
+        android:layout_width="match_parent"
+        android:layout_height="238dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/shape_shop_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/item_layout" />
+
+    <RadioGroup
+        android:id="@+id/categories"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checkedButton="@+id/hat"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/recycler_view_shop"
+        app:layout_constraintEnd_toEndOf="@id/recycler_view_shop"
+        app:layout_constraintStart_toStartOf="@id/recycler_view_shop">
+
+        <RadioButton
+            android:id="@+id/hat"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/radiobutton"
+            android:button="@null"
+            android:fontFamily="sans-serif"
+            android:text="@string/category_hats"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@drawable/radiobutton_text"
+            android:textSize="12sp"
+            android:typeface="normal" />
+
+        <RadioButton
+            android:id="@+id/shirts"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/radiobutton"
+            android:button="@null"
+            android:text="@string/category_shirts"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@drawable/radiobutton_text"
+            android:textSize="12sp"
+            android:typeface="normal" />
+
+        <RadioButton
+            android:id="@+id/pants"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/radiobutton"
+            android:button="@null"
+            android:fontFamily="sans-serif"
+            android:text="@string/category_pants"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@drawable/radiobutton_text"
+            android:textSize="12sp"
+            android:typeface="normal" />
+
+        <RadioButton
+            android:id="@+id/shoes"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/radiobutton"
+            android:button="@null"
+            android:fontFamily="sans-serif"
+            android:text="@string/category_shoes"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@drawable/radiobutton_text"
+            android:textSize="12sp"
+            android:typeface="normal" />
+    </RadioGroup>
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="107dp"
+        android:layout_height="170dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/body_0"
+        app:layout_constraintBottom_toTopOf="@+id/categories"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/avatar_shoes"
+        android:layout_width="107dp"
+        android:layout_height="170dp"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        tools:src="@drawable/boots_0" />
+
+    <ImageView
+        android:id="@+id/avatar_shirt"
+        android:layout_width="107dp"
+        android:layout_height="170dp"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        tools:src="@drawable/spotpjshirtblue_animation" />
+
+    <ImageView
+        android:id="@+id/avatar_pants"
+        android:layout_width="@dimen/avatar_item_width"
+        android:layout_height="@dimen/avatar_item_height"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        tools:src="@drawable/dresspants_0" />
+
+    <ImageView
+        android:id="@+id/avatar_hat"
+        android:layout_width="@dimen/avatar_item_width"
+        android:layout_height="@dimen/avatar_item_height"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        app:layout_constraintVertical_bias="1.0"
+        tools:src="@drawable/snorkel_1" />
+
+
+</android.support.constraint.ConstraintLayout>
