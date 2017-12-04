@@ -38,6 +38,33 @@ public class Item {
     }
 
     @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+        result = prime * result + name.hashCode();
+        result = prime * result + type.hashCode();
+        result = prime * result + price;
+        result = prime * result + (animated ? 1 : 0);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Item)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+
+        final Item o = (Item) obj;
+        return o.getName().equals(name) &&
+               o.type.equals(type) &&
+               (o.price == price) &&
+               (o.isAnimated() == isAnimated());
+    }
+    
+    @Override
     public String toString() {
         if (name == null) {
             return "NULL ?";

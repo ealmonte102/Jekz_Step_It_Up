@@ -43,6 +43,10 @@ public class Avatar {
         currency -= x;
     }
 
+    public void addItem(Item item) {
+        inventory.add(item);
+    }
+
     public boolean wearItem(Item item) {
         if (!inventory.contains(item)) {
             return false;

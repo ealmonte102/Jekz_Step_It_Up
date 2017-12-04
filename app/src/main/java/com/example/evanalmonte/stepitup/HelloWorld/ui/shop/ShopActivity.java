@@ -122,9 +122,7 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
 
     @Override
     public void showItems(List<Item> itemList) {
-        if (itemList != null) {
-            itemsListAdapater.replaceData(itemList);
-        }
+        itemsListAdapater.replaceData(itemList);
     }
 
     @OnCheckedChanged({R.id.hat, R.id.shirts, R.id.pants, R.id.shoes})
