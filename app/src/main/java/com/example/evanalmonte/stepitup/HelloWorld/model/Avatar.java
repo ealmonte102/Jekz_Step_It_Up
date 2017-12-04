@@ -28,6 +28,9 @@ public class Avatar {
         return shoes;
     }
 
+    public boolean hasItem(Item item) {
+        return inventory.contains(item);
+    }
 
     public int getCurrency() {
         return currency;
