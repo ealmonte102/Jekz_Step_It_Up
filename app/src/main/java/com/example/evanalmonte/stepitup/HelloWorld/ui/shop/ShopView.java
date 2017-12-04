@@ -10,4 +10,12 @@ import java.util.List;
 
 public interface ShopView {
     void showItems(List<Item> itemlist);
+
+    public void setHatImage(int id, boolean animateable);
+
+    public void setPantsImage(int id, boolean animateable);
+
+    public void setShirtImage(int id, boolean animateable);
+
+    public void setShoesImage(int id, boolean animateable);
 }

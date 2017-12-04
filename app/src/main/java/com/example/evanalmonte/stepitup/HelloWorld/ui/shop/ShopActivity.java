@@ -1,11 +1,11 @@
 package com.example.evanalmonte.stepitup.HelloWorld.ui.shop;
 
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -23,7 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 
-import static android.content.ContentValues.TAG;
 
 
 public class ShopActivity extends Activity implements ItemListAdapter.ShopItemListener, ShopView {
@@ -45,9 +44,11 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @BindView(R.id.avatar_pants)
     ImageView pantsImage;
 
+    @BindView(R.id.avatar)
+    ImageView avatarImage;
+
     ItemListAdapter itemsListAdapater;
     ShopPresenter shopPresenter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,48 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
         snapHelper.attachToRecyclerView(itemsRecyclerView);
     }
 
+    public void setHatImage(int id, boolean animateable) {
+        hatImage.setImageResource(id);
+        if (animateable) {
+            ((AnimationDrawable) hatImage.getDrawable()).start();
+        }
+    }
+
+    public void setShoesImage(int id, boolean animateable) {
+        shoesImage.setImageResource(id);
+        if (animateable) {
+            ((AnimationDrawable) shoesImage.getDrawable()).start();
+        }
+    }
+
+    public void setShirtImage(int id, boolean animateable) {
+        shirtImage.setImageResource(id);
+        if (animateable) {
+            ((AnimationDrawable) avatarImage.getDrawable()).stop();
+            ((AnimationDrawable) shirtImage.getDrawable()).start();
+            ((AnimationDrawable) avatarImage.getDrawable()).start();
+        }
+    }
+
+    public void setPantsImage(int id, boolean animateable) {
+        pantsImage.setImageResource(id);
+        if (animateable) {
+            ((AnimationDrawable) pantsImage.getDrawable()).start();
+        }
+    }
+
+    @Override
+    public void onItemClicked(Item item) {
+        shopPresenter.shopItemClicked(item);
+    }
+
+    @Override
+    public void showItems(List<Item> itemList) {
+        if (itemList != null) {
+            itemsListAdapater.replaceData(itemList);
+        }
+    }
+
     @OnCheckedChanged({R.id.hat, R.id.shirts, R.id.pants, R.id.shoes})
     public void onRadioButtonChanged(CompoundButton button, boolean checked) {
         if (!checked) { return; }
@@ -90,35 +133,6 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
             case R.id.shoes:
                 shopPresenter.loadShoes();
                 break;
-        }
-    }
-
-    @Override
-    public void onItemClicked(Item item) {
-        int id = item.getId();
-        switch (item.getType()) {
-            case PANTS:
-                pantsImage.setImageResource(id);
-                break;
-            case SHOES:
-                shoesImage.setImageResource(id);
-                break;
-            case SHIRT:
-                shirtImage.setImageResource(id);
-                break;
-            case HAT:
-                hatImage.setImageResource(id);
-                break;
-        }
-    }
-
-    @Override
-    public void showItems(List<Item> itemList) {
-        if (itemList != null) {
-            Log.d(TAG, itemList.toString());
-            itemsListAdapater.replaceData(itemList);
-        } else {
-            Log.d(TAG, "Item List is Null");
         }
     }
 }

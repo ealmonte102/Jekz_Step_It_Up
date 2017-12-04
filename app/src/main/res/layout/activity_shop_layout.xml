@@ -95,10 +95,10 @@
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="107dp"
-        android:layout_height="170dp"
+        android:layout_width="@dimen/avatar_item_width"
+        android:layout_height="@dimen/avatar_item_height"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/body_0"
+        android:src="@drawable/body_animation"
         app:layout_constraintBottom_toTopOf="@+id/categories"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -106,8 +106,9 @@
 
     <ImageView
         android:id="@+id/avatar_shoes"
-        android:layout_width="107dp"
-        android:layout_height="170dp"
+        android:layout_width="@dimen/avatar_item_width"
+        android:layout_height="@dimen/avatar_item_height"
+        android:src="@drawable/blank"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
         app:layout_constraintStart_toStartOf="@+id/avatar"
@@ -115,19 +116,10 @@
         tools:src="@drawable/boots_0" />
 
     <ImageView
-        android:id="@+id/avatar_shirt"
-        android:layout_width="107dp"
-        android:layout_height="170dp"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
-        app:layout_constraintEnd_toEndOf="@+id/avatar"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar"
-        tools:src="@drawable/spotpjshirtblue_animation" />
-
-    <ImageView
         android:id="@+id/avatar_pants"
         android:layout_width="@dimen/avatar_item_width"
         android:layout_height="@dimen/avatar_item_height"
+        android:src="@drawable/blank"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
         app:layout_constraintStart_toStartOf="@+id/avatar"
@@ -135,9 +127,21 @@
         tools:src="@drawable/dresspants_0" />
 
     <ImageView
+        android:id="@+id/avatar_shirt"
+        android:layout_width="@dimen/avatar_item_width"
+        android:layout_height="@dimen/avatar_item_height"
+        android:src="@drawable/blank"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        tools:src="@drawable/spotpjshirtblue_animation" />
+
+    <ImageView
         android:id="@+id/avatar_hat"
         android:layout_width="@dimen/avatar_item_width"
         android:layout_height="@dimen/avatar_item_height"
+        android:src="@drawable/blank"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
         app:layout_constraintHorizontal_bias="0.0"

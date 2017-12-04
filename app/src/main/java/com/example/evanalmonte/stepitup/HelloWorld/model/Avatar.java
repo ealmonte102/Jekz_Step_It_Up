@@ -1,5 +1,6 @@
 package com.example.evanalmonte.stepitup.HelloWorld.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Avatar {
@@ -7,7 +8,7 @@ public class Avatar {
     Item shirt;
     Item pants;
     Item shoes;
-    Set<Item> inventory;
+    Set<Item> inventory = new HashSet<>();
     int currency;
 
     public Item getHat() {

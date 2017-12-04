@@ -61,14 +61,14 @@
 
     <array name="shirts">
 
-        <item>@drawable/spotpjshirtpink_animation</item>
+        <item>@drawable/spotpjshirtyellow_animation</item>
         <item>"Pink Spotted PJ's"</item>
         <item>true</item>
         <item>300</item>
 
 
         <item>@drawable/spotpjshirtyellow_animation</item>
-        <item>"Beige Spotted PJ's</item>
+        <item>"Yellow Spotted PJ's</item>
         <item>true</item>
         <item>1500</item>
 
