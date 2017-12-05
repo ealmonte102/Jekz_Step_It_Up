@@ -77,6 +77,7 @@ public class Item {
         HAT,
         SHIRT,
         PANTS,
-        SHOES
+        SHOES,
+        MISC
     }
 }
