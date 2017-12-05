@@ -152,13 +152,12 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/imageView"
-        android:layout_width="31dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="56dp"
+        android:layout_width="28dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/text_view_currency"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_view_currency"
         app:layout_constraintTop_toTopOf="@+id/text_view_currency"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.49"
         app:srcCompat="@drawable/footprint_icon" />
 
     <TextView

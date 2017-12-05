@@ -4,6 +4,7 @@ import com.example.evanalmonte.stepitup.HelloWorld.model.Avatar;
 import com.example.evanalmonte.stepitup.HelloWorld.model.Item;
 import com.example.evanalmonte.stepitup.HelloWorld.model.ItemInteractor;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /**
@@ -22,8 +23,25 @@ public class ShopPresenter {
         avatar.addCurrency(11300);
     }
 
-    public void loadAvatar() {
-        shopView.setCurrencyText("x" + String.valueOf(avatar.getCurrency()));
+    public void reloadAvatar() {
+        shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
+        Item[] items = {avatar.getHat(), avatar.getShirt(), avatar.getPants(), avatar.getShoes()};
+        int i = 0;
+        if (items[i] != null) {
+            shopView.setHatImage(items[i].getId(), items[i++].isAnimated());
+        }
+        if (items[i] != null) {
+            shopView.setShirtImage(items[i].getId(), items[i++].isAnimated());
+
+        }
+        if (items[i] != null) {
+            shopView.setPantsImage(items[i].getId(), items[i++].isAnimated());
+        }
+        if (items[i] != null) {
+            shopView.setShoesImage(items[i].getId(), items[i].isAnimated());
+
+        }
+
     }
 
     public void loadHats() {
@@ -46,24 +64,7 @@ public class ShopPresenter {
     public void buyItem(Item item) {
         if (!avatar.buyItem(item)) { return; }
         avatar.wearItem(item);
-
-        int id = item.getId();
-        boolean isAnimated = item.isAnimated();
-        switch (item.getType()) {
-            case PANTS:
-                shopView.setPantsImage(id, isAnimated);
-                break;
-            case SHOES:
-                shopView.setShoesImage(id, isAnimated);
-                break;
-            case SHIRT:
-                shopView.setShirtImage(id, isAnimated);
-                break;
-            case HAT:
-                shopView.setHatImage(id, isAnimated);
-                break;
-        }
-        shopView.setCurrencyText(String.valueOf(avatar.getCurrency()));
+        reloadAvatar();
         shopView.reloadAdapter();
     }
 
@@ -73,22 +74,6 @@ public class ShopPresenter {
 
     public void equipItem(Item item) {
         avatar.wearItem(item);
-
-        int id = item.getId();
-        boolean isAnimated = item.isAnimated();
-        switch (item.getType()) {
-            case PANTS:
-                shopView.setPantsImage(id, isAnimated);
-                break;
-            case SHOES:
-                shopView.setShoesImage(id, isAnimated);
-                break;
-            case SHIRT:
-                shopView.setShirtImage(id, isAnimated);
-                break;
-            case HAT:
-                shopView.setHatImage(id, isAnimated);
-                break;
-        }
+        reloadAvatar();
     }
 }

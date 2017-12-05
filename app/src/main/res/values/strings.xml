@@ -7,4 +7,7 @@
     <string name="category_shirts">Shirts</string>
     <string name="category_pants">Pants</string>
     <string name="category_shoes">Shoes</string>
+    <string name="buy">Buy</string>
+    <string name="equip">Equip</string>
+    <string name="owned">Owned</string>
 </resources>
