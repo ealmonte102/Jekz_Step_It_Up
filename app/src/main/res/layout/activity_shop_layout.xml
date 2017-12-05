@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/shop_background"
+    app:layout_constraintTop_toBottomOf="@+id/avatar"
     tools:layout_editor_absoluteY="25dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_shop"
-        android:layout_width="match_parent"
-        android:layout_height="238dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
@@ -18,6 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categories"
         tools:listitem="@layout/layout_owned_item" />
 
     <RadioGroup
@@ -28,7 +30,8 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/recycler_view_shop"
         app:layout_constraintEnd_toEndOf="@id/recycler_view_shop"
-        app:layout_constraintStart_toStartOf="@id/recycler_view_shop">
+        app:layout_constraintStart_toStartOf="@id/recycler_view_shop"
+        app:layout_constraintTop_toBottomOf="@+id/avatar">
 
         <RadioButton
             android:id="@+id/hat"
@@ -96,18 +99,19 @@
     <ImageView
         android:id="@+id/avatar"
         android:layout_width="@dimen/avatar_item_width"
-        android:layout_height="@dimen/avatar_item_height"
+        android:layout_height="0dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/body_animation"
         app:layout_constraintBottom_toTopOf="@+id/categories"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_change_gender" />
 
     <ImageView
         android:id="@+id/avatar_shoes"
-        android:layout_width="@dimen/avatar_item_width"
-        android:layout_height="@dimen/avatar_item_height"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/blank"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
@@ -117,8 +121,8 @@
 
     <ImageView
         android:id="@+id/avatar_pants"
-        android:layout_width="@dimen/avatar_item_width"
-        android:layout_height="@dimen/avatar_item_height"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/blank"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
@@ -128,8 +132,8 @@
 
     <ImageView
         android:id="@+id/avatar_shirt"
-        android:layout_width="@dimen/avatar_item_width"
-        android:layout_height="@dimen/avatar_item_height"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/blank"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
@@ -139,8 +143,8 @@
 
     <ImageView
         android:id="@+id/avatar_hat"
-        android:layout_width="@dimen/avatar_item_width"
-        android:layout_height="@dimen/avatar_item_height"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/blank"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
