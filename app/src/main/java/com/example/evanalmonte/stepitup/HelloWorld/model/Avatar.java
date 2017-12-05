@@ -4,14 +4,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Avatar {
+    boolean isMale = true;
     Item hat;
     Item shirt;
     Item pants;
     Item shoes;
     Set<Item> inventory = new HashSet<>();
-
     int currency;
 
+    public boolean isMale() {
+        return isMale;
+    }
+
+    public void setMale(boolean male) {
+        isMale = male;
+    }
     public Item getHat() {
         return hat;
     }
