@@ -178,7 +178,7 @@
         android:layout_width="29dp"
         android:layout_height="26dp"
         android:layout_marginStart="8dp"
-        android:background="@drawable/person"
+        android:background="@drawable/model_change_background"
         app:layout_constraintEnd_toEndOf="@+id/text_view_currency"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/text_view_currency"
