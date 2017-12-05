@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -13,6 +14,8 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 
 import static android.content.ContentValues.TAG;
 
@@ -55,16 +58,32 @@ public class DBTest extends AsyncTask<String, Void, JSONArray> {
             }
 
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            String jsonStr = "";
-            int readAmount = in.available();
-            byte[] bytes = new byte[readAmount];
-            in.read(bytes, 0, readAmount);
-            for (byte b : bytes){
-                char c = (char) b;
-                jsonStr += c;
+
+            //receives bytes from server
+            LinkedList<Byte> bytes = new LinkedList<Byte>();
+            int len;
+            byte[] buffer = new byte[4096];
+            while (-1 != (len = in.read(buffer))){
+                for (int i = 0; i < len; i++){
+                    bytes.add(buffer[i]);
+                }
             }
 
-            JSONArray resultArray = new JSONArray(jsonStr);
+            //convert byte arraylist to array
+            int size = bytes.size();
+            byte[] b = new byte[size];
+            for (int i = 0; i < size; i++){
+                b[i] = bytes.removeFirst();
+            }
+
+            String jsonStr = new String(b, StandardCharsets.UTF_8);
+            //Log.d("myTest", "jsonStr: " + jsonStr);
+
+            JSONArray resultArray;
+
+            try{
+                resultArray = new JSONArray(jsonStr);
+            }catch (JSONException e) { resultArray = new JSONArray("["+jsonStr+"]");};
             /**for (int i = 0; i < resultArray.length(); i++){
                 JSONObject r = resultArray.getJSONObject(i);
                 //System.out.println(r.getInt("userid"));
@@ -73,7 +92,11 @@ public class DBTest extends AsyncTask<String, Void, JSONArray> {
                 userid = r.getInt("userid");
             }*/
 
+            //Log.d("myTest", "after JSONArray");
+
             int statusCode = urlConnection.getResponseCode();
+
+            //Log.d("myTest", "end of doInBackground");
 
             return resultArray;
 

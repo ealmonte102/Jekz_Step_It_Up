@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         JSONObject postData = new JSONObject();
         try {
             postData.put("userid", 1);
-            postData.put("start_time", "'2017-13-03 22:05:00 -5:00'");
-            postData.put("end_time", "'2017-12-03 22:05:30 -5:00'");
-            postData.put("steps", 70000);
+            postData.put("start_time", "'2017-12-04 22:05:00 -5:00'");
+            postData.put("end_time", "'2017-12-04 22:05:30 -5:00'");
+            postData.put("steps", 71000);
         } catch (JSONException e) {e.printStackTrace();}
 
         //DBTest test = new DBTest(postData);
@@ -51,10 +51,13 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         //Here you will receive the result fired from async class
         //of onPostExecute(result) method.
 
+        //Log.d("myTest", "made it to processFinish in main thread");
         try {
             //Log.d("myTest", "Test Test")
-            JSONObject r = output.getJSONObject(0);
-            Log.d("myTest", "value: " + r.getInt("userid"));
+            for (int i = 0; i < output.length(); i++){
+                JSONObject r = output.getJSONObject(i);
+                //Log.d("myTest", "rowCount value: " + r.getInt("rowCount"));
+            }
         }catch (JSONException e){e.printStackTrace();}
     }
 }
