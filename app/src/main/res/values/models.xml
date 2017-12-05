@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="models">
+        <item>@drawable/body_animation</item>
+        <item>"male"</item>
+
+        <item>@drawable/fbody_animation</item>
+        <item>"female"</item>
+    </array>
+</resources>

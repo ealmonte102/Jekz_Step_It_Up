@@ -16,9 +16,12 @@ import java.util.LinkedHashMap;
 public class ItemInteractor {
     private static ItemInteractor instance;
     private HashMap<Item.Item_Type, LinkedHashMap<Integer, Item>> itemList;
+    private HashMap<String, Integer> modelList;
 
-    private ItemInteractor(HashMap<Item.Item_Type, LinkedHashMap<Integer, Item>> items) {
+    private ItemInteractor(HashMap<Item.Item_Type, LinkedHashMap<Integer, Item>> items,
+                           HashMap<String, Integer> modelList) {
         this.itemList = items;
+        this.modelList = modelList;
     }
 
     public static ItemInteractor getInstance(Resources resources) {
@@ -37,8 +40,18 @@ public class ItemInteractor {
         extractFromResources(Item.Item_Type.PANTS, tempItemList, resources, numOfAttributes, R
                 .array.pants);
 
-        instance = new ItemInteractor(tempItemList);
+        HashMap<String, Integer> modelList = new HashMap<>();
+        extractModels(modelList, resources);
+        instance = new ItemInteractor(tempItemList, modelList);
         return instance;
+    }
+
+    private static void extractModels(HashMap<String, Integer> modelList, Resources res) {
+        TypedArray typedArray = res.obtainTypedArray(R.array.models);
+        for (int i = 0; i < typedArray.length(); i += 2) {
+            modelList.put(typedArray.getString(i + 1), typedArray.getResourceId(i, 0));
+        }
+        typedArray.recycle();
     }
 
     private static void extractFromResources(Item.Item_Type item_type, HashMap<Item.Item_Type,
@@ -60,9 +73,14 @@ public class ItemInteractor {
         itemArray.recycle();
     }
 
+
     public Collection<Item> getItems(Item.Item_Type type) {
         LinkedHashMap<Integer, Item> fetchedItems = itemList.get(type);
         return fetchedItems == null ? null : fetchedItems.values();
+    }
+
+    public int getModel(String name) {
+        return modelList.get(name);
     }
 
     public Item getItems(Item.Item_Type type, int id) {
