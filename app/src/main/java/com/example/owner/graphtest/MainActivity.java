@@ -1,11 +1,9 @@
 package com.example.owner.graphtest;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +20,7 @@ import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
-    DBTest asyncTask = new DBTest(null);
+    DBRequest asyncTask = new DBRequest(null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

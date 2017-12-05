@@ -23,13 +23,13 @@ import static android.content.ContentValues.TAG;
  * Created by Owner on 12/3/2017.
  */
 
-public class DBTest extends AsyncTask<String, Void, JSONArray> {
+public class DBRequest extends AsyncTask<String, Void, JSONArray> {
 
     public AsyncResponse delegate;
 
     JSONObject postData;
 
-    public DBTest(JSONObject postData) {
+    public DBRequest(JSONObject postData) {
         if (postData != null) {
             this.postData = postData;
         }
@@ -77,20 +77,13 @@ public class DBTest extends AsyncTask<String, Void, JSONArray> {
             }
 
             String jsonStr = new String(b, StandardCharsets.UTF_8);
-            //Log.d("myTest", "jsonStr: " + jsonStr);
+            Log.d("myTest", "jsonStr: " + jsonStr);
 
             JSONArray resultArray;
 
             try{
                 resultArray = new JSONArray(jsonStr);
             }catch (JSONException e) { resultArray = new JSONArray("["+jsonStr+"]");};
-            /**for (int i = 0; i < resultArray.length(); i++){
-                JSONObject r = resultArray.getJSONObject(i);
-                //System.out.println(r.getInt("userid"));
-                //Log.d("myTest", "value: " + r.getInt("userid"));
-                //Log.d("myTest", "inside for loop");
-                userid = r.getInt("userid");
-            }*/
 
             //Log.d("myTest", "after JSONArray");
 
