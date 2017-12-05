@@ -8,6 +8,7 @@
     <color name="shop_category_focused_background">#ffffff</color>
     <color name="shop_inventory_background">#e8e0d8</color>
     <color name="shop_background">#e2f3fa</color>
+    <color name="shop_dark_background">#7e8f96</color>
     <color name="shop_category_focused_text">#000</color>
     <color name="shop_buy_button">#65c878</color>
     <color name="shop_buy_button_pressed">#016414</color>
