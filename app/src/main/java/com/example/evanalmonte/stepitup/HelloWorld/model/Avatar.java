@@ -12,6 +12,14 @@ public class Avatar {
     Set<Item> inventory = new HashSet<>();
     int currency;
 
+    public Avatar(Item hat, Item shirt, Item pants, Item shoes, int currency) {
+        this.hat = hat;
+        this.shirt = shirt;
+        this.pants = pants;
+        this.shoes = shoes;
+        this.currency = currency;
+    }
+
     public boolean isMale() {
         return isMale;
     }

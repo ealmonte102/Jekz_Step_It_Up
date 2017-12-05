@@ -247,4 +247,12 @@
         <item>false</item>
         <item>300</item>
     </array>
+
+    <array name="misc">
+        <item>@drawable/blank</item>
+        <item>"Blank Item"</item>
+        <item>false</item>
+        <item>-1</item>
+    </array>
+
 </resources>

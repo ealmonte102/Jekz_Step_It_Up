@@ -39,19 +39,22 @@ public class ItemInteractor {
                 .array.shoes);
         extractFromResources(Item.Item_Type.PANTS, tempItemList, resources, numOfAttributes, R
                 .array.pants);
+        extractFromResources(Item.Item_Type.MISC, tempItemList, resources, numOfAttributes, R
+                .array.misc);
+        HashMap<String, Integer> modelList = extractModels(resources);
 
-        HashMap<String, Integer> modelList = new HashMap<>();
-        extractModels(modelList, resources);
         instance = new ItemInteractor(tempItemList, modelList);
         return instance;
     }
 
-    private static void extractModels(HashMap<String, Integer> modelList, Resources res) {
+    private static HashMap<String, Integer> extractModels(Resources res) {
+        HashMap<String, Integer> modelList = new HashMap<>();
         TypedArray typedArray = res.obtainTypedArray(R.array.models);
         for (int i = 0; i < typedArray.length(); i += 2) {
             modelList.put(typedArray.getString(i + 1), typedArray.getResourceId(i, 0));
         }
         typedArray.recycle();
+        return modelList;
     }
 
     private static void extractFromResources(Item.Item_Type item_type, HashMap<Item.Item_Type,
@@ -73,7 +76,6 @@ public class ItemInteractor {
         itemArray.recycle();
     }
 
-
     public Collection<Item> getItems(Item.Item_Type type) {
         LinkedHashMap<Integer, Item> fetchedItems = itemList.get(type);
         return fetchedItems == null ? null : fetchedItems.values();
@@ -83,7 +85,7 @@ public class ItemInteractor {
         return modelList.get(name);
     }
 
-    public Item getItems(Item.Item_Type type, int id) {
-        return itemList.get(type).get(id);
+    public Item getInitialItem() {
+        return itemList.get(Item.Item_Type.MISC).get(R.drawable.blank);
     }
 }

@@ -16,31 +16,36 @@ public class ShopPresenter {
     private ShopView shopView;
     private Avatar avatar;
 
-    public ShopPresenter(ShopView view, ItemInteractor instance) {
+    ShopPresenter(ShopView view, ItemInteractor instance) {
         this.shopView = view;
         this.itemInteractor = instance;
-        this.avatar = new Avatar();
-        avatar.addCurrency(11300);
+        Item blankItem = itemInteractor.getInitialItem();
+        avatar = new Avatar(blankItem, blankItem, blankItem, blankItem, 11300);
     }
 
-    public void reloadAvatar() {
+    void reloadAvatar() {
         shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
-        Item[] items = {avatar.getHat(), avatar.getShirt(), avatar.getPants(), avatar.getShoes()};
-        int i = 0;
-        if (items[i] != null) {
-            shopView.setHatImage(items[i].getId(), items[i++].isAnimated());
+        Item hat = avatar.getHat();
+        Item shirt = avatar.getShirt();
+        Item pants = avatar.getPants();
+        Item shoes = avatar.getShoes();
+        shopView.setHatImage(hat.getId());
+        shopView.setShirtImage(shirt.getId());
+        shopView.setPantsImage(pants.getId());
+        shopView.setShoesImage(shoes.getId());
+        if (hat.isAnimated()) {
+            shopView.animateHat(true);
         }
-        if (items[i] != null) {
-            shopView.setShirtImage(items[i].getId(), items[i++].isAnimated());
-
+        if (shirt.isAnimated()) {
+            shopView.animateShirt(true);
         }
-        if (items[i] != null) {
-            shopView.setPantsImage(items[i].getId(), items[i++].isAnimated());
+        if (pants.isAnimated()) {
+            shopView.animatePants(true);
         }
-        if (items[i] != null) {
-            shopView.setShoesImage(items[i].getId(), items[i].isAnimated());
-
+        if (shoes.isAnimated()) {
+            shopView.animateShoes(true);
         }
+        shopView.animateAvatar(true);
 
     }
 
@@ -74,6 +79,16 @@ public class ShopPresenter {
 
     public void equipItem(Item item) {
         avatar.wearItem(item);
+        reloadAvatar();
+    }
+
+    public void changeGender() {
+        boolean isMale = avatar.isMale();
+        avatar.setMale(!isMale);
+        String modelString = isMale ? "male" : "female";
+        int modelID = itemInteractor.getModel(modelString);
+
+        shopView.setAvatarImage(modelID);
         reloadAvatar();
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
-
+import butterknife.OnClick;
 
 
 public class ShopActivity extends Activity implements ItemListAdapter.ShopItemListener, ShopView {
@@ -54,6 +54,15 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     ItemListAdapter itemsListAdapater;
     ShopPresenter shopPresenter;
 
+    private void initRecyclerView() {
+        itemsListAdapater = new ItemListAdapter(this);
+        itemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        itemsRecyclerView.setAdapter(itemsListAdapater);
+        SnapHelper snapHelper = new GravitySnapHelper(Gravity.TOP);
+        snapHelper.attachToRecyclerView(itemsRecyclerView);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,43 +81,7 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
         categoryRadioGroup.check(checked);
     }
 
-    private void initRecyclerView() {
-        itemsListAdapater = new ItemListAdapter(this);
-        itemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        itemsRecyclerView.setAdapter(itemsListAdapater);
-        SnapHelper snapHelper = new GravitySnapHelper(Gravity.TOP);
-        snapHelper.attachToRecyclerView(itemsRecyclerView);
-    }
 
-    public void setHatImage(int id, boolean animateable) {
-        hatImage.setImageResource(id);
-        if (animateable) {
-            ((AnimationDrawable) hatImage.getDrawable()).start();
-        }
-    }
-
-    public void setShoesImage(int id, boolean animateable) {
-        shoesImage.setImageResource(id);
-        if (animateable) {
-            ((AnimationDrawable) shoesImage.getDrawable()).start();
-        }
-    }
-
-    public void setShirtImage(int id, boolean animateable) {
-        shirtImage.setImageResource(id);
-        if (animateable) {
-            ((AnimationDrawable) avatarImage.getDrawable()).stop();
-            ((AnimationDrawable) shirtImage.getDrawable()).start();
-            ((AnimationDrawable) avatarImage.getDrawable()).start();
-        }
-    }
-
-    public void setPantsImage(int id, boolean animateable) {
-        pantsImage.setImageResource(id);
-        if (animateable) {
-            ((AnimationDrawable) pantsImage.getDrawable()).start();
-        }
-    }
     @Override
     public void setCurrencyText(String text) {
         currencyText.setText(text);
@@ -140,6 +113,86 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
         itemsListAdapater.replaceData(itemList);
     }
 
+    @Override
+    public void setAvatarImage(int id) {
+        avatarImage.setImageResource(id);
+    }
+
+    @Override
+    public void setHatImage(int id) {
+        hatImage.setImageResource(id);
+    }
+
+    @Override
+    public void setPantsImage(int id) {
+        pantsImage.setImageResource(id);
+    }
+
+    @Override
+    public void setShirtImage(int id) {
+        shirtImage.setImageResource(id);
+    }
+
+    @Override
+    public void setShoesImage(int id) {
+        shoesImage.setImageResource(id);
+    }
+
+    @Override
+    public void animateHat(boolean animate) {
+        AnimationDrawable animationDrawable = (AnimationDrawable) hatImage.getDrawable();
+        if (animate) {
+            restartAnimation(animationDrawable);
+        } else {
+            animationDrawable.stop();
+        }
+    }
+
+    @Override
+    public void animateShirt(boolean animate) {
+        AnimationDrawable animationDrawable = (AnimationDrawable) shirtImage.getDrawable();
+        if (animate) {
+            restartAnimation(animationDrawable);
+        } else {
+            animationDrawable.stop();
+        }
+    }
+
+    @Override
+    public void animateShoes(boolean animate) {
+        AnimationDrawable animationDrawable = (AnimationDrawable) shoesImage.getDrawable();
+        if (animate) {
+            restartAnimation(animationDrawable);
+        } else {
+            animationDrawable.stop();
+        }
+    }
+
+    @Override
+    public void animatePants(boolean animate) {
+        AnimationDrawable animationDrawable = (AnimationDrawable) pantsImage.getDrawable();
+        if (animate) {
+            restartAnimation(animationDrawable);
+        } else {
+            animationDrawable.stop();
+        }
+    }
+
+    @Override
+    public void animateAvatar(boolean animate) {
+        AnimationDrawable animationDrawable = (AnimationDrawable) avatarImage.getDrawable();
+        if (animate) {
+            restartAnimation(animationDrawable);
+        } else {
+            animationDrawable.stop();
+        }
+    }
+
+    private void restartAnimation(AnimationDrawable animation) {
+        animation.stop();
+        animation.start();
+    }
+
     @OnCheckedChanged({R.id.hat, R.id.shirts, R.id.pants, R.id.shoes})
     public void onRadioButtonChanged(CompoundButton button, boolean checked) {
         if (!checked) { return; }
@@ -157,5 +210,10 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
                 shopPresenter.loadShoes();
                 break;
         }
+    }
+
+    @OnClick(R.id.button_change_gender)
+    public void genderButtonClicked() {
+        shopPresenter.changeGender();
     }
 }
