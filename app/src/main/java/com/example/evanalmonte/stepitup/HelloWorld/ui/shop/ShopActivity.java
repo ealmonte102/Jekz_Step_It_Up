@@ -51,6 +51,18 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @BindView(R.id.text_view_currency)
     TextView currencyText;
 
+    @BindView(R.id.image_equipped_hat)
+    ImageView equippedHat;
+
+    @BindView(R.id.image_equipped_shirt)
+    ImageView equippedShirt;
+
+    @BindView(R.id.image_equipped_pants)
+    ImageView equippedPants;
+
+    @BindView(R.id.image_equipped_shoes)
+    ImageView equippedShoes;
+
     ItemListAdapter itemsListAdapater;
     ShopPresenter shopPresenter;
 
@@ -121,21 +133,25 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @Override
     public void setHatImage(int id) {
         hatImage.setImageResource(id);
+        equippedHat.setImageResource(id);
     }
 
     @Override
     public void setPantsImage(int id) {
         pantsImage.setImageResource(id);
+        equippedPants.setImageResource(id);
     }
 
     @Override
     public void setShirtImage(int id) {
         shirtImage.setImageResource(id);
+        equippedShirt.setImageResource(id);
     }
 
     @Override
     public void setShoesImage(int id) {
         shoesImage.setImageResource(id);
+        equippedShoes.setImageResource(id);
     }
 
     @Override

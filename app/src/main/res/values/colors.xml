@@ -12,4 +12,7 @@
     <color name="shop_category_focused_text">#000</color>
     <color name="shop_buy_button">#65c878</color>
     <color name="shop_buy_button_pressed">#016414</color>
+    <color name="equip_item_border">#b5bdbd</color>
+    <color name="equip_item_background">#cfd7d7</color>
+
 </resources>
