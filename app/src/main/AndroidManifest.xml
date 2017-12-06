@@ -20,6 +20,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".graphtest.GraphActivity" />
+        <activity android:name=".graphtest.MainActivity" />
+        <activity android:name=".graphtest.CharacterInfoActivity" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
