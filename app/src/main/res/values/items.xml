@@ -40,22 +40,22 @@
         <item>@drawable/skullcapred_0</item>
         <item>"Red Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>600</item>
 
         <item>@drawable/skullcapblue_0</item>
         <item>"Blue Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>600</item>
 
         <item>@drawable/skullcapgreen_0</item>
         <item>"Green Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>600</item>
 
         <item>@drawable/skullcapsanta_0</item>
         <item>"Santa Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>3000</item>
 
     </array>
 
