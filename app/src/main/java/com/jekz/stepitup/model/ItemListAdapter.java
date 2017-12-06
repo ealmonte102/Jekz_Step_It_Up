@@ -98,21 +98,35 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         public void bind(int position) {
             Item item = itemList.get(position);
             float yPosition = 0;
+            float xPosition = 0;
             switch (item.getType()) {
                 case HAT:
-                    yPosition = 0;
+                    yPosition = -12;
+                    if (item.getName().equals("Paper Bag") || item.getName().equals("Snorkel")) {
+                        yPosition = -23;
+                    }
+                    if (item.getName().equals("Jester Hat")) {
+                        yPosition = 0;
+                        xPosition = 5;
+                    }
+                    if (item.getName().equals("Helihat") || item.getName().equals("Blue Cap") ||
+                        item.getName().equals("Cowboy Hat")) {
+                        yPosition = -8;
+                        xPosition = 3;
+                    }
                     break;
                 case SHIRT:
-                    yPosition = -100;
+                    yPosition = -70;
                     break;
                 case SHOES:
-                    yPosition = -230;
+                    yPosition = -120;
                     break;
                 case PANTS:
-                    yPosition = -180;
+                    yPosition = -100;
                     break;
             }
             itemImage.setY(yPosition);
+            itemImage.setX(xPosition);
             itemImage.setImageResource(item.getId());
             itemName.setText(item.getName());
         }
@@ -158,7 +172,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         public void bind(int position) {
             super.bind(position);
             Item item = itemList.get(position);
-            itemPrice.setText(String.format(Locale.US, String.valueOf(item.getPrice())));
+            itemPrice.setText(String.format(Locale.US, "x%d", item.getPrice()));
+
         }
     }
 }
