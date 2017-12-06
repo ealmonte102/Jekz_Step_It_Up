@@ -158,7 +158,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         public void bind(int position) {
             super.bind(position);
             Item item = itemList.get(position);
-            itemPrice.setText(String.format(Locale.US, "x%d", item.getPrice()));
+            itemPrice.setText(String.format(Locale.US, String.valueOf(item.getPrice())));
         }
     }
 }
