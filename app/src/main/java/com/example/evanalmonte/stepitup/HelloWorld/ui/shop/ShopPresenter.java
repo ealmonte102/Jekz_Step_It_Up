@@ -25,6 +25,8 @@ public class ShopPresenter {
 
     void reloadAvatar() {
         shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
+        String modelString = avatar.isMale() ? "male" : "female";
+        int modelID = itemInteractor.getModel(modelString);
         Item hat = avatar.getHat();
         Item shirt = avatar.getShirt();
         Item pants = avatar.getPants();
@@ -33,6 +35,7 @@ public class ShopPresenter {
         shopView.setShirtImage(shirt.getId());
         shopView.setPantsImage(pants.getId());
         shopView.setShoesImage(shoes.getId());
+        shopView.setAvatarImage(modelID);
         if (hat.isAnimated()) {
             shopView.animateHat(true);
         }
@@ -85,10 +88,6 @@ public class ShopPresenter {
     public void changeGender() {
         boolean isMale = avatar.isMale();
         avatar.setMale(!isMale);
-        String modelString = isMale ? "male" : "female";
-        int modelID = itemInteractor.getModel(modelString);
-
-        shopView.setAvatarImage(modelID);
         reloadAvatar();
     }
 }
