@@ -1,4 +1,4 @@
-package com.example.evanalmonte.stepitup.HelloWorld.model;
+package com.jekz.stepitup.model;
 
 /**
  * Created by evanalmonte on 11/25/17.

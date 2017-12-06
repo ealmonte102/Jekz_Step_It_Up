@@ -1,6 +1,6 @@
-package com.example.evanalmonte.stepitup.HelloWorld.ui.shop;
+package com.jekz.stepitup.ui.shop;
 
-import com.example.evanalmonte.stepitup.HelloWorld.model.Item;
+import com.jekz.stepitup.model.Item;
 
 import java.util.List;
 

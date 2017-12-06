@@ -1,8 +1,8 @@
-package com.example.evanalmonte.stepitup.HelloWorld.ui.shop;
+package com.jekz.stepitup.ui.shop;
 
-import com.example.evanalmonte.stepitup.HelloWorld.model.Avatar;
-import com.example.evanalmonte.stepitup.HelloWorld.model.Item;
-import com.example.evanalmonte.stepitup.HelloWorld.model.ItemInteractor;
+import com.jekz.stepitup.model.Avatar;
+import com.jekz.stepitup.model.Item;
+import com.jekz.stepitup.model.ItemInteractor;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;

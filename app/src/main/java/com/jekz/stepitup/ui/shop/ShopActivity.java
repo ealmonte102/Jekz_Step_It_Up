@@ -1,4 +1,4 @@
-package com.example.evanalmonte.stepitup.HelloWorld.ui.shop;
+package com.jekz.stepitup.ui.shop;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
@@ -12,11 +12,11 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.example.evanalmonte.stepitup.HelloWorld.model.Item;
-import com.example.evanalmonte.stepitup.HelloWorld.model.ItemInteractor;
-import com.example.evanalmonte.stepitup.HelloWorld.model.ItemListAdapter;
-import com.example.evanalmonte.stepitup.R;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
+import com.jekz.stepitup.R;
+import com.jekz.stepitup.model.Item;
+import com.jekz.stepitup.model.ItemInteractor;
+import com.jekz.stepitup.model.ItemListAdapter;
 
 import java.util.List;
 

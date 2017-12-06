@@ -1,4 +1,4 @@
-package com.example.evanalmonte.stepitup.HelloWorld.model;
+package com.jekz.stepitup.model;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.evanalmonte.stepitup.R;
+import com.jekz.stepitup.R;
 
 import java.util.ArrayList;
 import java.util.List;

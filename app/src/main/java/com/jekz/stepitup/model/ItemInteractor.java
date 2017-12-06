@@ -1,9 +1,9 @@
-package com.example.evanalmonte.stepitup.HelloWorld.model;
+package com.jekz.stepitup.model;
 
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 
-import com.example.evanalmonte.stepitup.R;
+import com.jekz.stepitup.R;
 
 import java.util.Collection;
 import java.util.HashMap;

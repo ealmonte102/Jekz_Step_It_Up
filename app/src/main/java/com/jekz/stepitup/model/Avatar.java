@@ -1,4 +1,4 @@
-package com.example.evanalmonte.stepitup.HelloWorld.model;
+package com.jekz.stepitup.model;
 
 import java.util.HashSet;
 import java.util.Set;
