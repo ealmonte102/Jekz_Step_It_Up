@@ -10,52 +10,52 @@
         <item>@drawable/cowboy_0</item>
         <item>"Cowboy Hat"</item>
         <item>false</item>
-        <item>1000</item>
+        <item>300</item>
 
         <item>@drawable/heli_animation</item>
         <item>"Helihat"</item>
         <item>true</item>
-        <item>8000</item>
+        <item>800</item>
 
         <item>@drawable/paperbag_0</item>
         <item>"Paper Bag"</item>
         <item>false</item>
-        <item>1200</item>
+        <item>120</item>
 
         <item>@drawable/santa_0</item>
         <item>"Santa Hat"</item>
         <item>false</item>
-        <item>3000</item>
+        <item>300</item>
 
         <item>@drawable/snorkel_animation</item>
         <item>"Snorkel"</item>
         <item>true</item>
-        <item>10000</item>
+        <item>100</item>
 
         <item>@drawable/jesterhat_0</item>
         <item>"Jester Hat"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>100</item>
 
         <item>@drawable/skullcapred_0</item>
         <item>"Red Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>100</item>
 
         <item>@drawable/skullcapblue_0</item>
         <item>"Blue Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>100</item>
 
         <item>@drawable/skullcapgreen_0</item>
         <item>"Green Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>100</item>
 
         <item>@drawable/skullcapsanta_0</item>
         <item>"Santa Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>100</item>
 
     </array>
 
@@ -94,17 +94,17 @@
         <item>5000</item>
 
         <item>@drawable/stripepjshirtblue_animation</item>
-        <item>"Stripped Blue PJ's</item>
+        <item>"Striped Blue PJ's</item>
         <item>true</item>
         <item>1200</item>
 
         <item>@drawable/stripepjshirtpink_animation</item>
-        <item>"Stripped Pink PJ's</item>
+        <item>"Striped Pink PJ's</item>
         <item>true</item>
         <item>900</item>
 
         <item>@drawable/stripepjshirtyellow_animation</item>
-        <item>"Stripped Yellow PJ's</item>
+        <item>"Striped Yellow PJ's</item>
         <item>true</item>
         <item>900</item>
 
@@ -119,32 +119,32 @@
     <array name="pants">
 
         <item>@drawable/spotpjpantspink_0</item>
-        <item>"Pink Spotted Pajama Pants"</item>
+        <item>"Pink Spotted PJ's"</item>
         <item>false</item>
         <item>300</item>
 
         <item>@drawable/stripepjpantspink_0</item>
-        <item>"Pink Striped Pajama Pants"</item>
+        <item>"Pink Striped PJ's"</item>
         <item>false</item>
         <item>300</item>
 
         <item>@drawable/spotpjpantsblue_0</item>
-        <item>"Blue Spotted Pajama Pants"</item>
+        <item>"Blue Spotted PJ's"</item>
         <item>false</item>
         <item>300</item>
 
         <item>@drawable/stripepjpantsblue_0</item>
-        <item>"Blue Stripedd Pajama Pants"</item>
+        <item>"Blue Stripedd PJ's"</item>
         <item>false</item>
         <item>300</item>
 
         <item>@drawable/spotpjpantsyellow_0</item>
-        <item>"Beige Spotted Pajama Pants"</item>
+        <item>"Beige Spotted PJ's"</item>
         <item>false</item>
         <item>300</item>
 
         <item>@drawable/stripepjpantsyellow_0</item>
-        <item>"Beige Striped Pajama Pants"</item>
+        <item>"Beige Striped PJ's"</item>
         <item>false</item>
         <item>300</item>
 

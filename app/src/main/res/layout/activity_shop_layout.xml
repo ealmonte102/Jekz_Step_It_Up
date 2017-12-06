@@ -24,6 +24,7 @@
             android:id="@+id/image_equipped_hat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@string/category_hats"
             android:paddingTop="50dp"
             android:scaleType="center"
             tools:src="@drawable/cap_0" />
@@ -35,14 +36,15 @@
         android:layout_height="0dp"
         android:background="@drawable/equip_item_background"
         app:layout_constraintBottom_toTopOf="@+id/guideline_upper_equip_bottom"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_currency_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right_equip_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_right_equip_start"
         app:layout_constraintTop_toTopOf="@+id/avatar">
 
         <ImageView
             android:id="@+id/image_equipped_shirt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@string/category_shirts"
             android:paddingBottom="25dp"
             android:scaleType="center"
             tools:src="@drawable/spotpjshirtblue_0" />
@@ -54,14 +56,15 @@
         android:layout_height="0dp"
         android:background="@drawable/equip_item_background"
         app:layout_constraintBottom_toTopOf="@+id/guideline_avatar_bottom"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_currency_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right_equip_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_right_equip_start"
         app:layout_constraintTop_toTopOf="@+id/guideline_lower_equip_top">
 
         <ImageView
             android:id="@+id/image_equipped_shoes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@string/category_shoes"
             android:paddingBottom="100dp"
             android:scaleType="center"
             tools:src="@drawable/boots_0" />
@@ -81,9 +84,10 @@
             android:id="@+id/image_equipped_pants"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@string/category_pants"
             android:paddingBottom="80dp"
             android:scaleType="center"
-            app:srcCompat="@drawable/dresspants_0" />
+            tools:src="@drawable/dresspants_0" />
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -178,6 +182,7 @@
         android:id="@+id/avatar"
         android:layout_width="@dimen/avatar_item_width"
         android:layout_height="0dp"
+        android:contentDescription="@string/avatar"
         android:src="@drawable/body_animation"
         app:layout_constraintBottom_toTopOf="@+id/guideline_avatar_bottom"
         app:layout_constraintEnd_toEndOf="parent"
@@ -188,6 +193,7 @@
         android:id="@+id/avatar_shoes"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/avatar_shoes"
         android:src="@drawable/blank"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
@@ -199,6 +205,7 @@
         android:id="@+id/avatar_pants"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/avatar_pants"
         android:src="@drawable/blank"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
@@ -210,6 +217,7 @@
         android:id="@+id/avatar_shirt"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/avatar_shirt"
         android:src="@drawable/blank"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
@@ -221,6 +229,7 @@
         android:id="@+id/avatar_hat"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/avatar_hat"
         android:src="@drawable/blank"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="@+id/avatar"
@@ -228,42 +237,35 @@
         app:layout_constraintStart_toStartOf="@+id/avatar"
         app:layout_constraintTop_toTopOf="@+id/avatar"
         app:layout_constraintVertical_bias="1.0"
-        tools:src="@drawable/snorkel_1" />
+        tools:src="@drawable/jesterhat_0" />
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/imageView"
-        android:layout_width="28dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_view_currency"
-        app:layout_constraintEnd_toStartOf="@+id/text_view_currency"
-        app:layout_constraintTop_toTopOf="@+id/text_view_currency"
-        app:layout_constraintVertical_bias="0.49"
-        app:srcCompat="@drawable/footprint_icon" />
-
-    <TextView
-        android:id="@+id/text_view_currency"
+        android:id="@+id/image_footprint"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:autoSizeTextType="uniform"
-        android:fontFamily="casual"
-        android:textAlignment="viewEnd"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_currency_bottom"
-        app:layout_constraintEnd_toEndOf="@+id/guideline_currency_end"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline_currency_start"
-        app:layout_constraintTop_toTopOf="@+id/guideline_currency_top"
-        tools:text="x1200" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_title"
+        app:layout_constraintStart_toStartOf="@+id/guideline_right_equip_start"
+        app:layout_constraintTop_toTopOf="@+id/text_title"
+        app:srcCompat="@drawable/footprint_icon" />
 
-    <ImageButton
-        android:id="@+id/button_change_gender"
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/text_currency"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/model_change_background"
-        app:layout_constraintBottom_toTopOf="@+id/avatar_top"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_currency_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/guideline_currency_bottom" />
+        android:fontFamily="casual"
+        android:gravity="center|start"
+        app:autoSizeMinTextSize="3sp"
+        app:autoSizeStepGranularity="3sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="@+id/image_footprint"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right_equip_end"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/image_footprint"
+        app:layout_constraintTop_toTopOf="@+id/image_footprint"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="x12000" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_avatar_bottom"
@@ -298,7 +300,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05109489" />
+        app:layout_constraintGuide_percent="0.052083332" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_left_end"
@@ -315,48 +317,60 @@
         app:layout_constraintGuide_percent="0.13" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline_currency_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.03" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_currency_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.07462686"
-        app:layout_constraintTop_toTopOf="@+id/guideline_currency_top" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_currency_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.86" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_currency_end"
+        android:id="@+id/guideline_right_equip_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.88" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/guideline_right_equip_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.73" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/text_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="casual"
+        android:text="@string/customize"
+        android:textAlignment="center"
+        android:textColor="#000"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/avatar_top"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right_equip_start"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left_end"
+        app:layout_constraintTop_toTopOf="@+id/guideline_title_top" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_title_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.027027028" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.17" />
+
+    <ImageButton
+        android:id="@+id/button_change_gender"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/model_change_background"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="@+id/avatar" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -71,7 +71,6 @@ public class ShopPresenter {
 
     public void buyItem(Item item) {
         if (!avatar.buyItem(item)) { return; }
-        avatar.wearItem(item);
         reloadAvatar();
         shopView.reloadAdapter();
     }
