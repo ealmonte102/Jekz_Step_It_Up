@@ -40,26 +40,52 @@
         <item>@drawable/skullcapred_0</item>
         <item>"Red Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>600</item>
 
         <item>@drawable/skullcapblue_0</item>
         <item>"Blue Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>600</item>
 
         <item>@drawable/skullcapgreen_0</item>
         <item>"Green Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>600</item>
 
         <item>@drawable/skullcapsanta_0</item>
         <item>"Santa Skullcap"</item>
         <item>false</item>
-        <item>10000</item>
+        <item>3000</item>
 
     </array>
 
     <array name="shirts">
+
+        <item>@drawable/beigedress_animation</item>
+        <item>"Beige Dress"</item>
+        <item>true</item>
+        <item>300</item>
+
+        <item>@drawable/greendressflowers</item>
+        <item>"Green Flower Dress"</item>
+        <item>false</item>
+        <item>500</item>
+
+        <item>@drawable/pinkdress</item>
+        <item>"Pink Dress"</item>
+        <item>false</item>
+        <item>900</item>
+
+        <item>@drawable/purpleribbondress</item>
+        <item>"Purple Ribbon Dress"</item>
+        <item>false</item>
+        <item>1200</item>
+
+        <item>@drawable/redribbondress</item>
+        <item>"Red Ribbon Dress"</item>
+        <item>false</item>
+        <item>1000</item>
+
 
         <item>@drawable/spotpjshirtyellow_animation</item>
         <item>"Pink Spotted PJ's"</item>

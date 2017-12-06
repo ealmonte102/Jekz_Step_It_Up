@@ -48,7 +48,7 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @BindView(R.id.avatar)
     ImageView avatarImage;
 
-    @BindView(R.id.text_view_currency)
+    @BindView(R.id.text_currency)
     TextView currencyText;
 
     @BindView(R.id.image_equipped_hat)

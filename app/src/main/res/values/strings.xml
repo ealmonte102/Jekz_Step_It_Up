@@ -10,4 +10,11 @@
     <string name="buy">Buy</string>
     <string name="equip">Equip</string>
     <string name="owned">Owned</string>
+    <string name="avatar">avatar body</string>
+    <string name="avatar_shoes">avatar_shoes</string>
+    <string name="avatar_pants">avatar_pants</string>
+    <string name="avatar_shirt">avatar_shirt</string>
+    <string name="avatar_hat">avatar_hat</string>
+    <string name="change_model">change model</string>
+    <string name="customize">Customize</string>
 </resources>
