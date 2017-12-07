@@ -8,7 +8,7 @@
     android:layout_marginEnd="16dp"
     android:layout_marginStart="16dp"
     android:layout_marginTop="4dp"
-    android:background="@drawable/shape_shop_item_border">
+    android:background="@drawable/shape_equip_item">
 
     <include layout="@layout/item_layout" />
 
@@ -20,7 +20,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/shape_unequip_button"
         android:text="@string/unequip"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

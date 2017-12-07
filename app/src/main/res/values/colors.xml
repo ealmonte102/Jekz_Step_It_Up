@@ -14,5 +14,7 @@
     <color name="shop_buy_button_pressed">#016414</color>
     <color name="equip_item_border">#b5bdbd</color>
     <color name="equip_item_background">#cfd7d7</color>
+    <color name="equipped_item_background">#d1d3d5</color>
+    <color name="unequip_button_background_unpressed">#f1d7d7</color>
 
 </resources>
