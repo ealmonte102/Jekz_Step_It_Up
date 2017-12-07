@@ -7,19 +7,19 @@
 
     <item
         android:drawable="@drawable/stripepjshirtyellow_0"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/stripepjshirtyellow_1"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/stripepjshirtyellow_2"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/stripepjshirtyellow_1"
-        android:duration="400" />
+        android:duration="500" />
 
 
 </animation-list>

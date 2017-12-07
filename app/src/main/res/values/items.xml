@@ -10,7 +10,7 @@
         <item>@drawable/cowboy_0</item>
         <item>"Cowboy Hat"</item>
         <item>false</item>
-        <item>300</item>
+        <item>100</item>
 
         <item>@drawable/heli_animation</item>
         <item>"Helihat"</item>
@@ -113,6 +113,25 @@
         <item>true</item>
         <item>900</item>
 
+        <item>@drawable/dressred_animation</item>
+        <item>"Red Ribbon Dress</item>
+        <item>true</item>
+        <item>900</item>
+
+        <item>@drawable/dressorange_animation</item>
+        <item>"Orange Dress</item>
+        <item>true</item>
+        <item>900</item>
+
+        <item>@drawable/dressgreen_animation</item>
+        <item>"Green Flower Dress</item>
+        <item>true</item>
+        <item>900</item>
+
+        <item>@drawable/dresspurple_animation</item>
+        <item>"Purple Ribbon Dress</item>
+        <item>true</item>
+        <item>900</item>
 
     </array>
 

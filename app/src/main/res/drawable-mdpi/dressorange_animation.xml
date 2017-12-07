@@ -6,19 +6,19 @@
 
 
     <item
-        android:drawable="@drawable/dressshirt_0"
+        android:drawable="@drawable/dressorange_0"
         android:duration="500" />
 
     <item
-        android:drawable="@drawable/dressshirt_1"
+        android:drawable="@drawable/dressorange_1"
         android:duration="500" />
 
     <item
-        android:drawable="@drawable/dressshirt_2"
+        android:drawable="@drawable/dressorange_2"
         android:duration="500" />
 
     <item
-        android:drawable="@drawable/dressshirt_1"
+        android:drawable="@drawable/dressorange_1"
         android:duration="500" />
 
 

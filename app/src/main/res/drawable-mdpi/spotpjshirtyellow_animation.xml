@@ -6,19 +6,19 @@
 
     <item
         android:drawable="@drawable/spotpjshirtyellow_0"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/spotpjshirtyellow_1"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/spotpjshirtyellow_2"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/spotpjshirtyellow_1"
-        android:duration="400" />
+        android:duration="500" />
 
 
 </animation-list>

@@ -7,19 +7,19 @@
 
     <item
         android:drawable="@drawable/body_0"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/body_1"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/body_2"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/body_3"
-        android:duration="400" />
+        android:duration="500" />
 
 
 </animation-list>

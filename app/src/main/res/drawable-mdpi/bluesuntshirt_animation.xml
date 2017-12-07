@@ -7,19 +7,19 @@
 
     <item
         android:drawable="@drawable/bluesuntshirt_0"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/bluesuntshirt_1"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/bluesuntshirt_2"
-        android:duration="400" />
+        android:duration="500" />
 
     <item
         android:drawable="@drawable/bluesuntshirt_1"
-        android:duration="400" />
+        android:duration="500" />
 
 
 </animation-list>
