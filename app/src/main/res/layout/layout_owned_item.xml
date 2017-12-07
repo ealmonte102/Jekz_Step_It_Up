@@ -12,7 +12,7 @@
 
     <include layout="@layout/item_layout" />
 
-    <Button
+    <ToggleButton
         android:id="@+id/equip_button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="56dp"
@@ -21,6 +21,8 @@
         android:background="@drawable/shape_buy_button"
         android:text="@string/equip"
         android:textColor="#fff"
+        android:textOff="@string/equip"
+        android:textOn="@string/unequip"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,11 +35,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="35dp"
         android:text="@string/owned"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/equip_button"
+        app:layout_constraintEnd_toEndOf="@+id/shop_item_name"
         app:layout_constraintStart_toStartOf="@id/shop_item_name"
         app:layout_constraintTop_toBottomOf="@id/shop_item_name" />
 </android.support.constraint.ConstraintLayout>

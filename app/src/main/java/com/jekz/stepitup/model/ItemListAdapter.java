@@ -1,11 +1,11 @@
 package com.jekz.stepitup.model;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +17,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -83,6 +84,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         void equipItem(Item item);
 
         boolean isItemOwned(Item item);
+
+        void unequipItem(Item item);
     }
 
     abstract class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -102,10 +105,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
             int topPadding = 0;
             int leftPadding = 0;
             int bottomPadding = 0;
-            float x = itemView.getLayoutParams().height;
-            float density = itemView.getResources().getDisplayMetrics().density;
-            Log.d("Height", String.valueOf(x));
-            Log.d("Density", String.valueOf(density));
             switch (item.getType()) {
                 case HAT:
                     leftPadding = 10;
@@ -152,10 +151,12 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
             super(itemView);
         }
 
-        @OnClick(R.id.equip_button)
-        void itemClicked() {
+        @OnCheckedChanged(R.id.equip_button)
+        void equipButtonChanged(CompoundButton button, boolean isChecked) {
             Item item = itemList.get(getAdapterPosition());
-            listener.equipItem(item);
+            if (isChecked) {
+            } else {
+            }
         }
 
         @Override

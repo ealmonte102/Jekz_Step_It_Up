@@ -17,4 +17,5 @@
     <string name="avatar_hat">avatar_hat</string>
     <string name="change_model">change model</string>
     <string name="customize">Customize</string>
+    <string name="unequip">Unequip</string>
 </resources>
