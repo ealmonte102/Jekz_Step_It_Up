@@ -10,41 +10,35 @@ import java.text.NumberFormat;
  * Created by evanalmonte on 12/2/17.
  */
 
-public class ShopPresenter {
+public class ShopPresenter implements Presenter {
     private ItemInteractor itemInteractor;
     private ShopView shopView;
     private Avatar avatar;
+    private NumberFormat numberFormat = NumberFormat.getInstance();
 
-    ShopPresenter(ShopView view, ItemInteractor instance) {
-        this.shopView = view;
+    ShopPresenter(ItemInteractor instance) {
         this.itemInteractor = instance;
-        Item blank = instance.getItem(0).first;
-        avatar = new Avatar(blank, blank, blank, blank, 11300);
+        avatar = new Avatar();
+        avatar.addCurrency(13000);
     }
 
-    void reloadAvatar() {
-        shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
-        String modelString = avatar.isMale() ? "male" : "female";
-        int modelID = itemInteractor.getModel(modelString);
+
+    void reloadAnimations() {
         Item hat = avatar.getHat();
         Item shirt = avatar.getShirt();
         Item pants = avatar.getPants();
         Item shoes = avatar.getShoes();
-        shopView.setHatImage(itemInteractor.getItem(hat.getId()).second);
-        shopView.setShirtImage(itemInteractor.getItem(shirt.getId()).second);
-        shopView.setPantsImage(itemInteractor.getItem(pants.getId()).second);
-        shopView.setShoesImage(itemInteractor.getItem(shoes.getId()).second);
-        shopView.setAvatarImage(modelID);
-        if (hat.isAnimated()) {
+
+        if (hat != null && hat.isAnimated()) {
             shopView.animateHat(true);
         }
-        if (shirt.isAnimated()) {
+        if (shirt != null && shirt.isAnimated()) {
             shopView.animateShirt(true);
         }
-        if (pants.isAnimated()) {
+        if (pants != null && pants.isAnimated()) {
             shopView.animatePants(true);
         }
-        if (shoes.isAnimated()) {
+        if (shoes != null && shoes.isAnimated()) {
             shopView.animateShoes(true);
         }
         shopView.animateAvatar(true);
@@ -70,7 +64,7 @@ public class ShopPresenter {
 
     public void buyItem(Item item) {
         if (!avatar.buyItem(item)) { return; }
-        reloadAvatar();
+        shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
         shopView.reloadAdapter();
     }
 
@@ -80,16 +74,70 @@ public class ShopPresenter {
 
     public void equipItem(Item item) {
         avatar.wearItem(item);
-        reloadAvatar();
+        int resourceID = itemInteractor.getItem(item.getId()).second;
+        switch (item.getType()) {
+            case HAT:
+                shopView.setHatImage(resourceID);
+                break;
+            case SHIRT:
+                shopView.setShirtImage(resourceID);
+                break;
+            case PANTS:
+                shopView.setPantsImage(resourceID);
+                break;
+            case SHOES:
+                shopView.setShoesImage(resourceID);
+                break;
+        }
+        if (item.isAnimated()) {
+            reloadAnimations();
+        }
+        shopView.reloadAdapter();
     }
 
     public void changeGender() {
         boolean isMale = avatar.isMale();
         avatar.setMale(!isMale);
-        reloadAvatar();
+        String modelString = avatar.isMale() ? "male" : "female";
+        int modelID = itemInteractor.getModel(modelString);
+        shopView.setAvatarImage(modelID);
+        reloadAnimations();
     }
 
     public int resourceRequested(Item item) {
         return itemInteractor.getItem(item.getId()).second;
+    }
+
+    public void unequipItem(Item item) {
+        avatar.removeItem(item.getType());
+        switch (item.getType()) {
+            case HAT:
+                shopView.setHatImage(0);
+            case SHIRT:
+                shopView.setShirtImage(0);
+                break;
+            case PANTS:
+                shopView.setPantsImage(0);
+                break;
+            case SHOES:
+                shopView.setShoesImage(0);
+                break;
+        }
+        shopView.reloadAdapter();
+    }
+
+    @Override
+    public void onViewAttached(ShopView view) {
+        this.shopView = view;
+        shopView.setCurrencyText("x" + numberFormat.format(avatar.getCurrency()));
+    }
+
+    @Override
+    public void onViewDetached() {
+        this.shopView = null;
+    }
+
+    public boolean isItemEquipped(Item item) {
+        return avatar.isItemEquipped(item);
     }
 }

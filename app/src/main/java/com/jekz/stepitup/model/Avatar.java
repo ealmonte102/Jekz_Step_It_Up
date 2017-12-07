@@ -105,5 +105,17 @@ public class Avatar {
         return true;
     }
 
-
+    public boolean isItemEquipped(Item item) {
+        switch (item.getType()) {
+            case HAT:
+                return item.equals(hat);
+            case SHIRT:
+                return item.equals(shirt);
+            case PANTS:
+                return item.equals(pants);
+            case SHOES:
+                return item.equals(shoes);
+        }
+        return false;
+    }
 }

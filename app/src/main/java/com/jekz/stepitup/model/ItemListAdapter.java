@@ -1,11 +1,12 @@
 package com.jekz.stepitup.model;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +18,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -50,9 +50,11 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
             case NOT_OWNED:
                 itemView = inflater.inflate(R.layout.layout_unowned_item, parent, false);
                 return new UnownedItemViewHolder(itemView);
-            default:
-                return null;
+            case EQUIPPED:
+                itemView = inflater.inflate(R.layout.layout_equipped_item, parent, false);
+                return new EquippedItemViewHolder(itemView);
         }
+        return null;
     }
 
     @Override
@@ -62,6 +64,11 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
     @Override
     public int getItemViewType(int position) {
+        Item item = itemList.get(position);
+        if (listener.isItemEquipped(item)) {
+            Log.d("ItemView", item.toString() + "is equipped");
+            return ItemOwned.EQUIPPED.ordinal();
+        }
         if (listener.isItemOwned(itemList.get(position))) {
             return ItemOwned.OWNED.ordinal();
         }
@@ -75,7 +82,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
 
     public enum ItemOwned {
-        OWNED, NOT_OWNED
+        OWNED, NOT_OWNED, EQUIPPED
     }
 
     public interface ShopItemListener {
@@ -88,6 +95,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         void unequipItem(Item item);
 
         int getResourceForItem(Item item);
+
+        boolean isItemEquipped(Item item);
     }
 
     abstract class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -148,22 +157,45 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         }
     }
 
-    class OwnedItemViewHolder extends ItemViewHolder {
-        OwnedItemViewHolder(View itemView) {
+
+    class EquippedItemViewHolder extends ItemViewHolder {
+        @BindView(R.id.button_unequip_item)
+        Button unequipButton;
+
+
+        EquippedItemViewHolder(View itemView) {
             super(itemView);
         }
 
-        @OnCheckedChanged(R.id.equip_button)
-        void equipButtonChanged(CompoundButton button, boolean isChecked) {
+        @OnClick(R.id.button_unequip_item)
+        public void buyClicked(View view) {
             Item item = itemList.get(getAdapterPosition());
-            if (isChecked) {
-            } else {
-            }
+            listener.unequipItem(item);
         }
 
         @Override
         public void bind(int position) {
             super.bind(position);
+        }
+    }
+
+    class OwnedItemViewHolder extends ItemViewHolder {
+        @BindView(R.id.button_equip_item)
+        Button equipButton;
+
+        OwnedItemViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void bind(int position) {
+            super.bind(position);
+        }
+
+        @OnClick(R.id.button_equip_item)
+        public void equipClicked(View view) {
+            Item item = itemList.get(getAdapterPosition());
+            listener.equipItem(item);
         }
     }
 
@@ -194,4 +226,5 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
         }
     }
+
 }

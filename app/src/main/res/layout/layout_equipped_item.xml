@@ -13,13 +13,13 @@
     <include layout="@layout/item_layout" />
 
     <Button
-        android:id="@+id/button_equip_item"
+        android:id="@+id/button_unequip_item"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="56dp"
         android:layout_height="30dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/shape_buy_button"
-        android:text="@string/equip"
+        android:background="@drawable/shape_unequip_button"
+        android:text="@string/unequip"
         android:textColor="#fff"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"

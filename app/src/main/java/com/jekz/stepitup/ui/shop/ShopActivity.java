@@ -142,6 +142,11 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     }
 
     @Override
+    public boolean isItemEquipped(Item item) {
+        return shopPresenter.isItemEquipped(item);
+    }
+
+    @Override
     public void showItems(List<Item> itemList) {
         itemsListAdapater.replaceData(itemList);
     }
