@@ -78,16 +78,27 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        shopPresenter = new ShopPresenter(this, ItemInteractor.getInstance(getResources()));
+        shopPresenter = new ShopPresenter(ItemInteractor.getInstance(getResources()));
         setContentView(R.layout.activity_shop_layout);
         ButterKnife.bind(this);
         initRecyclerView();
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        shopPresenter.onViewAttached(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        shopPresenter.onViewDetached();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        shopPresenter.reloadAvatar();
         int checked = categoryRadioGroup.getCheckedRadioButtonId();
         categoryRadioGroup.clearCheck();
         categoryRadioGroup.check(checked);
@@ -122,7 +133,7 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
 
     @Override
     public void unequipItem(Item item) {
-
+        shopPresenter.unequipItem(item);
     }
 
     @Override
