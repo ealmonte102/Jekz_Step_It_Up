@@ -62,6 +62,23 @@ public class Avatar {
         currency -= x;
     }
 
+    public void removeItem(Item.Item_Type item_type) {
+        switch (item_type) {
+            case HAT:
+                hat = null;
+                break;
+            case SHIRT:
+                shirt = null;
+                break;
+            case PANTS:
+                pants = null;
+                break;
+            case SHOES:
+                shoes = null;
+                break;
+        }
+    }
+
     public boolean buyItem(Item item) {
         if (item.getPrice() > currency) {
             return false;
