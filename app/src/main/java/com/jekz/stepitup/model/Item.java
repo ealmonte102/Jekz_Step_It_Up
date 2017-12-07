@@ -1,17 +1,24 @@
 package com.jekz.stepitup.model;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Created by evanalmonte on 11/25/17.
  */
 
 public class Item {
+    private final static AtomicInteger nextID = new AtomicInteger(1);
     private int id;
     private String name;
     private Item_Type type;
     private int price;
     private boolean animated;
 
-    public Item(int id, String name, Item_Type type, boolean animated, int price) {
+    Item(String name, Item_Type type, boolean animated, int price) {
+        this(nextID.getAndIncrement(), name, type, animated, price);
+    }
+
+    Item(int id, String name, Item_Type type, boolean animated, int price) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -63,13 +70,13 @@ public class Item {
                (o.price == price) &&
                (o.isAnimated() == isAnimated());
     }
-    
+
     @Override
     public String toString() {
         if (name == null) {
             return "NULL ?";
         } else {
-            return name + ":" + price;
+            return name + ":" + id + ":" + price;
         }
     }
 

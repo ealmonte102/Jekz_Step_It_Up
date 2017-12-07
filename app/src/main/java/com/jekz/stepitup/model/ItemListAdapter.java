@@ -86,6 +86,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         boolean isItemOwned(Item item);
 
         void unequipItem(Item item);
+
+        int getResourceForItem(Item item);
     }
 
     abstract class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -141,7 +143,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
                     itemView.getResources().getDisplayMetrics());
 
             itemImage.setPadding(leftPadding, topPadding, 0, bottomPadding);
-            itemImage.setImageResource(item.getId());
+            itemImage.setImageResource(listener.getResourceForItem(item));
             itemName.setText(item.getName());
         }
     }

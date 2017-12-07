@@ -5,7 +5,6 @@ import com.jekz.stepitup.model.Item;
 import com.jekz.stepitup.model.ItemInteractor;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 
 /**
  * Created by evanalmonte on 12/2/17.
@@ -19,8 +18,8 @@ public class ShopPresenter {
     ShopPresenter(ShopView view, ItemInteractor instance) {
         this.shopView = view;
         this.itemInteractor = instance;
-        Item blankItem = itemInteractor.getInitialItem();
-        avatar = new Avatar(blankItem, blankItem, blankItem, blankItem, 11300);
+        Item blank = instance.getItem(0).first;
+        avatar = new Avatar(blank, blank, blank, blank, 11300);
     }
 
     void reloadAvatar() {
@@ -31,10 +30,10 @@ public class ShopPresenter {
         Item shirt = avatar.getShirt();
         Item pants = avatar.getPants();
         Item shoes = avatar.getShoes();
-        shopView.setHatImage(hat.getId());
-        shopView.setShirtImage(shirt.getId());
-        shopView.setPantsImage(pants.getId());
-        shopView.setShoesImage(shoes.getId());
+        shopView.setHatImage(itemInteractor.getItem(hat.getId()).second);
+        shopView.setShirtImage(itemInteractor.getItem(shirt.getId()).second);
+        shopView.setPantsImage(itemInteractor.getItem(pants.getId()).second);
+        shopView.setShoesImage(itemInteractor.getItem(shoes.getId()).second);
         shopView.setAvatarImage(modelID);
         if (hat.isAnimated()) {
             shopView.animateHat(true);
@@ -53,20 +52,20 @@ public class ShopPresenter {
     }
 
     public void loadHats() {
-        shopView.showItems(new ArrayList<>(itemInteractor.getItems(Item.Item_Type.HAT)));
+        shopView.showItems(itemInteractor.getItems(Item.Item_Type.HAT));
     }
 
     public void loadShirts() {
-        shopView.showItems(new ArrayList<>(itemInteractor.getItems(Item.Item_Type.SHIRT)));
+        shopView.showItems(itemInteractor.getItems(Item.Item_Type.SHIRT));
     }
 
     public void loadPants() {
-        shopView.showItems(new ArrayList<>(itemInteractor.getItems(Item.Item_Type.PANTS)));
+        shopView.showItems(itemInteractor.getItems(Item.Item_Type.PANTS));
 
     }
 
     public void loadShoes() {
-        shopView.showItems(new ArrayList<>(itemInteractor.getItems(Item.Item_Type.SHOES)));
+        shopView.showItems(itemInteractor.getItems(Item.Item_Type.SHOES));
     }
 
     public void buyItem(Item item) {
@@ -88,5 +87,9 @@ public class ShopPresenter {
         boolean isMale = avatar.isMale();
         avatar.setMale(!isMale);
         reloadAvatar();
+    }
+
+    public int resourceRequested(Item item) {
+        return itemInteractor.getItem(item.getId()).second;
     }
 }

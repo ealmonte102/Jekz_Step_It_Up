@@ -121,6 +121,16 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     }
 
     @Override
+    public void unequipItem(Item item) {
+
+    }
+
+    @Override
+    public int getResourceForItem(Item item) {
+        return shopPresenter.resourceRequested(item);
+    }
+
+    @Override
     public void showItems(List<Item> itemList) {
         itemsListAdapater.replaceData(itemList);
     }

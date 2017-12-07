@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="attributes">4</integer>
+    <integer name="num_item_attributes">4</integer>
     <array name="hats">
         <item>@drawable/cap_0</item>
         <item>"Blue Cap"</item>
@@ -268,6 +268,7 @@
     </array>
 
     <array name="misc">
+        <item>0</item>
         <item>@drawable/blank</item>
         <item>"Blank Item"</item>
         <item>false</item>
