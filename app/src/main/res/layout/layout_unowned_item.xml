@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="69.5dp"
     android:layout_marginBottom="4dp"
-    android:layout_marginEnd="32dp"
-    android:layout_marginStart="32dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
     android:layout_marginTop="4dp"
     android:background="@drawable/shape_shop_item_border">
 

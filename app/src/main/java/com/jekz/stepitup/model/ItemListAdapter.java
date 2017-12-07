@@ -1,6 +1,8 @@
 package com.jekz.stepitup.model;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,36 +99,49 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
         public void bind(int position) {
             Item item = itemList.get(position);
-            float yPosition = 0;
-            float xPosition = 0;
+            int topPadding = 0;
+            int leftPadding = 0;
+            int bottomPadding = 0;
+            float x = itemView.getLayoutParams().height;
+            float density = itemView.getResources().getDisplayMetrics().density;
+            Log.d("Height", String.valueOf(x));
+            Log.d("Density", String.valueOf(density));
             switch (item.getType()) {
                 case HAT:
-                    yPosition = -12;
+                    leftPadding = 10;
+                    topPadding = 40;
                     if (item.getName().equals("Paper Bag") || item.getName().equals("Snorkel")) {
-                        yPosition = -23;
+                        topPadding -= 5;
                     }
                     if (item.getName().equals("Jester Hat")) {
-                        yPosition = 0;
-                        xPosition = 5;
+                        topPadding += 15;
                     }
                     if (item.getName().equals("Helihat") || item.getName().equals("Blue Cap") ||
                         item.getName().equals("Cowboy Hat")) {
-                        yPosition = -8;
-                        xPosition = 3;
+                        topPadding += 5;
                     }
                     break;
                 case SHIRT:
-                    yPosition = -70;
+                    bottomPadding = 10;
                     break;
                 case SHOES:
-                    yPosition = -120;
+                    bottomPadding = 95;
                     break;
                 case PANTS:
-                    yPosition = -100;
+                    bottomPadding = 60;
                     break;
             }
-            itemImage.setY(yPosition);
-            itemImage.setX(xPosition);
+            bottomPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                    bottomPadding,
+                    itemView.getResources().getDisplayMetrics());
+            topPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                    topPadding,
+                    itemView.getResources().getDisplayMetrics());
+            leftPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                    leftPadding,
+                    itemView.getResources().getDisplayMetrics());
+
+            itemImage.setPadding(leftPadding, topPadding, 0, bottomPadding);
             itemImage.setImageResource(item.getId());
             itemName.setText(item.getName());
         }
