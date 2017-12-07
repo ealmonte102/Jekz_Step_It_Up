@@ -3,7 +3,6 @@ package com.jekz.stepitup.model;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.util.Log;
 import android.util.Pair;
 
 import com.jekz.stepitup.R;
@@ -76,7 +75,6 @@ public class ItemInteractor {
                     typedArray.getBoolean(i + 2, false),
                     typedArray.getInteger(i + 3, -1));
             itemList.put(item.getId(), new Pair<>(item, typedArray.getResourceId(i, 0)));
-            Log.d("Item", item.toString());
         }
         typedArray.recycle();
     }
