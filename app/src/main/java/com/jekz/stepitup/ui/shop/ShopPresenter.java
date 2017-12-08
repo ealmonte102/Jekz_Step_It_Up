@@ -1,8 +1,8 @@
 package com.jekz.stepitup.ui.shop;
 
-import com.jekz.stepitup.model.Avatar;
-import com.jekz.stepitup.model.Item;
-import com.jekz.stepitup.model.ItemInteractor;
+import com.jekz.stepitup.model.avatar.Avatar;
+import com.jekz.stepitup.model.item.Item;
+import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.AndroidStepCounter;
 import com.jekz.stepitup.model.step.StepCounter;
 

@@ -1,4 +1,4 @@
-package com.jekz.stepitup.model;
+package com.jekz.stepitup.model.item;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

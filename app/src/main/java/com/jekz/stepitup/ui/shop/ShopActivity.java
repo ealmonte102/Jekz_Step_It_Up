@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.jekz.stepitup.R;
-import com.jekz.stepitup.model.Item;
-import com.jekz.stepitup.model.ItemInteractor;
-import com.jekz.stepitup.model.ItemListAdapter;
+import com.jekz.stepitup.model.item.Item;
+import com.jekz.stepitup.model.item.ItemInteractor;
+import com.jekz.stepitup.model.item.ItemListAdapter;
 import com.jekz.stepitup.model.step.AndroidStepCounter;
 
 import java.util.List;

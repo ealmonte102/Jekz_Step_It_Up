@@ -1,6 +1,6 @@
 package com.jekz.stepitup.ui.shop;
 
-import com.jekz.stepitup.model.Item;
+import com.jekz.stepitup.model.item.Item;
 
 import java.util.List;
 

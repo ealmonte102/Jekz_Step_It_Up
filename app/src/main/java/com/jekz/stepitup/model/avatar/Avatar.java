@@ -1,4 +1,6 @@
-package com.jekz.stepitup.model;
+package com.jekz.stepitup.model.avatar;
+
+import com.jekz.stepitup.model.item.Item;
 
 import java.util.HashSet;
 import java.util.Set;

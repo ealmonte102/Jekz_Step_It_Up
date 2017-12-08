@@ -1,4 +1,4 @@
-package com.jekz.stepitup.model;
+package com.jekz.stepitup.model.item;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
