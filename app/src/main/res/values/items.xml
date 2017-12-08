@@ -265,6 +265,12 @@
         <item>"Bunny Slippers"</item>
         <item>false</item>
         <item>300</item>
+
+        <item>@drawable/highheels</item>
+        <item>"High Heels"</item>
+        <item>false"</item>
+        <item>400</item>
+
     </array>
 
     <array name="misc">
