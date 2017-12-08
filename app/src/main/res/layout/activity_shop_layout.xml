@@ -243,8 +243,8 @@
         android:id="@+id/image_footprint"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_title"
         app:layout_constraintStart_toStartOf="@+id/guideline_right_equip_start"
         app:layout_constraintTop_toTopOf="@+id/text_title"
@@ -252,20 +252,23 @@
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/text_currency"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="casual"
         android:gravity="center|start"
-        app:autoSizeMinTextSize="3sp"
-        app:autoSizeStepGranularity="3sp"
+        android:textAlignment="viewStart"
+        android:typeface="normal"
+        app:autoSizeMaxTextSize="19sp"
+        app:autoSizeMinTextSize="14sp"
+        app:autoSizeStepGranularity="2sp"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="@+id/image_footprint"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right_equip_end"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/image_footprint"
         app:layout_constraintTop_toTopOf="@+id/image_footprint"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="x12000" />
+        app:textAllCaps="true"
+        tools:text="x12312312" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_avatar_bottom"
