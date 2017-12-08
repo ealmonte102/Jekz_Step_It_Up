@@ -108,7 +108,6 @@
         android:id="@+id/categories"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:checkedButton="@+id/hat"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/recycler_view_shop"
         app:layout_constraintEnd_toEndOf="@id/recycler_view_shop"

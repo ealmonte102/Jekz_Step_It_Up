@@ -106,9 +106,7 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
         super.onResume();
         shopPresenter.reloadAnimations();
         shopPresenter.registerStepCounter(true);
-        int checked = categoryRadioGroup.getCheckedRadioButtonId();
-        categoryRadioGroup.clearCheck();
-        categoryRadioGroup.check(checked);
+        categoryRadioGroup.check(R.id.hat);
     }
 
     @Override
