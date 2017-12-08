@@ -67,7 +67,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         if (listener.isItemEquipped(item)) {
             return ItemOwned.EQUIPPED.ordinal();
         }
-        if (listener.isItemOwned(itemList.get(position))) {
+        if (listener.isItemOwned(item)) {
             return ItemOwned.OWNED.ordinal();
         }
         return ItemOwned.NOT_OWNED.ordinal();
