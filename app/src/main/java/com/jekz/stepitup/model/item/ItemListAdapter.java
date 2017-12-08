@@ -1,7 +1,6 @@
 package com.jekz.stepitup.model.item;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +65,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     public int getItemViewType(int position) {
         Item item = itemList.get(position);
         if (listener.isItemEquipped(item)) {
-            Log.d("ItemView", item.toString() + "is equipped");
             return ItemOwned.EQUIPPED.ordinal();
         }
         if (listener.isItemOwned(itemList.get(position))) {
@@ -124,21 +122,24 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
                         topPadding -= 5;
                     }
                     if (item.getName().equals("Jester Hat")) {
-                        topPadding += 15;
+                        topPadding += 20;
                     }
                     if (item.getName().equals("Helihat") || item.getName().equals("Blue Cap") ||
                         item.getName().equals("Cowboy Hat")) {
-                        topPadding += 5;
+                        topPadding += 10;
                     }
                     break;
                 case SHIRT:
-                    bottomPadding = 10;
+                    bottomPadding = 20;
+                    if (item.getName().endsWith("Dress")) {
+                        bottomPadding += 20;
+                    }
                     break;
                 case SHOES:
                     bottomPadding = 95;
                     break;
                 case PANTS:
-                    bottomPadding = 60;
+                    bottomPadding = 70;
                     break;
             }
             bottomPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,

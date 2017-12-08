@@ -6,13 +6,18 @@ import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.AndroidStepCounter;
 import com.jekz.stepitup.model.step.StepCounter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.NumberFormat;
 
 /**
  * Created by evanalmonte on 12/2/17.
  */
 
-public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback {
+public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback,
+        com.jekz.stepitup.graphtest.AsyncResponse {
     private ItemInteractor itemInteractor;
     private ShopView shopView;
     private Avatar avatar;
@@ -69,6 +74,34 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
     public void buyItem(Item item) {
         if (!avatar.buyItem(item)) { return; }
+        ShopRequest asyncTask = new ShopRequest(null);
+        ShopRequest asyncTask2 = new ShopRequest(null);
+
+        asyncTask.delegate = this;
+        asyncTask2.delegate = this;
+
+        JSONObject postData = new JSONObject();
+
+        try {
+            postData.put("data_type", "items");
+            postData.put("userid", 1);
+            postData.put("itemid", 1);
+            postData.put("amount", 1);
+
+        } catch (JSONException e) {e.printStackTrace();}
+
+        asyncTask.postData = postData;
+        asyncTask.execute("https://jekz.herokuapp.com/api/db/update");
+
+        postData = new JSONObject();
+        try {
+            postData.put("data_type", "items");
+            postData.put("userid", 1);
+
+        } catch (JSONException e) {e.printStackTrace();}
+
+        asyncTask2.postData = postData;
+        asyncTask2.execute("https://jekz.herokuapp.com/api/db/retrieve");
         shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
         shopView.reloadAdapter();
     }
@@ -158,5 +191,21 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     public void onStepDetected() {
         avatar.addCurrency(1);
         shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
+    }
+
+    @Override
+    public void processFinish(JSONArray output) {
+        //Here you will receive the result fired from async class
+        //of onPostExecute(result) method.
+
+        //Log.d("myTest", "made it to processFinish in main thread");
+        try {
+            //Log.d("myTest", "Test Test")
+            for (int i = 0; i < output.length(); i++) {
+                JSONObject r = output.getJSONObject(i);
+                //Log.d("myTest", "rowCount value: " + r.getInt("rowCount"));
+            }
+        } catch (JSONException e) {e.printStackTrace();}
+
     }
 }
