@@ -2,6 +2,7 @@ package com.jekz.stepitup.ui.shop;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.jekz.stepitup.R;
 import com.jekz.stepitup.model.Item;
 import com.jekz.stepitup.model.ItemInteractor;
 import com.jekz.stepitup.model.ItemListAdapter;
+import com.jekz.stepitup.model.step.AndroidStepCounter;
 
 import java.util.List;
 
@@ -78,7 +80,10 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        shopPresenter = new ShopPresenter(ItemInteractor.getInstance(getResources()));
+        SensorManager manager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        shopPresenter = new ShopPresenter(
+                new AndroidStepCounter(manager),
+                ItemInteractor.getInstance(getResources()));
         setContentView(R.layout.activity_shop_layout);
         ButterKnife.bind(this);
         initRecyclerView();
@@ -100,11 +105,17 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     protected void onResume() {
         super.onResume();
         shopPresenter.reloadAnimations();
+        shopPresenter.registerStepCounter(true);
         int checked = categoryRadioGroup.getCheckedRadioButtonId();
         categoryRadioGroup.clearCheck();
         categoryRadioGroup.check(checked);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        shopPresenter.registerStepCounter(false);
+    }
 
     @Override
     public void setCurrencyText(String text) {

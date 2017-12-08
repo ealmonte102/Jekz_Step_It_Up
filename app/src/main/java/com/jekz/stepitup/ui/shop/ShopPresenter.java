@@ -3,6 +3,8 @@ package com.jekz.stepitup.ui.shop;
 import com.jekz.stepitup.model.Avatar;
 import com.jekz.stepitup.model.Item;
 import com.jekz.stepitup.model.ItemInteractor;
+import com.jekz.stepitup.model.step.AndroidStepCounter;
+import com.jekz.stepitup.model.step.StepCounter;
 
 import java.text.NumberFormat;
 
@@ -10,14 +12,17 @@ import java.text.NumberFormat;
  * Created by evanalmonte on 12/2/17.
  */
 
-public class ShopPresenter implements Presenter {
+public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback {
     private ItemInteractor itemInteractor;
     private ShopView shopView;
     private Avatar avatar;
     private NumberFormat numberFormat = NumberFormat.getInstance();
+    private AndroidStepCounter androidStepCounter;
 
-    ShopPresenter(ItemInteractor instance) {
+    ShopPresenter(AndroidStepCounter androidStepCounter, ItemInteractor instance) {
         this.itemInteractor = instance;
+        this.androidStepCounter = androidStepCounter;
+        this.androidStepCounter.addListener(this);
         avatar = new Avatar();
         avatar.addCurrency(13000);
     }
@@ -139,5 +144,19 @@ public class ShopPresenter implements Presenter {
 
     public boolean isItemEquipped(Item item) {
         return avatar.isItemEquipped(item);
+    }
+
+    public void registerStepCounter(boolean b) {
+        if (b) {
+            androidStepCounter.registerSensor();
+        } else {
+            androidStepCounter.unregisterSensor();
+        }
+    }
+
+    @Override
+    public void onStepDetected() {
+        avatar.addCurrency(1);
+        shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
     }
 }
