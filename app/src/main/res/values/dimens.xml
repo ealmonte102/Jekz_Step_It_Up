@@ -4,4 +4,5 @@
     <dimen name="thick_border">2dp</dimen>
     <dimen name="avatar_item_width">107dp</dimen>
     <dimen name="avatar_item_height">170dp</dimen>
+    <dimen name="item_text_size">16dp</dimen>
 </resources>
