@@ -73,13 +73,18 @@ public class Avatar {
         }
     }
 
-    public boolean buyItem(Item item) {
+    public boolean canAfford(Item item) {
         if (item.getPrice() > currency) {
             return false;
         }
-        removeCurrency(item.getPrice());
-        addItem(item);
         return true;
+    }
+
+    public void buyItem(Item item) {
+        if (item.getPrice() <= currency) {
+            removeCurrency(item.getPrice());
+            addItem(item);
+        }
     }
 
     public void addItem(Item item) {

@@ -82,13 +82,8 @@ public class DBRequest extends AsyncTask<String, Void, JSONArray> {
             try {
                 resultArray = new JSONArray(jsonStr);
             } catch (JSONException e) { resultArray = new JSONArray("[" + jsonStr + "]");}
-            ;
-
-            //Log.d("myTest", "after JSONArray");
 
             int statusCode = urlConnection.getResponseCode();
-
-            //Log.d("myTest", "end of doInBackground");
 
             return resultArray;
 

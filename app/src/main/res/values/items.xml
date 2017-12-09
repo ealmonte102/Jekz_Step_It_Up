@@ -309,6 +309,12 @@
         <item>shoes</item>
         <item>false"</item>
         <item>400</item>
+
+        <item>@drawable/hat_catears0</item>
+        <item>"Cat Ears"</item>
+        <item>hat</item>
+        <item>false"</item>
+        <item>400</item>
     </array>
     <array name="misc">
         <item>0</item>

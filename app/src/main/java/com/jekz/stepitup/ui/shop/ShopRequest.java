@@ -84,15 +84,12 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
             try {
                 resultArray = new JSONArray(jsonStr);
             } catch (JSONException e) { resultArray = new JSONArray("[" + jsonStr + "]");}
-            ;
-
-            //Log.d("myTest", "after JSONArray");
 
             int statusCode = urlConnection.getResponseCode();
 
-            //Log.d("myTest", "end of doInBackground");
 
             return resultArray;
+
 
         } catch (Exception e) {
             Log.d(TAG, e.getLocalizedMessage());
@@ -102,6 +99,7 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
 
     @Override
     protected void onPostExecute(JSONArray result) {
+
         delegate.processFinish(result);
     }
 }

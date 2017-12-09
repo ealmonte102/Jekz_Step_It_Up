@@ -1,5 +1,7 @@
 package com.jekz.stepitup.ui.shop;
 
+import android.util.Log;
+
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
@@ -24,11 +26,15 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     private NumberFormat numberFormat = NumberFormat.getInstance();
     private AndroidStepCounter androidStepCounter;
 
+    private int currentItemCount = 0;
+    private boolean successfulUpdate = false;
+
     ShopPresenter(AndroidStepCounter androidStepCounter, ItemInteractor instance) {
         this.itemInteractor = instance;
         this.androidStepCounter = androidStepCounter;
         this.androidStepCounter.addListener(this);
         avatar = new Avatar();
+        retrieveItem(1);
         avatar.addCurrency(13000);
     }
 
@@ -73,37 +79,14 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     }
 
     public void buyItem(Item item) {
-        if (!avatar.buyItem(item)) { return; }
-        ShopRequest asyncTask = new ShopRequest(null);
-        ShopRequest asyncTask2 = new ShopRequest(null);
+        if (avatar.canAfford(item)) {
+            //DOES NOT RESOLVE POSSIBLE SYNC ISSUES YET
+            UpdateItem(1, item.getId());
+            avatar.buyItem(item);
+            shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
+            shopView.reloadAdapter();
+        }
 
-        asyncTask.delegate = this;
-        asyncTask2.delegate = this;
-
-        JSONObject postData = new JSONObject();
-
-        try {
-            postData.put("data_type", "items");
-            postData.put("userid", 1);
-            postData.put("itemid", 1);
-            postData.put("amount", 1);
-
-        } catch (JSONException e) {e.printStackTrace();}
-
-        asyncTask.postData = postData;
-        asyncTask.execute("https://jekz.herokuapp.com/api/db/update");
-
-        postData = new JSONObject();
-        try {
-            postData.put("data_type", "items");
-            postData.put("userid", 1);
-
-        } catch (JSONException e) {e.printStackTrace();}
-
-        asyncTask2.postData = postData;
-        asyncTask2.execute("https://jekz.herokuapp.com/api/db/retrieve");
-        shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
-        shopView.reloadAdapter();
     }
 
     public boolean checkForItem(Item item) {
@@ -203,9 +186,56 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
             //Log.d("myTest", "Test Test")
             for (int i = 0; i < output.length(); i++) {
                 JSONObject r = output.getJSONObject(i);
-                //Log.d("myTest", "rowCount value: " + r.getInt("rowCount"));
+
+                Log.d("myTest", "User ID: " + r.getInt("userid"));
+                Log.d("myTest", "Item ID: " + r.getInt("itemid"));
+                Log.d("myTest", "Amount: " + r.getInt("count"));
+
+                int itemcount = r.getInt("count");
+                if (itemcount > 0) {
+                    int itemid = r.getInt("itemid");
+                    Item b = itemInteractor.getItem(itemid).first;
+
+                    avatar.addItem(b);
+                }
+
             }
         } catch (JSONException e) {e.printStackTrace();}
 
+    }
+
+    public void UpdateItem(int userid, int itemid) {
+
+        ShopRequest asyncTask = new ShopRequest(null);
+
+        asyncTask.delegate = this;
+
+        JSONObject postData = new JSONObject();
+
+        try {
+            postData.put("data_type", "items");
+            postData.put("userid", 1);
+            postData.put("itemid", itemid);
+            postData.put("amount", 1);
+
+        } catch (JSONException e) {e.printStackTrace();}
+
+        asyncTask.postData = postData;
+        asyncTask.execute("https://jekz.herokuapp.com/api/db/update");
+    }
+
+    public void retrieveItem(int userid) {
+        ShopRequest asyncTask2 = new ShopRequest(null);
+        asyncTask2.delegate = this;
+
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("data_type", "items");
+            postData.put("userid", userid);
+
+        } catch (JSONException e) {e.printStackTrace();}
+
+        asyncTask2.postData = postData;
+        asyncTask2.execute("https://jekz.herokuapp.com/api/db/retrieve");
     }
 }
