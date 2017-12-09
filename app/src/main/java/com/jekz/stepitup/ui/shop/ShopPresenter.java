@@ -26,8 +26,6 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     private NumberFormat numberFormat = NumberFormat.getInstance();
     private AndroidStepCounter androidStepCounter;
 
-    private int currentItemCount = 0;
-    private boolean successfulUpdate = false;
 
     ShopPresenter(AndroidStepCounter androidStepCounter, ItemInteractor instance) {
         this.itemInteractor = instance;
@@ -61,27 +59,27 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
     }
 
-    public void loadHats() {
+    void loadHats() {
         shopView.showItems(itemInteractor.getItems(Item.Item_Type.HAT));
     }
 
-    public void loadShirts() {
+    void loadShirts() {
         shopView.showItems(itemInteractor.getItems(Item.Item_Type.SHIRT));
     }
 
-    public void loadPants() {
+    void loadPants() {
         shopView.showItems(itemInteractor.getItems(Item.Item_Type.PANTS));
 
     }
 
-    public void loadShoes() {
+    void loadShoes() {
         shopView.showItems(itemInteractor.getItems(Item.Item_Type.SHOES));
     }
 
-    public void buyItem(Item item) {
+    void buyItem(Item item) {
         if (avatar.canAfford(item)) {
             //DOES NOT RESOLVE POSSIBLE SYNC ISSUES YET
-            UpdateItem(1, item.getId());
+            updateItem(1, item.getId());
             avatar.buyItem(item);
             shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
             shopView.reloadAdapter();
@@ -89,11 +87,11 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
     }
 
-    public boolean checkForItem(Item item) {
+    boolean checkForItem(Item item) {
         return avatar.hasItem(item);
     }
 
-    public void equipItem(Item item) {
+    void equipItem(Item item) {
         avatar.wearItem(item);
         int resourceID = itemInteractor.getItem(item.getId()).second;
         switch (item.getType()) {
@@ -116,7 +114,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         shopView.reloadAdapter();
     }
 
-    public void changeGender() {
+    void changeGender() {
         boolean isMale = avatar.isMale();
         avatar.setMale(!isMale);
         String modelString = avatar.isMale() ? "male" : "female";
@@ -125,11 +123,11 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         reloadAnimations();
     }
 
-    public int resourceRequested(Item item) {
+    int resourceRequested(Item item) {
         return itemInteractor.getItem(item.getId()).second;
     }
 
-    public void unequipItem(Item item) {
+    void unequipItem(Item item) {
         avatar.removeItem(item.getType());
         switch (item.getType()) {
             case HAT:
@@ -158,11 +156,11 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         this.shopView = null;
     }
 
-    public boolean isItemEquipped(Item item) {
+    boolean isItemEquipped(Item item) {
         return avatar.isItemEquipped(item);
     }
 
-    public void registerStepCounter(boolean b) {
+    void registerStepCounter(boolean b) {
         if (b) {
             androidStepCounter.registerSensor();
         } else {
@@ -204,7 +202,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
     }
 
-    public void UpdateItem(int userid, int itemid) {
+    void updateItem(int userid, int itemid) {
 
         ShopRequest asyncTask = new ShopRequest(null);
 
@@ -224,7 +222,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         asyncTask.execute("https://jekz.herokuapp.com/api/db/update");
     }
 
-    public void retrieveItem(int userid) {
+    void retrieveItem(int userid) {
         ShopRequest asyncTask2 = new ShopRequest(null);
         asyncTask2.delegate = this;
 
@@ -237,5 +235,28 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
         asyncTask2.postData = postData;
         asyncTask2.execute("https://jekz.herokuapp.com/api/db/retrieve");
+    }
+
+    void reloadImages() {
+        Item hat = avatar.getHat();
+        Item shirt = avatar.getShirt();
+        Item pants = avatar.getPants();
+        Item shoes = avatar.getShoes();
+
+        if (hat != null) {
+            shopView.setHatImage(itemInteractor.getItem(hat.getId()).second);
+        }
+
+        if (shirt != null) {
+            shopView.setShirtImage(itemInteractor.getItem(shirt.getId()).second);
+        }
+
+        if (pants != null) {
+            shopView.setPantsImage(itemInteractor.getItem(pants.getId()).second);
+        }
+
+        if (shoes != null) {
+            shopView.setShoesImage(itemInteractor.getItem(shoes.getId()).second);
+        }
     }
 }

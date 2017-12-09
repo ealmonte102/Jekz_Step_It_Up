@@ -105,6 +105,7 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     protected void onResume() {
         super.onResume();
         shopPresenter.reloadAnimations();
+        shopPresenter.reloadImages();
         shopPresenter.registerStepCounter(true);
         categoryRadioGroup.check(R.id.hat);
     }
