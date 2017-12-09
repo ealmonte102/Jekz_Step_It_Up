@@ -30,9 +30,9 @@
         android:fontFamily="casual"
         android:textColor="@android:color/background_dark"
         android:textSize="@dimen/item_text_size"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_mid_vertical"
         app:layout_constraintHorizontal_bias="0.339"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline_mid_vertical"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Santa Hat" />
 
@@ -44,7 +44,7 @@
         app:layout_constraintGuide_begin="69dp" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline4"
+        android:id="@+id/guideline_mid_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -77,7 +77,7 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="56dp"
             android:layout_height="30dp"
-            android:background="@drawable/shape_buy_button"
+            android:background="@drawashape_button_buytton"
             android:text="Buy"
             android:textColor="#fff"
             android:textSize="12sp"

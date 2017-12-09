@@ -8,7 +8,7 @@
     android:layout_marginEnd="16dp"
     android:layout_marginStart="16dp"
     android:layout_marginTop="4dp"
-    android:background="@drawable/shape_equip_item">
+    android:background="@drawable/shape_background_equip_item">
 
     <include layout="@layout/item_layout" />
 
@@ -18,7 +18,7 @@
         android:layout_width="56dp"
         android:layout_height="30dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/shape_unequip_button"
+        android:background="@drawable/shape_button_unequip"
         android:text="@string/unequip"
         android:textColor="#000"
         android:textSize="12sp"

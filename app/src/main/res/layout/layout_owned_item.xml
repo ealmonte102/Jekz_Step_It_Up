@@ -18,7 +18,7 @@
         android:layout_width="56dp"
         android:layout_height="30dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/shape_buy_button"
+        android:background="@drawable/shape_button_equip"
         android:text="@string/equip"
         android:textColor="#fff"
         android:textSize="12sp"
