@@ -26,6 +26,7 @@ class LoginModel implements LoginMVP.Model {
         }
         if (TEST_USERS.get(username.toLowerCase()).equals(password)) {
             callback.loginResult(true);
+            return;
         }
         callback.loginResult(false);
     }
