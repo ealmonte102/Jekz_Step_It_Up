@@ -307,19 +307,31 @@
         <item>@drawable/highheels_0</item>
         <item>"High Heels"</item>
         <item>shoes</item>
-        <item>false"</item>
+        <item>false</item>
         <item>400</item>
 
         <item>@drawable/catears_0</item>
         <item>"Cat Ears"</item>
         <item>hat</item>
-        <item>false"</item>
+        <item>false</item>
         <item>400</item>
 
         <item>@drawable/bunnyears_0</item>
         <item>"Bunny Ears"</item>
         <item>hat</item>
-        <item>false"</item>
+        <item>false</item>
+        <item>400</item>
+
+        <item>@drawable/shoes_red_racing</item>
+        <item>"Red Racing Shoes"</item>
+        <item>shoes</item>
+        <item>false</item>
+        <item>400</item>
+
+        <item>@drawable/blue_racing_shoes</item>
+        <item>"Blue Racing Shoes"</item>
+        <item>shoes</item>
+        <item>false</item>
         <item>400</item>
     </array>
     <array name="misc">
