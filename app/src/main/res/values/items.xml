@@ -304,14 +304,20 @@
         <item>false</item>
         <item>300</item>
 
-        <item>@drawable/highheels</item>
+        <item>@drawable/highheels_0</item>
         <item>"High Heels"</item>
         <item>shoes</item>
         <item>false"</item>
         <item>400</item>
 
-        <item>@drawable/hat_catears0</item>
+        <item>@drawable/catears_0</item>
         <item>"Cat Ears"</item>
+        <item>hat</item>
+        <item>false"</item>
+        <item>400</item>
+
+        <item>@drawable/bunnyears_0</item>
+        <item>"Bunny Ears"</item>
         <item>hat</item>
         <item>false"</item>
         <item>400</item>

@@ -121,6 +121,12 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
                     if (item.getName().equals("Paper Bag") || item.getName().equals("Snorkel")) {
                         topPadding -= 5;
                     }
+                    if (item.getName().equals("Bunny Ears")) {
+                        topPadding += 35;
+                    }
+                    if (item.getName().equals("Cat Ears")) {
+                        topPadding += 23;
+                    }
                     if (item.getName().equals("Jester Hat")) {
                         topPadding += 20;
                     }
