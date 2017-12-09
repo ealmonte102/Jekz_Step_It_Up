@@ -45,6 +45,10 @@ public class Avatar {
         return currency;
     }
 
+    public void setCurrency(int x) {
+        currency = x;
+    }
+
     public void addCurrency(int x) {
         if (x <= 0) { x = 0; }
         currency += x;
@@ -70,20 +74,6 @@ public class Avatar {
             case SHOES:
                 shoes = null;
                 break;
-        }
-    }
-
-    public boolean canAfford(Item item) {
-        if (item.getPrice() > currency) {
-            return false;
-        }
-        return true;
-    }
-
-    public void buyItem(Item item) {
-        if (item.getPrice() <= currency) {
-            removeCurrency(item.getPrice());
-            addItem(item);
         }
     }
 

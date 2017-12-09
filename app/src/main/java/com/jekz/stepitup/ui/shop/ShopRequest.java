@@ -88,6 +88,7 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
             int statusCode = urlConnection.getResponseCode();
 
 
+
             return resultArray;
 
 
@@ -99,6 +100,11 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
 
     @Override
     protected void onPostExecute(JSONArray result) {
-        delegate.processFinish(result);
+
+
+        if (result != null) {
+            delegate.processFinish(result);
+        }
+
     }
 }
