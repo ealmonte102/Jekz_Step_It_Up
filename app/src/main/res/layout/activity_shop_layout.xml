@@ -374,12 +374,12 @@
         app:layout_constraintStart_toStartOf="@+id/avatar"
         app:layout_constraintTop_toTopOf="@+id/avatar" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <ImageButton
+        android:id="@+id/button_shop_back"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginEnd="8dp"
-        android:src="@drawable/back_arrow"
+        android:background="@drawable/back_arrow"
         app:layout_constraintBottom_toBottomOf="@+id/text_title"
         app:layout_constraintEnd_toStartOf="@+id/text_title"
         app:layout_constraintHorizontal_bias="0.508"
