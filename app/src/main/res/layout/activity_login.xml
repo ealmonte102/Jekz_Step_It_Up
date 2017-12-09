@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jekz.stepitup.ui.login.LoginActivity">
+
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:id="@+id/circular_progress_steps"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:cpb_background_progressbar_color="#FFCDD2"
+        app:cpb_background_progressbar_width="5dp"
+        app:cpb_progressbar_color="#F44336"
+        app:cpb_progressbar_width="10dp"
+        app:layout_constraintBottom_toTopOf="@id/edittext_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_step_count"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintVertical_weight=".3">
+
+    </com.mikhaellopez.circularprogressbar.CircularProgressBar>
+
+    <EditText
+        android:id="@+id/edittext_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="username"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/edittext_password"
+        app:layout_constraintEnd_toEndOf="@+id/circular_progress_steps"
+        app:layout_constraintStart_toStartOf="@+id/circular_progress_steps"
+        app:layout_constraintTop_toBottomOf="@+id/circular_progress_steps" />
+
+    <EditText
+        android:id="@+id/edittext_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/button_login"
+        app:layout_constraintEnd_toEndOf="@+id/edittext_username"
+        app:layout_constraintStart_toStartOf="@+id/edittext_username"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_username"
+        app:layout_constraintVertical_bias="0.364" />
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:fontFamily="serif-monospace"
+        android:text="Login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edittext_password"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/edittext_password" />
+
+    <TextView
+        android:id="@+id/text_step_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/circular_progress_steps"
+        app:layout_constraintEnd_toEndOf="@+id/circular_progress_steps"
+        app:layout_constraintStart_toStartOf="@+id/circular_progress_steps"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="hello" />
+
+
+</android.support.constraint.ConstraintLayout>
