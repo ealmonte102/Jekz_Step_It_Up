@@ -99,7 +99,6 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
 
     @Override
     protected void onPostExecute(JSONArray result) {
-
         delegate.processFinish(result);
     }
 }

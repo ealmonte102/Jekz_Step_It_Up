@@ -269,4 +269,8 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     public void genderButtonClicked() {
         shopPresenter.changeGender();
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }
