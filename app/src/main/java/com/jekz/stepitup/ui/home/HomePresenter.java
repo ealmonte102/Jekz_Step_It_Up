@@ -63,12 +63,12 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
 
     @Override
     public void accessLoginScreen() {
-        view.displayMessage("Function not support yet");
+        view.displayMessage("Login function not support yet");
     }
 
     @Override
     public void accessGraphs() {
-        view.displayMessage("Function not support yet");
+        view.displayMessage("Graph function not support yet");
     }
 
     @Override
