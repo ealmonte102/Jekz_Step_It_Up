@@ -2,6 +2,7 @@ package com.jekz.stepitup.ui.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jekz.stepitup.R;
+import com.jekz.stepitup.model.step.AndroidStepCounter;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import butterknife.BindView;
@@ -35,7 +37,8 @@ public class LoginActivity extends Activity implements LoginMVP.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        loginPresenter = new LoginPresenter();
+        SensorManager manager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        loginPresenter = new LoginPresenter(AndroidStepCounter.getInstance(manager));
     }
 
     @Override
@@ -54,6 +57,18 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     @OnClick(R.id.button_login)
     public void onClickLoginButton(View view) {
         loginPresenter.login(usernameText.getText().toString(), passwordText.getText().toString());
+    }
+
+    @OnClick({R.id.button_start, R.id.button_end})
+    public void sessionButton(View view) {
+        switch (view.getId()) {
+            case R.id.button_start:
+                loginPresenter.registerSensor(true);
+                break;
+            case R.id.button_end:
+                loginPresenter.registerSensor(false);
+                break;
+        }
     }
 
     @Override

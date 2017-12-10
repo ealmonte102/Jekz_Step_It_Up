@@ -1,58 +1,68 @@
 package com.jekz.stepitup.ui.login;
 
-import android.os.Handler;
 import android.util.Log;
+
+import com.jekz.stepitup.model.step.Session;
+import com.jekz.stepitup.model.step.StepCounter;
 
 /**
  * Created by evanalmonte on 12/8/17.
  */
 
-public class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback {
-    final Handler handler = new Handler();
+class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback, StepCounter
+        .StepCounterCallback {
+    final int STEP_GOAL = 100;
     LoginMVP.View loginView;
     LoginMVP.Model model;
-    int steps;
-    Runnable runnable;
+    StepCounter stepCounter;
 
-    public LoginPresenter() {
+    LoginPresenter(StepCounter stepCounter) {
         model = new LoginModel();
+        this.stepCounter = stepCounter;
     }
 
     @Override
-    public void onViewAttached(LoginMVP.View view) {
-        this.loginView = view;
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                loginView.setStepText(String.valueOf(steps));
-                loginView.setStepProgress(steps);
-                steps++;
-                handler.postDelayed(this, 1000);
-            }
-        };
-        handler.post(runnable);
+    public void onViewAttached(LoginMVP.View loginView) {
+        this.loginView = loginView;
+        stepCounter.addListener(this);
     }
 
     @Override
     public void onViewDetached() {
-        this.loginView = null;
-        handler.removeCallbacks(runnable);
+        stepCounter.removeListener(this);
+        loginView = null;
     }
 
     @Override
     public void login(String username, String password) {
-        handler.removeCallbacks(runnable);
         model.login(username, password, this);
     }
 
     @Override
+    public void registerSensor(boolean register) {
+        if (register) {
+            stepCounter.registerSensor();
+        } else {
+            Session session = stepCounter.unregisterSensor();
+            Log.d("Session Created", session.toString());
+        }
+    }
+
+    @Override
     public void loginResult(boolean loginSuccess) {
-        Log.d("TAG", "Login Result Called");
+        if (loginView == null) { return; }
         if (loginSuccess) {
             loginView.showMessage("Login Successful!");
             loginView.startLoginActivity();
         } else {
             loginView.showMessage("Error Logging In");
         }
+    }
+
+    @Override
+    public void onStepDetected(int x) {
+        if (loginView == null) { return; }
+        loginView.setStepProgress((float) x / STEP_GOAL * 100);
+        loginView.setStepText(String.valueOf(x));
     }
 }
