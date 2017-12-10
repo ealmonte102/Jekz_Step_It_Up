@@ -4,6 +4,8 @@ package com.jekz.stepitup.ui.login;
  * Created by evanalmonte on 12/8/17.
  */
 
+import com.jekz.stepitup.ui.BasePresenter;
+
 /**
  * Contract for Login MVP
  */
@@ -24,7 +26,7 @@ interface LoginMVP {
     /**
      * Interface representing a presenter
      */
-    interface Presenter {
+    interface Presenter extends BasePresenter<LoginMVP.View> {
         void onViewAttached(LoginMVP.View view);
 
         void onViewDetached();
