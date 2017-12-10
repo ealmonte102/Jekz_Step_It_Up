@@ -1,7 +1,6 @@
 package com.jekz.stepitup.ui.shop;
 
-import android.util.Pair;
-
+import com.jekz.stepitup.AvatarRepo;
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
@@ -31,10 +30,8 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         this.itemInteractor = instance;
         this.androidStepCounter = androidStepCounter;
         this.androidStepCounter.addListener(this);
-        avatar = new Avatar();
+        avatar = AvatarRepo.getInstance().getAvatar();
         retrieveItem(1, "items");
-        retrieveItem(1, "user_data");
-        //avatar.addCurrency(13000);
     }
 
     void reloadImages() {
@@ -42,6 +39,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         Item shirt = avatar.getShirt();
         Item pants = avatar.getPants();
         Item shoes = avatar.getShoes();
+        String model = avatar.isMale() ? "male" : "female";
 
         if (hat != null) {
             shopView.setHatImage(itemInteractor.getItem(hat.getId()).second);
@@ -58,6 +56,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         if (shoes != null) {
             shopView.setShoesImage(itemInteractor.getItem(shoes.getId()).second);
         }
+        shopView.setAvatarImage(itemInteractor.getModel(model));
     }
 
     void reloadAnimations() {
@@ -100,7 +99,6 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     }
 
     void buyItem(Item item) {
-
         updateItem(1, item.getId(), "purchase", 0, 0, 0, 0, "nogender");
     }
 
@@ -234,7 +232,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
             for (int i = 0; i < output.length(); i++) {
 
-                //Equip or Unequip
+                //Update Equipped Items
                 try {
                     JSONObject q = output.getJSONObject(i);
                     String verify = q.getString("return_data");
@@ -296,26 +294,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                     }
                 } catch (JSONException e) {e.printStackTrace();}
 
-
-                //Retrieve
-                try {
-                    JSONObject r = output.getJSONObject(i);
-                    //Log.d("Test Object;", r.getInt("count") + "");
-                    int itemcount = r.getInt("count");
-                    if (itemcount > 0) {
-                        int itemid = r.getInt("itemid");
-
-                        Pair<Item, Integer> itemPair;
-                        itemPair = itemInteractor.getItem(itemid);
-                        if (itemPair != null) {
-                            avatar.addItem(itemPair.first);
-                            shopView.reloadAdapter();
-                        }
-
-                    }
-                } catch (JSONException e) {e.printStackTrace();}
-
-                //Gender
+                //Update Gender
                 try {
                     JSONObject r = output.getJSONObject(i);
                     //Log.d("Test Object;", r.getInt("count") + "");
@@ -333,79 +312,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
                 } catch (JSONException e) {e.printStackTrace();}
 
-
-                //User Data
-                try {
-                    JSONObject s = output.getJSONObject(i);
-                    int filter = s.getInt("total_sessions");
-
-                    String gender = s.getString("gender");
-
-                    if (gender.equals("male") || gender.equals("female")) {
-                        avatar.setMale(gender);
-                        int modelID = itemInteractor.getModel(gender);
-                        shopView.setAvatarImage(modelID);
-                        reloadAnimations();
-                    }
-
-                    int hatid = s.getInt("hat");
-                    int shirtid = s.getInt("shirt");
-                    int pantsid = s.getInt("pants");
-                    int shoesid = s.getInt("shoes");
-
-                    if (hatid != 0) {
-                        Item hat = itemInteractor.getItem(hatid).first;
-                        int hatID = itemInteractor.getItem(hatid).second;
-                        avatar.wearItem(hat);
-                        shopView.setHatImage(hatID);
-                    } else {
-                        avatar.removeItem(Item.Item_Type.HAT);
-                        shopView.setHatImage(0);
-                    }
-
-                    if (shirtid != 0) {
-                        Item shirt = itemInteractor.getItem(shirtid).first;
-                        int shirtID = itemInteractor.getItem(shirtid).second;
-                        avatar.wearItem(shirt);
-                        shopView.setShirtImage(shirtID);
-                    } else {
-                        avatar.removeItem(Item.Item_Type.SHIRT);
-                        shopView.setShirtImage(0);
-                    }
-
-                    if (pantsid != 0) {
-                        Item pants = itemInteractor.getItem(pantsid).first;
-                        int pantsID = itemInteractor.getItem(pantsid).second;
-                        avatar.wearItem(pants);
-                        shopView.setPantsImage(pantsID);
-                    } else {
-                        avatar.removeItem(Item.Item_Type.PANTS);
-                        shopView.setPantsImage(0);
-                    }
-
-                    if (shoesid != 0) {
-                        Item shoes = itemInteractor.getItem(shoesid).first;
-                        int shoesID = itemInteractor.getItem(shoesid).second;
-                        avatar.wearItem(shoes);
-                        shopView.setShoesImage(shoesID);
-                    } else {
-                        avatar.removeItem(Item.Item_Type.SHOES);
-                        shopView.setShoesImage(0);
-                    }
-
-                    int currency = s.getInt("currency");
-
-                    avatar.setCurrency(currency);
-                    shopView.setCurrencyText(
-                            "x" + NumberFormat.getInstance().format(avatar.getCurrency()));
-
-                    reloadAnimations();
-                    shopView.reloadAdapter();
-
-
-                } catch (JSONException e) {e.printStackTrace();}
-
-                //Update
+                //Update Currency
                 try {
                     JSONObject t = output.getJSONObject(i);
                     String verify = t.getString("return_data");
