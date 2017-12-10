@@ -18,9 +18,16 @@ public class Avatar {
         return isMale;
     }
 
-    public void setMale(boolean male) {
-        isMale = male;
+    public void setMale(String gender) {
+        if (gender.equals("male")) {
+            isMale = true;
+        }
+        if (gender.equals("female")) {
+            isMale = false;
+        }
+
     }
+
     public Item getHat() {
         return hat;
     }

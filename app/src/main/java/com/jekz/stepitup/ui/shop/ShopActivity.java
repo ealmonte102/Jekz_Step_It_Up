@@ -82,8 +82,7 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SensorManager manager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        shopPresenter = new ShopPresenter(
-                new AndroidStepCounter(manager),
+        shopPresenter = new ShopPresenter(AndroidStepCounter.getInstance(manager),
                 ItemInteractor.getInstance(getResources()));
         setContentView(R.layout.activity_shop_layout);
         ButterKnife.bind(this);

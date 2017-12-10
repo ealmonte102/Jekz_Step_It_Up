@@ -100,7 +100,8 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     }
 
     void buyItem(Item item) {
-            updateItem(1, item.getId());
+
+        updateItem(1, item.getId(), "purchase", 0, 0, 0, 0, "nogender");
     }
 
     boolean checkForItem(Item item) {
@@ -108,35 +109,50 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     }
 
     void equipItem(Item item) {
-        avatar.wearItem(item);
-        int resourceID = itemInteractor.getItem(item.getId()).second;
+        Item hat = avatar.getHat();
+        Item shirt = avatar.getShirt();
+        Item pants = avatar.getPants();
+        Item shoes = avatar.getShoes();
+        int hatid = 0;
+        int shirtid = 0;
+        int pantsid = 0;
+        int shoesid = 0;
+        if (hat != null) {
+            hatid = hat.getId();
+        }
+        if (shirt != null) {
+            shirtid = shirt.getId();
+        }
+        if (pants != null) {
+            pantsid = pants.getId();
+        }
+        if (shoes != null) {
+            shoesid = shoes.getId();
+        }
         switch (item.getType()) {
             case HAT:
-                shopView.setHatImage(resourceID);
+                hatid = item.getId();
                 break;
             case SHIRT:
-                shopView.setShirtImage(resourceID);
+                shirtid = item.getId();
                 break;
             case PANTS:
-                shopView.setPantsImage(resourceID);
+                pantsid = item.getId();
                 break;
             case SHOES:
-                shopView.setShoesImage(resourceID);
+                shoesid = item.getId();
                 break;
         }
-        if (item.isAnimated()) {
-            reloadAnimations();
-        }
-        shopView.reloadAdapter();
+        updateItem(1, 0, "equip", hatid, shirtid, pantsid, shoesid, "nogender");
     }
 
     void changeGender() {
         boolean isMale = avatar.isMale();
-        avatar.setMale(!isMale);
-        String modelString = avatar.isMale() ? "male" : "female";
-        int modelID = itemInteractor.getModel(modelString);
-        shopView.setAvatarImage(modelID);
-        reloadAnimations();
+        if (isMale) {
+            updateItem(1, 0, "gender", 0, 0, 0, 0, "female");
+        } else {
+            updateItem(1, 0, "gender", 0, 0, 0, 0, "male");
+        }
     }
 
     int resourceRequested(Item item) {
@@ -144,21 +160,41 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     }
 
     void unequipItem(Item item) {
-        avatar.removeItem(item.getType());
+        Item hat = avatar.getHat();
+        Item shirt = avatar.getShirt();
+        Item pants = avatar.getPants();
+        Item shoes = avatar.getShoes();
+        int hatid = 0;
+        int shirtid = 0;
+        int pantsid = 0;
+        int shoesid = 0;
+        if (hat != null) {
+            hatid = hat.getId();
+        }
+        if (shirt != null) {
+            shirtid = shirt.getId();
+        }
+        if (pants != null) {
+            pantsid = pants.getId();
+        }
+        if (shoes != null) {
+            shoesid = shoes.getId();
+        }
         switch (item.getType()) {
             case HAT:
-                shopView.setHatImage(0);
+                hatid = 0;
+                break;
             case SHIRT:
-                shopView.setShirtImage(0);
+                shirtid = 0;
                 break;
             case PANTS:
-                shopView.setPantsImage(0);
+                pantsid = 0;
                 break;
             case SHOES:
-                shopView.setShoesImage(0);
+                shoesid = 0;
                 break;
         }
-        shopView.reloadAdapter();
+        updateItem(1, 0, "equip", hatid, shirtid, pantsid, shoesid, "nogender");
     }
 
     @Override
@@ -185,16 +221,83 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     }
 
     @Override
-    public void onStepDetected() {
+    public void onStepDetected(int x) {
         avatar.addCurrency(1);
-        shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
+        if (shopView != null) {
+            shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
+        }
     }
 
     @Override
     public void processFinish(JSONArray output) {
 
-        //Retrieve
+
             for (int i = 0; i < output.length(); i++) {
+
+                //Equip or Unequip
+                try {
+                    JSONObject q = output.getJSONObject(i);
+                    String verify = q.getString("return_data");
+
+                    if (verify.equals("equip")) {
+
+                        boolean succeed = q.getBoolean("success");
+
+                        if (succeed) {
+                            int hatid = q.getInt("hat_");
+                            int shirtid = q.getInt("shirt_");
+                            int pantsid = q.getInt("pants_");
+                            int shoesid = q.getInt("shoes_");
+
+                            if (hatid != 0) {
+                                Item hat = itemInteractor.getItem(hatid).first;
+                                int hatID = itemInteractor.getItem(hatid).second;
+                                avatar.wearItem(hat);
+                                shopView.setHatImage(hatID);
+                            } else {
+                                avatar.removeItem(Item.Item_Type.HAT);
+                                shopView.setHatImage(0);
+                            }
+
+                            if (shirtid != 0) {
+                                Item shirt = itemInteractor.getItem(shirtid).first;
+                                int shirtID = itemInteractor.getItem(shirtid).second;
+                                avatar.wearItem(shirt);
+                                shopView.setShirtImage(shirtID);
+                            } else {
+                                avatar.removeItem(Item.Item_Type.SHIRT);
+                                shopView.setShirtImage(0);
+                            }
+
+                            if (pantsid != 0) {
+                                Item pants = itemInteractor.getItem(pantsid).first;
+                                int pantsID = itemInteractor.getItem(pantsid).second;
+                                avatar.wearItem(pants);
+                                shopView.setPantsImage(pantsID);
+                            } else {
+                                avatar.removeItem(Item.Item_Type.PANTS);
+                                shopView.setPantsImage(0);
+                            }
+
+                            if (shoesid != 0) {
+                                Item shoes = itemInteractor.getItem(shoesid).first;
+                                int shoesID = itemInteractor.getItem(shoesid).second;
+                                avatar.wearItem(shoes);
+                                shopView.setShoesImage(shoesID);
+                            } else {
+                                avatar.removeItem(Item.Item_Type.SHOES);
+                                shopView.setShoesImage(0);
+                            }
+
+                            reloadAnimations();
+                            shopView.reloadAdapter();
+                        }
+
+                    }
+                } catch (JSONException e) {e.printStackTrace();}
+
+
+                //Retrieve
                 try {
                     JSONObject r = output.getJSONObject(i);
                     //Log.d("Test Object;", r.getInt("count") + "");
@@ -212,17 +315,91 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                     }
                 } catch (JSONException e) {e.printStackTrace();}
 
+                //Gender
+                try {
+                    JSONObject r = output.getJSONObject(i);
+                    //Log.d("Test Object;", r.getInt("count") + "");
+                    String gender = r.getString("gender_");
+                    boolean verify = r.getBoolean("success");
+
+                    if (verify) {
+                        if (gender.equals("male") || gender.equals("female")) {
+                            avatar.setMale(gender);
+                            int modelID = itemInteractor.getModel(gender);
+                            shopView.setAvatarImage(modelID);
+                            reloadAnimations();
+                        }
+                    }
+
+                } catch (JSONException e) {e.printStackTrace();}
+
 
                 //User Data
                 try {
                     JSONObject s = output.getJSONObject(i);
                     int filter = s.getInt("total_sessions");
 
+                    String gender = s.getString("gender");
+
+                    if (gender.equals("male") || gender.equals("female")) {
+                        avatar.setMale(gender);
+                        int modelID = itemInteractor.getModel(gender);
+                        shopView.setAvatarImage(modelID);
+                        reloadAnimations();
+                    }
+
+                    int hatid = s.getInt("hat");
+                    int shirtid = s.getInt("shirt");
+                    int pantsid = s.getInt("pants");
+                    int shoesid = s.getInt("shoes");
+
+                    if (hatid != 0) {
+                        Item hat = itemInteractor.getItem(hatid).first;
+                        int hatID = itemInteractor.getItem(hatid).second;
+                        avatar.wearItem(hat);
+                        shopView.setHatImage(hatID);
+                    } else {
+                        avatar.removeItem(Item.Item_Type.HAT);
+                        shopView.setHatImage(0);
+                    }
+
+                    if (shirtid != 0) {
+                        Item shirt = itemInteractor.getItem(shirtid).first;
+                        int shirtID = itemInteractor.getItem(shirtid).second;
+                        avatar.wearItem(shirt);
+                        shopView.setShirtImage(shirtID);
+                    } else {
+                        avatar.removeItem(Item.Item_Type.SHIRT);
+                        shopView.setShirtImage(0);
+                    }
+
+                    if (pantsid != 0) {
+                        Item pants = itemInteractor.getItem(pantsid).first;
+                        int pantsID = itemInteractor.getItem(pantsid).second;
+                        avatar.wearItem(pants);
+                        shopView.setPantsImage(pantsID);
+                    } else {
+                        avatar.removeItem(Item.Item_Type.PANTS);
+                        shopView.setPantsImage(0);
+                    }
+
+                    if (shoesid != 0) {
+                        Item shoes = itemInteractor.getItem(shoesid).first;
+                        int shoesID = itemInteractor.getItem(shoesid).second;
+                        avatar.wearItem(shoes);
+                        shopView.setShoesImage(shoesID);
+                    } else {
+                        avatar.removeItem(Item.Item_Type.SHOES);
+                        shopView.setShoesImage(0);
+                    }
+
                     int currency = s.getInt("currency");
 
                     avatar.setCurrency(currency);
                     shopView.setCurrencyText(
                             "x" + NumberFormat.getInstance().format(avatar.getCurrency()));
+
+                    reloadAnimations();
                     shopView.reloadAdapter();
 
 
@@ -231,27 +408,32 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                 //Update
                 try {
                     JSONObject t = output.getJSONObject(i);
-                    boolean success = t.getBoolean("success");
+                    String verify = t.getString("return_data");
 
-                    if (success) {
-                        int currency = t.getInt("user_currency");
-                        int itemid = t.getInt("itemid_");
+                    if (verify.equals("purchase")) {
+                        boolean success = t.getBoolean("success");
 
-                        Item item = itemInteractor.getItem(itemid).first;
-                        avatar.addItem(item);
-                        avatar.setCurrency(currency);
-                        shopView.setCurrencyText(
-                                "x" + NumberFormat.getInstance().format(avatar.getCurrency()));
-                        shopView.reloadAdapter();
+                        if (success) {
+                            int currency = t.getInt("user_currency");
+                            int itemid = t.getInt("itemid_");
+
+                            Item item = itemInteractor.getItem(itemid).first;
+                            avatar.addItem(item);
+                            avatar.setCurrency(currency);
+                            shopView.setCurrencyText(
+                                    "x" + NumberFormat.getInstance().format(avatar.getCurrency()));
+                            shopView.reloadAdapter();
 
 
+                        }
                     }
+
                 } catch (JSONException e) {e.printStackTrace();}
             }
     }
 
 
-    void updateItem(int userid, int itemid) {
+    void updateItem(int userid, int itemid, String type, int hatid, int shirtid, int pantsid, int shoesid, String gender) {
 
         ShopRequest asyncTask = new ShopRequest(null);
 
@@ -259,13 +441,38 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
         JSONObject postData = new JSONObject();
 
-        try {
-            postData.put("data_type", "items");
-            postData.put("userid", 1);
-            postData.put("itemid", itemid);
-            postData.put("amount", 1);
+        if (type.equals("purchase")) {
+            try {
+                postData.put("data_type", "items");
+                postData.put("userid", userid);
+                postData.put("itemid", itemid);
+                postData.put("amount", 1);
 
-        } catch (JSONException e) {e.printStackTrace();}
+            } catch (JSONException e) {e.printStackTrace();}
+        }
+        if (type.equals("equip")) {
+            try {
+                postData.put("data_type", "user_data");
+                postData.put("userid", userid);
+                postData.put("hat", hatid);
+                postData.put("shirt", shirtid);
+                postData.put("pants", pantsid);
+                postData.put("shoes", shoesid);
+
+
+            } catch (JSONException e) {e.printStackTrace();}
+        }
+
+        if (type.equals("gender")) {
+            try {
+                postData.put("action", "update_user_info");
+                postData.put("userid", userid);
+                postData.put("weight", 0);
+                postData.put("height", 0);
+                postData.put("gender", gender);
+
+            } catch (JSONException e) {e.printStackTrace();}
+        }
 
         asyncTask.postData = postData;
         asyncTask.execute("https://jekz.herokuapp.com/api/db/update");

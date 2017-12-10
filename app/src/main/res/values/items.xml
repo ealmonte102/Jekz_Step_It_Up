@@ -322,13 +322,13 @@
         <item>false</item>
         <item>400</item>
 
-        <item>@drawable/shoes_red_racing</item>
+        <item>@drawable/raceshoesred_0</item>
         <item>"Red Racing Shoes"</item>
         <item>shoes</item>
         <item>false</item>
         <item>400</item>
 
-        <item>@drawable/blue_racing_shoes</item>
+        <item>@drawable/raceshoesblue_0</item>
         <item>"Blue Racing Shoes"</item>
         <item>shoes</item>
         <item>false</item>
