@@ -1,6 +1,7 @@
 package com.jekz.stepitup.ui.shop;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.item.ItemListAdapter;
 import com.jekz.stepitup.model.step.AndroidStepCounter;
+import com.jekz.stepitup.ui.home.HomeActivity;
 
 import java.util.List;
 
@@ -104,8 +106,8 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @Override
     protected void onResume() {
         super.onResume();
-        shopPresenter.reloadAnimations();
         shopPresenter.reloadImages();
+        shopPresenter.reloadAnimations();
         shopPresenter.registerStepCounter(true);
         categoryRadioGroup.check(R.id.hat);
     }
@@ -273,6 +275,8 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @OnClick(R.id.button_shop_back)
     public void backButtonClicked() {
         Toast.makeText(this, "Back Button Pressed", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 
     @Override
