@@ -1,0 +1,150 @@
+package com.jekz.stepitup.ui.home;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.jekz.stepitup.R;
+import com.jekz.stepitup.graphtest.GraphActivity;
+import com.jekz.stepitup.model.item.ItemInteractor;
+import com.jekz.stepitup.ui.login.LoginActivity;
+import com.jekz.stepitup.ui.shop.ShopActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
+
+    @BindView(R.id.toolbar_home)
+    Toolbar toolbar;
+
+    @BindView(R.id.image_avatar_hat_home)
+    ImageView hatImage;
+
+    @BindView(R.id.image_avatar_home)
+    ImageView avatarImage;
+
+    @BindView(R.id.image_avatar_shirt_home)
+    ImageView shirtImage;
+
+    @BindView(R.id.image_avatar_pants_home)
+    ImageView pantsImage;
+
+    @BindView(R.id.image_avatar_shoes_home)
+    ImageView shoesImage;
+
+    HomeMVP.Presenter presenter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        presenter = new HomePresenter(ItemInteractor.getInstance(getResources()));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.onViewAttached(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.loadAvatar();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onViewDetached();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.profile_menu:
+                presenter.accessLoginScreen();
+                return true;
+            case R.id.shop_menu:
+                presenter.accessShop();
+                return true;
+            case R.id.statistics_menu:
+                presenter.accessGraphs();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void setAvatarImage(int id) {
+        avatarImage.setImageResource(id);
+    }
+
+    @Override
+    public void setHatImage(int id) {
+        hatImage.setImageResource(id);
+    }
+
+    @Override
+    public void setPantsImage(int id) {
+        pantsImage.setImageResource(id);
+    }
+
+    @Override
+    public void setShirtImage(int id) {
+        shirtImage.setImageResource(id);
+    }
+
+    @Override
+    public void setShoesImage(int id) {
+        shoesImage.setImageResource(id);
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void navigateToShop() {
+        navigateToActivity(this, ShopActivity.class);
+    }
+
+    @Override
+    public void navigateToGraphs() {
+        navigateToActivity(this, GraphActivity.class);
+    }
+
+    @Override
+    public void navigateToLoginScreen() {
+        navigateToActivity(this, LoginActivity.class);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Implementation intentionally empty to disable back button
+    }
+
+    private void navigateToActivity(Context context, Class<?> activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
+    }
+
+
+}
