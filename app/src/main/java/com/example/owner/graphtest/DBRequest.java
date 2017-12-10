@@ -77,7 +77,7 @@ public class DBRequest extends AsyncTask<String, Void, JSONArray> {
             }
 
             String jsonStr = new String(b, StandardCharsets.UTF_8);
-            Log.d("myTest", "jsonStr: " + jsonStr);
+            //Log.d("myTest", "jsonStr: " + jsonStr);
 
             JSONArray resultArray;
 
@@ -85,6 +85,7 @@ public class DBRequest extends AsyncTask<String, Void, JSONArray> {
                 resultArray = new JSONArray(jsonStr);
             }catch (JSONException e) { resultArray = new JSONArray("["+jsonStr+"]");};
 
+            //Log.d("myTest", "JSONArray length: " + resultArray.length());
             //Log.d("myTest", "after JSONArray");
 
             int statusCode = urlConnection.getResponseCode();
@@ -101,6 +102,8 @@ public class DBRequest extends AsyncTask<String, Void, JSONArray> {
 
     @Override
     protected void onPostExecute(JSONArray result) {
-            delegate.processFinish(result);
+        //Log.d("myTest", "on post execute");
+
+        delegate.processFinish(result);
     }
 }
