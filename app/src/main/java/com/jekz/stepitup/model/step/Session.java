@@ -24,6 +24,6 @@ public class Session {
     public String toString() {
         String startDate = new Date(startTime).toString();
         String endDate = new Date(endTime).toString();
-        return startDate + " - " + endDate + " : " + String.valueOf(totalSteps);
+        return startDate + " - " + endDate + " : " + String.valueOf(totalSteps) + " step(s) walked";
     }
 }

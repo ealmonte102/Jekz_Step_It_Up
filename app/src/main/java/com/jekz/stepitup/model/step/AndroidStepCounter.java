@@ -4,6 +4,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -12,23 +13,38 @@ import java.util.ArrayList;
  * Created by evanalmonte on 12/8/17.
  */
 
-public class AndroidStepCounter implements StepCounter, SensorEventListener {
+public class AndroidStepCounter implements IntervalStepCounter, SensorEventListener {
     private static AndroidStepCounter instance;
     private SensorManager manager;
     private Sensor stepSensor;
+
+    private long intervalInMillis;
     private ArrayList<StepCounterCallback> listeners = new ArrayList<>();
+
     private int sessionStartedSteps;
     private int mostRecentSteps;
     private long sessionStartTime;
 
-    private AndroidStepCounter(SensorManager manager) {
+    private Handler handler = new Handler();
+    private boolean autoCounting = false;
+    private Runnable autoCount = new Runnable() {
+        @Override
+        public void run() {
+            unregisterSensor();
+            startAutoCount();
+        }
+    };
+
+    private AndroidStepCounter(SensorManager manager, long intervalInMillis) {
         this.manager = manager;
+        this.intervalInMillis = intervalInMillis;
         stepSensor = manager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
     }
 
-    public static AndroidStepCounter getInstance(SensorManager sensorManager) {
+    public static AndroidStepCounter getInstance(SensorManager sensorManager, long
+            intervalInMillis) {
         if (instance == null) {
-            instance = new AndroidStepCounter(sensorManager);
+            instance = new AndroidStepCounter(sensorManager, intervalInMillis);
         }
         return instance;
     }
@@ -45,16 +61,20 @@ public class AndroidStepCounter implements StepCounter, SensorEventListener {
 
     @Override
     public void registerSensor() {
-        Log.d("Register Sensor", "Sensor is now registered");
+        Log.i("StepCounter", "Sensor is now registered");
         resetCount();
         manager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
-    public Session unregisterSensor() {
+    public void unregisterSensor() {
+        Log.i("StepCounter", "Sensor is now UN-registered");
+        autoCounting = false;
+        handler.removeCallbacks(autoCount);
         manager.unregisterListener(this);
-        return new Session(sessionStartTime, System.currentTimeMillis(),
+        Session session = new Session(sessionStartTime, System.currentTimeMillis(),
                 mostRecentSteps - sessionStartedSteps);
+        notifySessionEnded(session);
     }
 
     private void resetCount() {
@@ -84,5 +104,26 @@ public class AndroidStepCounter implements StepCounter, SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    @Override
+    public void setInterval(int intervalInMillis) {
+        this.intervalInMillis = intervalInMillis;
+    }
+
+    @Override
+    public void notifySessionEnded(Session session) {
+        for (StepCounterCallback listener : listeners) {
+            listener.onSessionEnded(session);
+        }
+    }
+
+    @Override
+    public void startAutoCount() {
+        if (!autoCounting) {
+            registerSensor();
+            handler.postDelayed(autoCount, intervalInMillis);
+            autoCounting = true;
+        }
     }
 }

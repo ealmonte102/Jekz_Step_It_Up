@@ -36,10 +36,10 @@ public interface StepCounter {
     /**
      * Method which stops counting steps
      *
-     * @return session containing the start time, end time and number of steps taken during the
+     * Calls sessionEnded on for each listener
      * session
      */
-    Session unregisterSensor();
+    void unregisterSensor();
 
     /**
      * Interface representing a callback which is called when a step is detected
@@ -51,5 +51,12 @@ public interface StepCounter {
          * @param numOfSteps The number of steps counted
          */
         void onStepDetected(int numOfSteps);
+
+        /**
+         * Sends the session that has transpired to the callback
+         *
+         * @param session The session created.
+         */
+        void onSessionEnded(Session session);
     }
 }
