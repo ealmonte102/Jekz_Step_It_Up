@@ -39,11 +39,11 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
     DBRequest user_data = new DBRequest(null);
     DBRequest session_data = new DBRequest(null);
 
-    protected static int user_weight = 0;
+    /**protected static int user_weight = 0;
     protected static int user_height = 0;
     protected static int total_steps = 0;
     protected static int total_duration = 0;
-    protected static int total_sessions = 0;
+    protected static int total_sessions = 0;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         session_data.execute("https://jekz.herokuapp.com/api/db/retrieve");
 
         //total_steps = 5;
-        Log.d("myTest", "total steps: " + this.total_steps);
+        //Log.d("myTest", "total steps: " + this.total_steps);
 
         //write to text view
         //writeDurationToTextView(this, 0 , total_duration, total_sessions);
@@ -108,9 +108,64 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
 
         //Log.d("myTest", "made it to processFinish in GraphActivity");
 
+        int user_weight = 0;
+        int user_height = 0;
+        int total_steps = 0;
+        int total_duration = 0;
+        int total_sessions = 0;
+
         //Block for parsing user data
         if (output.length() == 1){
-            getUserData(output);
+            try {
+                for (int i = 0; i < output.length(); i++){
+                    //Log.d("myTest", "inside for loop of processFinish");
+
+                    JSONObject r = output.getJSONObject(i);
+                    //Log.d("myTest", "JSONObject to string: " + r.toString());
+
+                    if (r.has("weight")){
+                        try {
+                            user_weight = r.getInt("weight");
+                            //setUserWeight(r.getInt("weight"));
+                            //Log.d("myTest", "weight: " + user_weight);
+                        } catch (JSONException e){e.printStackTrace();}
+                    }
+
+                    if (r.has("height")){
+                        try {
+                            user_height = r.getInt("height");
+                            //setUserHeight(r.getInt("height"));
+                            //Log.d("myTest", "height: " + user_height);
+                        } catch (JSONException e){e.printStackTrace();}
+                    }
+
+                    if (r.has("total_steps")){
+                        try{
+                            total_steps = r.getInt("total_steps");
+                            //setTotalSteps(r.getInt("total_steps"));
+                            //Log.d("myTest", "total steps in method: " + total_steps);
+                        }catch (JSONException e){e.printStackTrace();}
+                    }
+
+                    if (r.has("total_duration")){
+                        try{
+                            total_duration = r.getInt("total_duration");
+                            //setTotalDuration(r.getInt("total_duration"));
+                            //Log.d("myTest", "total duration: " + total_duration);
+                        }catch (JSONException e){e.printStackTrace();}
+                    }
+
+                    if (r.has("total_sessions")){
+                        try{
+                            total_sessions = r.getInt("total_sessions");
+                            //setTotalSessions(r.getInt("total_sessions"));
+                            //Log.d("myTest", "total sessions: " + total_sessions);
+                        }catch (JSONException e){e.printStackTrace();}
+                    }
+                    else Log.d("myTest", "Nothing in processFinish");
+                }
+            }catch (JSONException e){e.printStackTrace();}
+
             //Log.d("myTest", "total steps: " + total_steps);
         }
 
@@ -118,9 +173,14 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         else if (output.length() > 1) {
 
         }
+
+        //run graphs
+        writeDurationToTextView(total_duration, total_sessions);
+        //writeStepsToTextView(this, 1, total_steps, total_sessions);
+        //writeCaloriesToTextView(this, 2, user_weight, total_duration, total_sessions);
     }
 
-    private void getUserData(JSONArray output){
+    /**private void getUserData(JSONArray output){
         try {
             for (int i = 0; i < output.length(); i++){
                 //Log.d("myTest", "inside for loop of processFinish");
@@ -171,9 +231,9 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
             }
         }catch (JSONException e){e.printStackTrace();}
 
-    }
+    }*/
 
-    public void setUserWeight(int weight){
+    /**public void setUserWeight(int weight){
         this.user_weight = weight;
     }
 
@@ -193,7 +253,9 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         this.total_sessions = sessions;
     }
 
-    protected static void drawSessionLengthGraph(Activity activity, int id){
+     */
+
+    protected void drawSessionLengthGraph(){
         /**
          * put this in xml
          * <com.github.mikephil.charting.charts.BarChart
@@ -206,8 +268,9 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //edit this to match id in xml
         //BarChart barChart = (BarChart) findViewById(R.id.activity);
 
+        /**
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(id);
+        BarChart barChart = (BarChart) findViewById();
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -248,10 +311,10 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         xAxis0.setGranularity(1f); // only intervals of 1 day
         xAxis0.setLabelCount(7);
 
-        barChart.invalidate();
+        barChart.invalidate();*/
     }
 
-    protected static void drawStepCountGraph(Activity activity, int id){
+    protected void drawStepCountGraph(){
 
         /**
          * put this in xml
@@ -272,7 +335,9 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //BarChart barChart = (BarChart) findViewById(R.id.barChart0);
 
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(id);
+
+        /**
+        BarChart barChart = (BarChart) findViewById();
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -322,10 +387,10 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         dailyGoal.setLineWidth(4f);
         yAxis.addLimitLine(dailyGoal);
 
-        barChart.invalidate();
+        barChart.invalidate();*/
     }
 
-    protected static void drawCalorieGraph(Activity activity, int id){
+    protected void drawCalorieGraph(){
 
         /**
          * include this in xml and format
@@ -340,7 +405,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //BarChart barChart = (BarChart) findViewById(R.id.barChart0);
 
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(id);
+        /**
+        BarChart barChart = (BarChart) findViewById();
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -381,10 +447,10 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         xAxis0.setGranularity(1f); // only intervals of 1 day
         xAxis0.setLabelCount(7);
 
-        barChart.invalidate();
+        barChart.invalidate();*/
     }
 
-    protected static void drawDistanceGraph(Activity activity, int id){
+    protected void drawDistanceGraph(){
 
 
         /**
@@ -400,7 +466,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //BarChart barChart = (BarChart) findViewById(R.id.barChart0);
 
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(id);
+        /**
+        BarChart barChart = (BarChart) findViewById();
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -441,49 +508,50 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         xAxis0.setGranularity(1f); // only intervals of 1 day
         xAxis0.setLabelCount(7);
 
-        barChart.invalidate();
+        barChart.invalidate();*/
     }
 
-    protected static void writeDurationToTextView(Activity activity, int id, int total_duration, int total_sessions){
+    protected void writeDurationToTextView(int total_duration, int total_sessions){
         //Edit this based on textview name in XML
         //TextView textView = (TextView) findViewById(R.id.textView1);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(id);
+        //TextView textView = (TextView) activity.findViewById(id);
+        TextView textView = (TextView) findViewById(R.id.textView);
 
         textView.setText("Lifetime total: " + total_duration + " minutes" + "\n" + "Lifetime average: " + (total_duration/total_sessions) + " minutes");
     }
 
-    protected static void writeDistanceToTextView(Activity activity, int id){
+    protected static void writeDistanceToTextView(){
         //Edit this based on textview name in XML
         //TextView textView = (TextView) findViewById(R.id.textView2);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(id);
+        //TextView textView = (TextView) findViewById();
 
-        textView.setText("Estimated lifetime total: 6542" + " miles" + "\n" + "Estimated lifetime average: 3.1" + " miles");
+        //textView.setText("Estimated lifetime total: 6542" + " miles" + "\n" + "Estimated lifetime average: 3.1" + " miles");
     }
 
-    protected static void writeStepsToTextView(Activity activity, int id, int total_steps, int total_sessions){
+    protected static void writeStepsToTextView(int total_steps, int total_sessions){
         //Edit this based on textview name in XML
         //TextView textView = (TextView) findViewById(R.id.textView3);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(id);
+        //TextView textView = (TextView) findViewById();
 
-        textView.setText("Lifetime total: "+ total_steps + " steps" + "\n" + "Lifetime average: "+ (total_steps/total_sessions) + " steps");
+        //textView.setText("Lifetime total: "+ total_steps + " steps" + "\n" + "Lifetime average: "+ (total_steps/total_sessions) + " steps");
     }
 
-    protected static void writeCaloriesToTextView(Activity activity, int id, int weight, int total_duration, int total_sessions){
+    protected static void writeCaloriesToTextView(int weight, int total_duration, int total_sessions){
         //Edit this based on textview name in XML
         //TextView textView = (TextView) findViewById(R.id.textView4);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(id);
+        //TextView textView = (TextView) findViewById();
 
         double total_calorie = (weight/2.2) * (total_duration/3600);
         double average_calorie = total_calorie/total_sessions;
 
-        textView.setText("Estimated lifetime total: " + total_calorie + " calories" + "\n" + "Estimated lifetime average: " + average_calorie + " calories");
+       //textView.setText("Estimated lifetime total: " + total_calorie + " calories" + "\n" + "Estimated lifetime average: " + average_calorie + " calories");
     }
 }
