@@ -5,7 +5,7 @@ package com.jekz.stepitup.model.step;
  */
 
 public interface IntervalStepCounter extends StepCounter {
-    void setInterval(int numOfSeconds);
+    void setInterval(long numOfSeconds);
 
     void notifySessionEnded(Session session);
 
