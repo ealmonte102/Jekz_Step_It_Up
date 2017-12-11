@@ -35,18 +35,10 @@ public class AndroidStepCounter implements IntervalStepCounter, SensorEventListe
         }
     };
 
-    private AndroidStepCounter(SensorManager manager, long intervalInMillis) {
+    public AndroidStepCounter(SensorManager manager, long intervalInMillis) {
         this.manager = manager;
         this.intervalInMillis = intervalInMillis;
         stepSensor = manager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-    }
-
-    public static AndroidStepCounter getInstance(SensorManager sensorManager, long
-            intervalInMillis) {
-        if (instance == null) {
-            instance = new AndroidStepCounter(sensorManager, intervalInMillis);
-        }
-        return instance;
     }
 
     @Override
@@ -61,13 +53,15 @@ public class AndroidStepCounter implements IntervalStepCounter, SensorEventListe
 
     @Override
     public void registerSensor() {
-        Log.i("StepCounter", "Sensor is now registered");
-        resetCount();
-        manager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        if (!autoCounting) {
+            Log.i("StepCounter", "Sensor is now registered");
+            resetCount();
+            manager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
     }
 
     @Override
-    public void unregisterSensor() {
+    public synchronized void unregisterSensor() {
         Log.i("StepCounter", "Sensor is now UN-registered");
         autoCounting = false;
         handler.removeCallbacks(autoCount);
@@ -91,6 +85,32 @@ public class AndroidStepCounter implements IntervalStepCounter, SensorEventListe
     }
 
     @Override
+    public synchronized void setInterval(long intervalInMillis) {
+        this.intervalInMillis = intervalInMillis;
+        Session session = new Session(sessionStartTime, System.currentTimeMillis(),
+                mostRecentSteps - sessionStartedSteps);
+        notifySessionEnded(session);
+        handler.removeCallbacks(autoCount);
+        startAutoCount();
+    }
+
+    @Override
+    public void notifySessionEnded(Session session) {
+        for (StepCounterCallback listener : listeners) {
+            listener.onSessionEnded(session);
+        }
+    }
+
+    @Override
+    public synchronized void startAutoCount() {
+        if (!autoCounting) {
+            registerSensor();
+            handler.postDelayed(autoCount, intervalInMillis);
+            autoCounting = true;
+        }
+    }
+
+    @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             if (sessionStartedSteps < 1) {
@@ -106,24 +126,4 @@ public class AndroidStepCounter implements IntervalStepCounter, SensorEventListe
 
     }
 
-    @Override
-    public void setInterval(int intervalInMillis) {
-        this.intervalInMillis = intervalInMillis;
-    }
-
-    @Override
-    public void notifySessionEnded(Session session) {
-        for (StepCounterCallback listener : listeners) {
-            listener.onSessionEnded(session);
-        }
-    }
-
-    @Override
-    public void startAutoCount() {
-        if (!autoCounting) {
-            registerSensor();
-            handler.postDelayed(autoCount, intervalInMillis);
-            autoCounting = true;
-        }
-    }
 }

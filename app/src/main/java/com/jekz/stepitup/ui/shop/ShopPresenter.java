@@ -1,10 +1,13 @@
 package com.jekz.stepitup.ui.shop;
 
+import android.util.Log;
+
 import com.jekz.stepitup.AvatarRepo;
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
-import com.jekz.stepitup.model.step.AndroidStepCounter;
+import com.jekz.stepitup.model.step.IntervalStepCounter;
+import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.StepCounter;
 
 import org.json.JSONArray;
@@ -23,13 +26,12 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     private ShopView shopView;
     private Avatar avatar;
     private NumberFormat numberFormat = NumberFormat.getInstance();
-    private AndroidStepCounter androidStepCounter;
+    private IntervalStepCounter stepCounter;
 
 
-    ShopPresenter(AndroidStepCounter androidStepCounter, ItemInteractor instance) {
+    ShopPresenter(IntervalStepCounter stepCounter, ItemInteractor instance) {
         this.itemInteractor = instance;
-        this.androidStepCounter = androidStepCounter;
-        this.androidStepCounter.addListener(this);
+        this.stepCounter = stepCounter;
         avatar = AvatarRepo.getInstance().getAvatar();
         retrieveItem(1, "items");
     }
@@ -199,6 +201,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     public void onViewAttached(ShopView view) {
         this.shopView = view;
         shopView.setCurrencyText("x" + numberFormat.format(avatar.getCurrency()));
+        stepCounter.startAutoCount();
     }
 
     @Override
@@ -210,11 +213,11 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         return avatar.isItemEquipped(item);
     }
 
-    void registerStepCounter(boolean b) {
+    void listenToStepCounter(boolean b) {
         if (b) {
-            androidStepCounter.registerSensor();
+            stepCounter.addListener(this);
         } else {
-            androidStepCounter.unregisterSensor();
+            stepCounter.removeListener(this);
         }
     }
 
@@ -222,8 +225,13 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     public void onStepDetected(int x) {
         avatar.addCurrency(1);
         if (shopView != null) {
-            shopView.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
+            Log.i("Autocount Shop Step", String.valueOf(x));
         }
+    }
+
+    @Override
+    public void onSessionEnded(Session session) {
+        Log.i("Autocount Shop Session", String.valueOf(session));
     }
 
     @Override

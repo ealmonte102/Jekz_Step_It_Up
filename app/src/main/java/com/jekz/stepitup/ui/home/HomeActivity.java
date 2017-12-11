@@ -5,21 +5,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.jekz.stepitup.JekzApplication;
 import com.jekz.stepitup.R;
 import com.jekz.stepitup.graphtest.GraphActivity;
 import com.jekz.stepitup.model.item.ItemInteractor;
+import com.jekz.stepitup.model.step.IntervalStepCounter;
+import com.jekz.stepitup.model.step.Session;
+import com.jekz.stepitup.model.step.StepCounter;
 import com.jekz.stepitup.ui.login.LoginActivity;
 import com.jekz.stepitup.ui.shop.ShopActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
+public class HomeActivity extends AppCompatActivity implements HomeMVP.View, StepCounter
+        .StepCounterCallback {
 
     @BindView(R.id.toolbar_home)
     Toolbar toolbar;
@@ -40,10 +46,12 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     ImageView shoesImage;
 
     HomeMVP.Presenter presenter;
+    IntervalStepCounter stepCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        stepCounter = ((JekzApplication) (getApplication())).getStepCounter();
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
@@ -54,12 +62,20 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     protected void onStart() {
         super.onStart();
         presenter.onViewAttached(this);
+        stepCounter.startAutoCount();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        stepCounter.addListener(this);
         presenter.loadAvatar();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stepCounter.removeListener(this);
     }
 
     @Override
@@ -147,4 +163,15 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     }
 
 
+    @Override
+    public void onStepDetected(int numOfSteps) {
+        Log.i("Autocount Home Step", String.valueOf
+                (numOfSteps));
+    }
+
+    @Override
+    public void onSessionEnded(Session session) {
+        Log.i("Autocount Home Session", session.toString
+                ());
+    }
 }

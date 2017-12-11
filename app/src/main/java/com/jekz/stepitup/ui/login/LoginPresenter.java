@@ -43,8 +43,7 @@ class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback
         if (register) {
             stepCounter.registerSensor();
         } else {
-            Session session = stepCounter.unregisterSensor();
-            Log.d("Session Created", session.toString());
+            stepCounter.unregisterSensor();
         }
     }
 
@@ -64,5 +63,10 @@ class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback
         if (loginView == null) { return; }
         loginView.setStepProgress((float) x / STEP_GOAL * 100);
         loginView.setStepText(String.valueOf(x));
+    }
+
+    @Override
+    public void onSessionEnded(Session session) {
+        Log.d("Session Ended", session.toString());
     }
 }

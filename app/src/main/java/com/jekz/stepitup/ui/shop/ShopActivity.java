@@ -3,7 +3,6 @@ package com.jekz.stepitup.ui.shop;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,11 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
+import com.jekz.stepitup.JekzApplication;
 import com.jekz.stepitup.R;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.item.ItemListAdapter;
-import com.jekz.stepitup.model.step.AndroidStepCounter;
 import com.jekz.stepitup.ui.home.HomeActivity;
 
 import java.util.List;
@@ -83,8 +82,8 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SensorManager manager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        shopPresenter = new ShopPresenter(AndroidStepCounter.getInstance(manager),
+        shopPresenter = new ShopPresenter(
+                ((JekzApplication) (getApplication())).getStepCounter(),
                 ItemInteractor.getInstance(getResources()));
         setContentView(R.layout.activity_shop_layout);
         ButterKnife.bind(this);
@@ -108,14 +107,14 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
         super.onResume();
         shopPresenter.reloadImages();
         shopPresenter.reloadAnimations();
-        shopPresenter.registerStepCounter(true);
+        shopPresenter.listenToStepCounter(true);
         categoryRadioGroup.check(R.id.hat);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        shopPresenter.registerStepCounter(false);
+        shopPresenter.listenToStepCounter(false);
     }
 
     @Override
