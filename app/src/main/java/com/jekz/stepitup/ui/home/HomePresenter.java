@@ -63,7 +63,7 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
 
     @Override
     public void accessLoginScreen() {
-        view.displayMessage("Login functionality not supported yet");
+        view.navigateToLoginScreen();
     }
 
     @Override

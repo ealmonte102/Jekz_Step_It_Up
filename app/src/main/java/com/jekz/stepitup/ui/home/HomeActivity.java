@@ -171,7 +171,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View, Ste
 
     @Override
     public void onSessionEnded(Session session) {
-        Log.i("Autocount Home Session", session.toString
+        Log.i("Autocount Home SESSION", session.toString
                 ());
     }
 }
