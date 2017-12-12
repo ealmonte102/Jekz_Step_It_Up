@@ -14,12 +14,28 @@ interface LoginMVP {
      * Interface representing a view
      */
     interface View {
-        void showMessage(String error);
+        /**
+         * Displays a message
+         *
+         * @param message message to be displayed
+         */
+        void showMessage(String message);
 
-        void startLoginActivity();
+        /**
+         * Navigate to home activity
+         */
+        void startHomeActivity();
 
+        /**
+         * Display the number of steps walked so far
+         * @param text number of steps walked for the current session
+         */
         void setStepText(String text);
 
+        /**
+         * Display the current progress
+         * @param progress current progress
+         */
         void setStepProgress(float progress);
     }
 
@@ -39,6 +55,11 @@ interface LoginMVP {
          */
         void login(String username, String password);
 
+        /**
+         * Logs out of the application
+         */
+        void logout();
+
         void registerSensor(boolean register);
     }
 
@@ -54,6 +75,14 @@ interface LoginMVP {
         void login(String username, String password, LoginCallback callback);
 
         /**
+         * Check whether the user is logged in
+         *
+         * @return true if logged in, false otherwise
+         */
+        boolean isLoggedIn();
+
+        void logout(LoginCallback callback);
+        /**
          * Interface representing callback to be notified on completion of login
          */
         interface LoginCallback {
@@ -61,6 +90,8 @@ interface LoginMVP {
              * @param loginSuccess true if login success, false otherwise
              */
             void loginResult(boolean loginSuccess);
+
+            void onLogout(boolean logoutSuccessful);
         }
     }
 

@@ -2,6 +2,7 @@ package com.jekz.stepitup.ui.login;
 
 import android.util.Log;
 
+import com.jekz.stepitup.data.LoginPreferences;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.StepCounter;
 
@@ -16,8 +17,8 @@ class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback
     LoginMVP.Model model;
     StepCounter stepCounter;
 
-    LoginPresenter(StepCounter stepCounter) {
-        model = new LoginModel();
+    LoginPresenter(StepCounter stepCounter, LoginPreferences loginPreferences) {
+        model = new LoginModel(loginPreferences);
         this.stepCounter = stepCounter;
     }
 
@@ -39,6 +40,11 @@ class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback
     }
 
     @Override
+    public void logout() {
+        model.logout(this);
+    }
+
+    @Override
     public void registerSensor(boolean register) {
         if (register) {
             stepCounter.registerSensor();
@@ -52,9 +58,18 @@ class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback
         if (loginView == null) { return; }
         if (loginSuccess) {
             loginView.showMessage("Login Successful!");
-            loginView.startLoginActivity();
+            loginView.startHomeActivity();
         } else {
             loginView.showMessage("Error Logging In");
+        }
+    }
+
+    @Override
+    public void onLogout(boolean logoutSuccessful) {
+        if (logoutSuccessful) {
+            loginView.showMessage("You are now logged out");
+        } else {
+            loginView.showMessage("You are already logged out");
         }
     }
 
@@ -67,6 +82,7 @@ class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback
 
     @Override
     public void onSessionEnded(Session session) {
-        Log.d("Session Ended", session.toString());
+        Log.d("AutoCount Login SESSION", session.toString
+                ());
     }
 }

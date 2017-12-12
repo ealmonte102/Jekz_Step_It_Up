@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.jekz.stepitup.JekzApplication;
 import com.jekz.stepitup.R;
+import com.jekz.stepitup.data.LoginPreferences;
+import com.jekz.stepitup.data.SharedPrefsManager;
+import com.jekz.stepitup.ui.home.HomeActivity;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import butterknife.BindView;
@@ -30,14 +33,16 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     TextView stepText;
 
     LoginMVP.Presenter loginPresenter;
+    LoginPreferences loginPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        loginPreferences = SharedPrefsManager.getInstance(getApplicationContext());
         loginPresenter = new LoginPresenter(
-                ((JekzApplication) (getApplication())).getStepCounter());
+                ((JekzApplication) (getApplication())).getStepCounter(), loginPreferences);
     }
 
     @Override
@@ -66,9 +71,17 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     }
 
 
-    @OnClick(R.id.button_login)
+    @OnClick({R.id.button_login, R.id.button_logout})
     public void onClickLoginButton(View view) {
-        loginPresenter.login(usernameText.getText().toString(), passwordText.getText().toString());
+        switch (view.getId()) {
+            case R.id.button_login:
+                loginPresenter.login(usernameText.getText().toString(),
+                        passwordText.getText().toString());
+                break;
+            case R.id.button_logout:
+                loginPresenter.logout();
+                break;
+        }
     }
 
     @OnClick({R.id.button_start, R.id.button_end})
@@ -84,9 +97,10 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     }
 
     @Override
-    public void startLoginActivity() {
-        Intent intent = new Intent(this, com.jekz.stepitup.ui.shop.ShopActivity.class);
+    public void startHomeActivity() {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -100,7 +114,7 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     }
 
     @Override
-    public void showMessage(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
