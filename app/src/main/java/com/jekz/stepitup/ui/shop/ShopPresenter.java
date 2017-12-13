@@ -9,6 +9,7 @@ import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.IntervalStepCounter;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.StepCounter;
+import com.jekz.stepitup.ui.login.LoginManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,18 +24,21 @@ import java.text.NumberFormat;
 public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback,
         com.jekz.stepitup.graphtest.AsyncResponse {
     private static final String TAG = ShopPresenter.class.getName();
+
     private ItemInteractor itemInteractor;
     private ShopView shopView;
     private Avatar avatar;
+    private LoginManager loginManager;
     private NumberFormat numberFormat = NumberFormat.getInstance();
     private IntervalStepCounter stepCounter;
 
 
-    ShopPresenter(IntervalStepCounter stepCounter, ItemInteractor instance) {
+    ShopPresenter(IntervalStepCounter stepCounter, ItemInteractor instance, LoginManager
+            loginManager) {
         this.itemInteractor = instance;
         this.stepCounter = stepCounter;
+        this.loginManager = loginManager;
         avatar = AvatarRepo.getInstance().getAvatar();
-        retrieveItem(1, "items");
     }
 
     void reloadImages() {
@@ -352,10 +356,11 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
 
     void updateItem(int userid, int itemid, String type, int hatid, int shirtid, int pantsid, int shoesid, String gender) {
+        String session = loginManager.getSession();
+        Log.d(TAG, "Current session cookie: " + session);
+        ShopRequest shopRequest = new ShopRequest(null);
 
-        ShopRequest asyncTask = new ShopRequest(null);
-
-        asyncTask.delegate = this;
+        shopRequest.delegate = this;
 
         JSONObject postData = new JSONObject();
 
@@ -392,8 +397,8 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
             } catch (JSONException e) {e.printStackTrace();}
         }
 
-        asyncTask.postData = postData;
-        asyncTask.execute("https://jekz.herokuapp.com/api/db/update");
+        shopRequest.postData = postData;
+        shopRequest.execute("https://jekz.herokuapp.com/api/db/update");
     }
 
     void retrieveItem(int userid, String datatype) {
@@ -410,4 +415,5 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         asyncTask2.postData = postData;
         asyncTask2.execute("https://jekz.herokuapp.com/api/db/retrieve");
     }
+
 }

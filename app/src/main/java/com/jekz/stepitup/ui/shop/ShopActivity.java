@@ -17,10 +17,13 @@ import android.widget.Toast;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.jekz.stepitup.JekzApplication;
 import com.jekz.stepitup.R;
+import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.item.ItemListAdapter;
 import com.jekz.stepitup.ui.home.HomeActivity;
+import com.jekz.stepitup.ui.login.LoginManager;
+import com.jekz.stepitup.ui.login.RemoteLoginModel;
 
 import java.util.List;
 
@@ -82,9 +85,13 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPrefsManager manager = SharedPrefsManager.getInstance(getApplicationContext());
+        LoginManager loginManager = new RemoteLoginModel(manager);
         shopPresenter = new ShopPresenter(
                 ((JekzApplication) (getApplication())).getStepCounter(),
-                ItemInteractor.getInstance(getResources()));
+                ItemInteractor.getInstance(getResources()),
+                loginManager);
         setContentView(R.layout.activity_shop_layout);
         ButterKnife.bind(this);
         initRecyclerView();

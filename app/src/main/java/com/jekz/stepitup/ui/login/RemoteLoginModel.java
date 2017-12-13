@@ -67,6 +67,8 @@ public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequest
             Log.d(TAG, "Current date: " + current.toString());
             if (current.before(date)) {
                 Log.d(TAG, "Local cookie is valid");
+                Log.d(TAG, "Session ID: " + getSession());
+                Log.d(TAG, "Username: " + getUsername());
                 return true;
             }
         } catch (ParseException ignored) {}

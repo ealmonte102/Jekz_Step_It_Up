@@ -3,7 +3,6 @@ package com.jekz.stepitup.ui.splash;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.ui.home.HomeActivity;
@@ -20,18 +19,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         SharedPrefsManager manager = SharedPrefsManager.getInstance(getApplicationContext());
         loginManager = new RemoteLoginModel(manager);
-        String currentUser = manager.getString(SharedPrefsManager.Key.USERNAME, "No user logged " +
-                                                                                "in");
-        Log.d(TAG, currentUser);
-/*
-        loginManager.logout(new LoginManager.LogoutCallback() {
-            @Override
-            public void onLogout(boolean logoutSuccessful) {
 
-            }
-        });
-
-        */
         Intent intent;
         if (loginManager.isLoggedIn()) {
             intent = new Intent(this, HomeActivity.class);
