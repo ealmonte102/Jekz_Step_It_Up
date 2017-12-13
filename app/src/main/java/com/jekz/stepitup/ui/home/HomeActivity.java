@@ -18,6 +18,7 @@ import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.IntervalStepCounter;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.StepCounter;
+import com.jekz.stepitup.ui.friends.FriendActivity;
 import com.jekz.stepitup.ui.login.LoginActivity;
 import com.jekz.stepitup.ui.shop.ShopActivity;
 
@@ -102,6 +103,9 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View, Ste
             case R.id.statistics_menu:
                 presenter.accessGraphs();
                 return true;
+            case R.id.friends_menu:
+                presenter.accessFriends();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -150,6 +154,11 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View, Ste
     @Override
     public void navigateToLoginScreen() {
         navigateToActivity(this, LoginActivity.class);
+    }
+
+    @Override
+    public void navigateToFriendsScreen() {
+        navigateToActivity(this, FriendActivity.class);
     }
 
     @Override

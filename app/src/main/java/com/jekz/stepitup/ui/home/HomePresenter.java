@@ -72,6 +72,11 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
     }
 
     @Override
+    public void accessFriends() {
+        view.navigateToFriendsScreen();
+    }
+
+    @Override
     public void onViewAttached(HomeMVP.View view) {
         this.view = view;
         loadAvatar();

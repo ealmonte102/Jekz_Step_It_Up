@@ -2,18 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/friends_menu"
+        android:icon="@drawable/ic_friends"
+        android:title="@string/menu_friends_name"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/profile_menu"
         android:icon="@drawable/ic_profile"
-        android:title="Menu"
+        android:title="@string/menu_logut_name"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/statistics_menu"
         android:icon="@drawable/ic_graphs"
-        android:title="graphs"
+        android:title="@string/menu_graphs_title"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/shop_menu"
         android:icon="@drawable/ic_shop"
-        android:title="Shop"
-        app:showAsAction="ifRoom" />
+        android:title="@string/menu_shop_title"
+        app:showAsAction="always" />
 </menu>

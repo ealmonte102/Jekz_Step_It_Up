@@ -21,4 +21,8 @@
     <string name="friends_list">Friends List</string>
     <string name="add">Add</string>
     <string name="remove">Remove</string>
+    <string name="menu_graphs_title">Graphs</string>
+    <string name="menu_shop_title">Shop</string>
+    <string name="menu_logut_name">Logout</string>
+    <string name="menu_friends_name">Friends</string>
 </resources>
