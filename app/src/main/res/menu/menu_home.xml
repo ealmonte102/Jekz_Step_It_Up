@@ -10,12 +10,12 @@
         android:id="@+id/profile_menu"
         android:icon="@drawable/ic_profile"
         android:title="@string/menu_logut_name"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/statistics_menu"
         android:icon="@drawable/ic_graphs"
         android:title="@string/menu_graphs_title"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/shop_menu"
         android:icon="@drawable/ic_shop"
