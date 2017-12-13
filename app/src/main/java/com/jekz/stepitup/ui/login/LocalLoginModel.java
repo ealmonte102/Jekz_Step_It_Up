@@ -5,7 +5,7 @@ import com.jekz.stepitup.data.SharedPrefsManager.Key;
 
 import java.util.HashMap;
 
-class LoginModel implements LoginMVP.Model {
+class LocalLoginModel implements LoginManager {
 
     private final static HashMap<String, String> TEST_USERS = new HashMap<>();
     private final static String TEST_PASSWORD = "JEKZ";
@@ -19,7 +19,7 @@ class LoginModel implements LoginMVP.Model {
 
     private LoginPreferences loginPreferences;
 
-    public LoginModel(LoginPreferences loginPreferences) {
+    public LocalLoginModel(LoginPreferences loginPreferences) {
         this.loginPreferences = loginPreferences;
     }
 
@@ -37,23 +37,23 @@ class LoginModel implements LoginMVP.Model {
             callback.loginResult(false);
             return;
         }
-        loginPreferences.put(Key.SESSION, "YES");
+        loginPreferences.put(Key.SESSION, "Today");
         loginPreferences.put(Key.USERNAME, username);
         callback.loginResult(true);
     }
 
     @Override
-    public boolean isLoggedIn() {
-        return loginPreferences.getString(Key.SESSION) != null;
-    }
-
-    @Override
-    public void logout(LoginCallback callback) {
+    public void logout(LogoutCallback callback) {
         if (loginPreferences.getString(Key.SESSION) == null) {
             callback.onLogout(false);
         } else {
             loginPreferences.remove(Key.SESSION, Key.USERNAME);
             callback.onLogout(true);
         }
+    }
+
+    @Override
+    public boolean isLoggedIn() {
+        return loginPreferences.getString(Key.SESSION) != null;
     }
 }

@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jekz.stepitup.JekzApplication;
 import com.jekz.stepitup.R;
-import com.jekz.stepitup.data.LoginPreferences;
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.ui.home.HomeActivity;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -32,30 +32,24 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     @BindView(R.id.text_step_count)
     TextView stepText;
 
+    @BindView(R.id.button_login)
+    Button loginButton;
+
+    @BindView(R.id.button_logout)
+    Button logoutButton;
+
+
     LoginMVP.Presenter loginPresenter;
-    LoginPreferences loginPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        loginPreferences = SharedPrefsManager.getInstance(getApplicationContext());
+        SharedPrefsManager manager = SharedPrefsManager.getInstance(getApplicationContext());
         loginPresenter = new LoginPresenter(
-                ((JekzApplication) (getApplication())).getStepCounter(), loginPreferences);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loginPresenter.registerSensor(true);
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        loginPresenter.registerSensor(false);
+                ((JekzApplication) (getApplication())).getStepCounter(),
+                new RemoteLoginModel(manager));
     }
 
     @Override
@@ -70,6 +64,17 @@ public class LoginActivity extends Activity implements LoginMVP.View {
         loginPresenter.onViewDetached();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loginPresenter.registerSensor(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        loginPresenter.registerSensor(false);
+    }
 
     @OnClick({R.id.button_login, R.id.button_logout})
     public void onClickLoginButton(View view) {
@@ -111,6 +116,20 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     @Override
     public void setStepProgress(float progress) {
         circularProgressBar.setProgress(progress);
+    }
+
+    @Override
+    public void enableLoginButton(boolean enabled) {
+        float loginAlpha = enabled ? 1 : 0.5f;
+        loginButton.setAlpha(loginAlpha);
+        loginButton.setEnabled(enabled);
+    }
+
+    @Override
+    public void enableLogoutButton(boolean enabled) {
+        float loginAlpha = enabled ? 1 : 0.5f;
+        logoutButton.setAlpha(loginAlpha);
+        logoutButton.setEnabled(enabled);
     }
 
     @Override

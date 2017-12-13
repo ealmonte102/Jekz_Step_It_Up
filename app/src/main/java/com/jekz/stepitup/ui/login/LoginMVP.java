@@ -37,6 +37,10 @@ interface LoginMVP {
          * @param progress current progress
          */
         void setStepProgress(float progress);
+
+        void enableLoginButton(boolean enabled);
+
+        void enableLogoutButton(boolean enabled);
     }
 
     /**
@@ -62,37 +66,4 @@ interface LoginMVP {
 
         void registerSensor(boolean register);
     }
-
-
-    /**
-     * Interface representing a model
-     */
-    interface Model {
-        /**
-         * Attempt to login in using specified username and password, on completion, callback is
-         * notified
-         */
-        void login(String username, String password, LoginCallback callback);
-
-        /**
-         * Check whether the user is logged in
-         *
-         * @return true if logged in, false otherwise
-         */
-        boolean isLoggedIn();
-
-        void logout(LoginCallback callback);
-        /**
-         * Interface representing callback to be notified on completion of login
-         */
-        interface LoginCallback {
-            /**
-             * @param loginSuccess true if login success, false otherwise
-             */
-            void loginResult(boolean loginSuccess);
-
-            void onLogout(boolean logoutSuccessful);
-        }
-    }
-
 }

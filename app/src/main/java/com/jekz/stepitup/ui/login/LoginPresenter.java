@@ -1,8 +1,5 @@
 package com.jekz.stepitup.ui.login;
 
-import android.util.Log;
-
-import com.jekz.stepitup.data.LoginPreferences;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.StepCounter;
 
@@ -10,15 +7,16 @@ import com.jekz.stepitup.model.step.StepCounter;
  * Created by evanalmonte on 12/8/17.
  */
 
-class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback, StepCounter
-        .StepCounterCallback {
+class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, LoginManager
+        .LogoutCallback, StepCounter.StepCounterCallback {
+    private static final String TAG = RemoteLoginModel.class.getName();
     final int STEP_GOAL = 100;
     LoginMVP.View loginView;
-    LoginMVP.Model model;
+    LoginManager loginManager;
     StepCounter stepCounter;
 
-    LoginPresenter(StepCounter stepCounter, LoginPreferences loginPreferences) {
-        model = new LoginModel(loginPreferences);
+    LoginPresenter(StepCounter stepCounter, LoginManager loginManager) {
+        this.loginManager = loginManager;
         this.stepCounter = stepCounter;
     }
 
@@ -26,6 +24,12 @@ class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback
     public void onViewAttached(LoginMVP.View loginView) {
         this.loginView = loginView;
         stepCounter.addListener(this);
+        if (loginManager.isLoggedIn()) {
+            loginView.enableLoginButton(false);
+        } else {
+            loginView.enableLogoutButton(true);
+            loginView.enableLogoutButton(false);
+        }
     }
 
     @Override
@@ -36,12 +40,19 @@ class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback
 
     @Override
     public void login(String username, String password) {
-        model.login(username, password, this);
+        if (username.isEmpty() || password.isEmpty()) {
+            loginView.showMessage("Please enter both username and password");
+        } else {
+            loginView.enableLoginButton(false);
+            loginManager.login(username, password, this);
+        }
     }
 
     @Override
     public void logout() {
-        model.logout(this);
+        loginManager.logout(this);
+        loginView.enableLoginButton(true);
+        loginView.enableLogoutButton(false);
     }
 
     @Override
@@ -56,6 +67,7 @@ class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback
     @Override
     public void loginResult(boolean loginSuccess) {
         if (loginView == null) { return; }
+        loginView.enableLoginButton(true);
         if (loginSuccess) {
             loginView.showMessage("Login Successful!");
             loginView.startHomeActivity();
@@ -81,8 +93,5 @@ class LoginPresenter implements LoginMVP.Presenter, LoginMVP.Model.LoginCallback
     }
 
     @Override
-    public void onSessionEnded(Session session) {
-        Log.d("AutoCount Login SESSION", session.toString
-                ());
-    }
+    public void onSessionEnded(Session session) { }
 }
