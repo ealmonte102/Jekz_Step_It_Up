@@ -77,7 +77,7 @@ public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequest
         String[] cookieheader = cookie.split(";");
         String sessionID = cookieheader[0];
         String expirationDate = cookieheader[2].split("=")[1];
-        Log.d(TAG, "Successful login, new generated cookie: " + sessionID + "\n" +
+        Log.d(TAG, "New generated cookie: " + sessionID + "\n" +
                    "Expires:" + expirationDate);
         loginPreferences.put(SharedPrefsManager.Key.SESSION, sessionID);
         loginPreferences.put(SharedPrefsManager.Key.EXPIRE_DATE, expirationDate);

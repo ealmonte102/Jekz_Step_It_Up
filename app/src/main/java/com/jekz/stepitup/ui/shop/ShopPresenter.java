@@ -22,6 +22,7 @@ import java.text.NumberFormat;
 
 public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback,
         com.jekz.stepitup.graphtest.AsyncResponse {
+    private static final String TAG = ShopPresenter.class.getName();
     private ItemInteractor itemInteractor;
     private ShopView shopView;
     private Avatar avatar;
@@ -225,13 +226,13 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     public void onStepDetected(int x) {
         avatar.addCurrency(1);
         if (shopView != null) {
-            Log.i("Autocount Shop Step", String.valueOf(x));
+            Log.i(TAG, "Steps Detected: " + String.valueOf(x));
         }
     }
 
     @Override
     public void onSessionEnded(Session session) {
-        Log.i("Autocount Shop Session", String.valueOf(session));
+        Log.i(TAG, "Session Ended: " + String.valueOf(session));
     }
 
     @Override
@@ -250,10 +251,10 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                         boolean succeed = q.getBoolean("success");
 
                         if (succeed) {
-                            int hatid = q.getInt("hat_");
-                            int shirtid = q.getInt("shirt_");
-                            int pantsid = q.getInt("pants_");
-                            int shoesid = q.getInt("shoes_");
+                            int hatid = q.getInt("hat");
+                            int shirtid = q.getInt("shirt");
+                            int pantsid = q.getInt("pants");
+                            int shoesid = q.getInt("shoes");
 
                             if (hatid != 0) {
                                 Item hat = itemInteractor.getItem(hatid).first;
@@ -300,13 +301,14 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                         }
 
                     }
-                } catch (JSONException e) {e.printStackTrace();}
+                } catch (JSONException ignored) {
+                    Log.d(TAG, "Error parsing during equip items update: " + ignored.getMessage());
+                }
 
                 //Update Gender
                 try {
                     JSONObject r = output.getJSONObject(i);
-                    //Log.d("Test Object;", r.getInt("count") + "");
-                    String gender = r.getString("gender_");
+                    String gender = r.getString("gender");
                     boolean verify = r.getBoolean("success");
 
                     if (verify) {
@@ -318,32 +320,33 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                         }
                     }
 
-                } catch (JSONException e) {e.printStackTrace();}
+                } catch (JSONException ignored) {
+                    Log.d(TAG, "Error parsing during gender update: " + ignored.getMessage());
+                }
 
                 //Update Currency
                 try {
                     JSONObject t = output.getJSONObject(i);
                     String verify = t.getString("return_data");
-
                     if (verify.equals("purchase")) {
                         boolean success = t.getBoolean("success");
-
+                        Log.d(TAG, "Purchase result: " + success);
                         if (success) {
                             int currency = t.getInt("user_currency");
-                            int itemid = t.getInt("itemid_");
-
+                            int itemid = t.getInt("itemid");
                             Item item = itemInteractor.getItem(itemid).first;
+                            Log.d(TAG, "Item bought: " + item.toString());
                             avatar.addItem(item);
                             avatar.setCurrency(currency);
                             shopView.setCurrencyText(
                                     "x" + NumberFormat.getInstance().format(avatar.getCurrency()));
                             shopView.reloadAdapter();
-
-
                         }
                     }
 
-                } catch (JSONException e) {e.printStackTrace();}
+                } catch (JSONException ignored) {
+                    Log.d(TAG, "Error parsing during currency update: " + ignored.getMessage());
+                }
             }
     }
 

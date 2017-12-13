@@ -161,7 +161,7 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
                     }
 
                 }
-            } catch (JSONException e) {e.printStackTrace();}
+            } catch (JSONException ignored) {}
 
 
             //Retrieve
@@ -178,7 +178,7 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
                     }
 
                 }
-            } catch (JSONException e) {e.printStackTrace();}
+            } catch (JSONException ignored) {}
 
             //Gender
             try {
@@ -195,7 +195,7 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
                     }
                 }
 
-            } catch (JSONException e) {e.printStackTrace();}
+            } catch (JSONException ignored) {}
 
 
             //User Data
@@ -262,7 +262,7 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
                 //view.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency
                 // ()));
 
-            } catch (JSONException e) {e.printStackTrace();}
+            } catch (JSONException e) {e.getMessage();}
         }
     }
 

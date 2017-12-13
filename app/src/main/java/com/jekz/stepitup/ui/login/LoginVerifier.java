@@ -1,6 +1,7 @@
 package com.jekz.stepitup.ui.login;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +20,7 @@ import java.net.URL;
  */
 
 class LoginVerifier extends AsyncTask<String, Integer, String> {
-    private static final String TAG = RemoteLoginModel.class.getName();
+    private static final String TAG = LoginVerifier.class.getName();
     private String cookie;
     private String username;
     private String password;
@@ -70,8 +71,10 @@ class LoginVerifier extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result) {
         if (result.contains(username + "'s Home Page")) {
+            Log.d(TAG, username + " is now logged in");
             callback.onValidCredentials(cookie);
         } else {
+            Log.d(TAG, "user: " + username + " and supplied password do not match");
             callback.onInvalidCredentials();
         }
     }
