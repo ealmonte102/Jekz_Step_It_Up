@@ -18,4 +18,7 @@
     <string name="change_model">change model</string>
     <string name="customize">Customize</string>
     <string name="unequip">Unequip</string>
+    <string name="friends_list">Friends List</string>
+    <string name="add">Add</string>
+    <string name="remove">Remove</string>
 </resources>

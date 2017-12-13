@@ -17,5 +17,7 @@
     <color name="equipped_item_background">#d1d3d5</color>
     <color name="unequip_button_background_unpressed">#f1d7d7</color>
     <color name="white">#fff</color>
+    <color name="friends_button">#FF8800</color>
+    <color name="friends_button_unpressed">#FFCC00</color>
 
 </resources>
