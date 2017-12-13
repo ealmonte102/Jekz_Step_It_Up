@@ -73,6 +73,7 @@ public class SharedPrefsManager implements LoginPreferences {
 
     public enum Key {
         USERNAME,
-        SESSION
+        SESSION,
+        EXPIRE_DATE
     }
 }
