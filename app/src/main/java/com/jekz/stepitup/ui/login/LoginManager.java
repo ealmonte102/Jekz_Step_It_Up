@@ -15,6 +15,9 @@ public interface LoginManager {
 
     boolean isLoggedIn();
 
+    String getSession();
+
+    String getUsername();
     /**
      * Interface representing callback to be notified on completion of login
      */

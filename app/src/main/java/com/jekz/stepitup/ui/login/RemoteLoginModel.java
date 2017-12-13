@@ -43,9 +43,10 @@ public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequest
         if (loginPreferences.getString(SharedPrefsManager.Key.SESSION) == null) {
             callback.onLogout(false);
         } else {
-            loginPreferences.remove(SharedPrefsManager.Key.SESSION);
-            loginPreferences.remove(SharedPrefsManager.Key.USERNAME);
-            loginPreferences.remove(SharedPrefsManager.Key.EXPIRE_DATE);
+            loginPreferences.remove(
+                    SharedPrefsManager.Key.SESSION,
+                    SharedPrefsManager.Key.USERNAME,
+                    SharedPrefsManager.Key.EXPIRE_DATE);
             callback.onLogout(true);
         }
     }
@@ -70,6 +71,16 @@ public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequest
             }
         } catch (ParseException ignored) {}
         return false;
+    }
+
+    @Override
+    public String getSession() {
+        return loginPreferences.getString(SharedPrefsManager.Key.SESSION);
+    }
+
+    @Override
+    public String getUsername() {
+        return loginPreferences.getString(SharedPrefsManager.Key.USERNAME);
     }
 
     @Override

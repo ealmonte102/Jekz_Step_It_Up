@@ -56,4 +56,14 @@ class LocalLoginModel implements LoginManager {
     public boolean isLoggedIn() {
         return loginPreferences.getString(Key.SESSION) != null;
     }
+
+    @Override
+    public String getSession() {
+        return loginPreferences.getString(Key.SESSION);
+    }
+
+    @Override
+    public String getUsername() {
+        return loginPreferences.getString(Key.USERNAME);
+    }
 }
