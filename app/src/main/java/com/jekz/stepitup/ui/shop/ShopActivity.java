@@ -2,7 +2,6 @@ package com.jekz.stepitup.ui.shop;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +20,7 @@ import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.item.ItemListAdapter;
+import com.jekz.stepitup.ui.friends.AvatarImage;
 import com.jekz.stepitup.ui.home.HomeActivity;
 import com.jekz.stepitup.ui.login.LoginManager;
 import com.jekz.stepitup.ui.login.RemoteLoginModel;
@@ -40,23 +40,11 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
     @BindView(R.id.categories)
     RadioGroup categoryRadioGroup;
 
-    @BindView(R.id.avatar_shoes)
-    ImageView shoesImage;
-
-    @BindView(R.id.avatar_hat)
-    ImageView hatImage;
-
-    @BindView(R.id.avatar_shirt)
-    ImageView shirtImage;
-
-    @BindView(R.id.avatar_pants)
-    ImageView pantsImage;
-
-    @BindView(R.id.avatar)
-    ImageView avatarImage;
-
     @BindView(R.id.text_currency)
     TextView currencyText;
+
+    @BindView(R.id.model)
+    AvatarImage avatarImage;
 
     @BindView(R.id.image_equipped_hat)
     ImageView equippedHat;
@@ -170,90 +158,6 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
         itemsListAdapater.replaceData(itemList);
     }
 
-    @Override
-    public void setAvatarImage(int id) {
-        avatarImage.setImageResource(id);
-    }
-
-    @Override
-    public void setHatImage(int id) {
-        hatImage.setImageResource(id);
-        equippedHat.setImageResource(id);
-    }
-
-    @Override
-    public void setPantsImage(int id) {
-        pantsImage.setImageResource(id);
-        equippedPants.setImageResource(id);
-    }
-
-    @Override
-    public void setShirtImage(int id) {
-        shirtImage.setImageResource(id);
-        equippedShirt.setImageResource(id);
-    }
-
-    @Override
-    public void setShoesImage(int id) {
-        shoesImage.setImageResource(id);
-        equippedShoes.setImageResource(id);
-    }
-
-    @Override
-    public void animateHat(boolean animate) {
-        AnimationDrawable animationDrawable = (AnimationDrawable) hatImage.getDrawable();
-        if (animate) {
-            restartAnimation(animationDrawable);
-        } else {
-            animationDrawable.stop();
-        }
-    }
-
-    @Override
-    public void animateShirt(boolean animate) {
-        AnimationDrawable animationDrawable = (AnimationDrawable) shirtImage.getDrawable();
-        if (animate) {
-            restartAnimation(animationDrawable);
-        } else {
-            animationDrawable.stop();
-        }
-    }
-
-    @Override
-    public void animateShoes(boolean animate) {
-        AnimationDrawable animationDrawable = (AnimationDrawable) shoesImage.getDrawable();
-        if (animate) {
-            restartAnimation(animationDrawable);
-        } else {
-            animationDrawable.stop();
-        }
-    }
-
-    @Override
-    public void animatePants(boolean animate) {
-        AnimationDrawable animationDrawable = (AnimationDrawable) pantsImage.getDrawable();
-        if (animate) {
-            restartAnimation(animationDrawable);
-        } else {
-            animationDrawable.stop();
-        }
-    }
-
-    @Override
-    public void animateAvatar(boolean animate) {
-        AnimationDrawable animationDrawable = (AnimationDrawable) avatarImage.getDrawable();
-        if (animate) {
-            restartAnimation(animationDrawable);
-        } else {
-            animationDrawable.stop();
-        }
-    }
-
-    private void restartAnimation(AnimationDrawable animation) {
-        animation.stop();
-        animation.start();
-    }
-
     @OnCheckedChanged({R.id.hat, R.id.shirts, R.id.pants, R.id.shoes})
     public void onRadioButtonChanged(CompoundButton button, boolean checked) {
         if (!checked) { return; }
@@ -287,5 +191,31 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
 
     @Override
     public void onBackPressed() {
+    }
+
+    @Override
+    public void setAvatarImagePart(AvatarImage.AvatarPart part, int id) {
+        avatarImage.setAvatarPartImage(part, id);
+        switch (part) {
+            case HAT:
+                equippedHat.setImageResource(id);
+                break;
+            case SHIRT:
+                equippedShirt.setImageResource(id);
+                break;
+            case PANTS:
+                equippedPants.setImageResource(id);
+                break;
+            case SHOES:
+                equippedShoes.setImageResource(id);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void animateAvatarImagePart(AvatarImage.AvatarPart part, boolean shouldAnimate) {
+        avatarImage.animatePart(part, shouldAnimate);
     }
 }

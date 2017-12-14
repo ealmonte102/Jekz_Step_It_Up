@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/shop_background"
-    app:layout_constraintTop_toBottomOf="@+id/avatar"
+    app:layout_constraintTop_toBottomOf="@+id/model"
     tools:layout_editor_absoluteY="25dp">
 
     <FrameLayout
@@ -16,8 +16,8 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline_upper_equip_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guideline_left_end"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left_start"
-        app:layout_constraintTop_toTopOf="@+id/avatar"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left_margin"
+        app:layout_constraintTop_toTopOf="@+id/model"
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
@@ -36,9 +36,9 @@
         android:layout_height="0dp"
         android:background="@drawable/equip_item_background"
         app:layout_constraintBottom_toTopOf="@+id/guideline_upper_equip_bottom"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right_equip_end"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right_margin"
         app:layout_constraintStart_toStartOf="@+id/guideline_right_equip_start"
-        app:layout_constraintTop_toTopOf="@+id/avatar">
+        app:layout_constraintTop_toTopOf="@+id/model">
 
         <ImageView
             android:id="@+id/image_equipped_shirt"
@@ -56,7 +56,7 @@
         android:layout_height="0dp"
         android:background="@drawable/equip_item_background"
         app:layout_constraintBottom_toTopOf="@+id/guideline_avatar_bottom"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right_equip_end"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right_margin"
         app:layout_constraintStart_toStartOf="@+id/guideline_right_equip_start"
         app:layout_constraintTop_toTopOf="@+id/guideline_lower_equip_top">
 
@@ -70,14 +70,15 @@
             tools:src="@drawable/boots_0" />
     </FrameLayout>
 
+
     <FrameLayout
         android:id="@+id/frame_layout_pants"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/equip_item_background"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="@+id/model"
         app:layout_constraintEnd_toStartOf="@+id/guideline_left_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left_start"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left_margin"
         app:layout_constraintTop_toTopOf="@+id/guideline_lower_equip_top">
 
         <ImageView
@@ -112,7 +113,7 @@
         app:layout_constraintBottom_toTopOf="@id/recycler_view_shop"
         app:layout_constraintEnd_toEndOf="@id/recycler_view_shop"
         app:layout_constraintStart_toStartOf="@id/recycler_view_shop"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_inventory_top">
+        app:layout_constraintTop_toBottomOf="@+id/guideline_top_friends">
 
         <RadioButton
             android:id="@+id/hat"
@@ -177,16 +178,16 @@
             android:typeface="normal" />
     </RadioGroup>
 
-    <ImageView
-        android:id="@+id/avatar"
+    <com.jekz.stepitup.ui.friends.AvatarImage
+        android:id="@+id/model"
         android:layout_width="@dimen/avatar_item_width"
         android:layout_height="0dp"
-        android:contentDescription="@string/avatar"
-        android:src="@drawable/body_animation"
+        android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_avatar_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/avatar_top" />
+
 
     <ImageView
         android:id="@+id/avatar_shoes"
@@ -194,10 +195,10 @@
         android:layout_height="0dp"
         android:contentDescription="@string/avatar_shoes"
         android:src="@drawable/blank"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
-        app:layout_constraintEnd_toEndOf="@+id/avatar"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="@+id/model"
+        app:layout_constraintEnd_toEndOf="@+id/model"
+        app:layout_constraintStart_toStartOf="@+id/model"
+        app:layout_constraintTop_toTopOf="@+id/model"
         tools:src="@drawable/boots_0" />
 
     <ImageView
@@ -206,10 +207,10 @@
         android:layout_height="0dp"
         android:contentDescription="@string/avatar_pants"
         android:src="@drawable/blank"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
-        app:layout_constraintEnd_toEndOf="@+id/avatar"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="@+id/model"
+        app:layout_constraintEnd_toEndOf="@+id/model"
+        app:layout_constraintStart_toStartOf="@+id/model"
+        app:layout_constraintTop_toTopOf="@+id/model"
         tools:src="@drawable/dresspants_0" />
 
     <ImageView
@@ -218,10 +219,10 @@
         android:layout_height="0dp"
         android:contentDescription="@string/avatar_shirt"
         android:src="@drawable/blank"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
-        app:layout_constraintEnd_toEndOf="@+id/avatar"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="@+id/model"
+        app:layout_constraintEnd_toEndOf="@+id/model"
+        app:layout_constraintStart_toStartOf="@+id/model"
+        app:layout_constraintTop_toTopOf="@+id/model"
         tools:src="@drawable/spotpjshirtblue_animation" />
 
     <ImageView
@@ -230,12 +231,12 @@
         android:layout_height="0dp"
         android:contentDescription="@string/avatar_hat"
         android:src="@drawable/blank"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
-        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="@+id/model"
+        app:layout_constraintEnd_toEndOf="@+id/model"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/model"
+        app:layout_constraintTop_toTopOf="@+id/model"
+        app:layout_constraintVertical_bias="0.0"
         tools:src="@drawable/jesterhat_0" />
 
     <android.support.v7.widget.AppCompatImageView
@@ -262,7 +263,7 @@
         app:autoSizeStepGranularity="2sp"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="@+id/image_footprint"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right_equip_end"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right_margin"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/image_footprint"
         app:layout_constraintTop_toTopOf="@+id/image_footprint"
@@ -277,7 +278,7 @@
         app:layout_constraintGuide_percent="0.5121413" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline_inventory_top"
+        android:id="@+id/guideline_top_friends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -298,7 +299,7 @@
         app:layout_constraintGuide_percent="0.36" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline_left_start"
+        android:id="@+id/guideline_left_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -319,7 +320,7 @@
         app:layout_constraintGuide_percent="0.13" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline_right_equip_end"
+        android:id="@+id/guideline_right_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -371,8 +372,8 @@
         android:background="@drawable/model_change_background"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar" />
+        app:layout_constraintStart_toStartOf="@+id/model"
+        app:layout_constraintTop_toTopOf="@+id/model" />
 
     <ImageButton
         android:id="@+id/button_shop_back"
@@ -383,7 +384,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_title"
         app:layout_constraintEnd_toStartOf="@+id/text_title"
         app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left_start"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left_margin"
         app:layout_constraintTop_toTopOf="@id/text_title"
         app:layout_constraintVertical_bias="0.35000002" />
 

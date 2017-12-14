@@ -9,6 +9,7 @@ import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.IntervalStepCounter;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.StepCounter;
+import com.jekz.stepitup.ui.friends.AvatarImage;
 import com.jekz.stepitup.ui.login.LoginManager;
 
 import org.json.JSONArray;
@@ -49,21 +50,25 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         String model = avatar.isMale() ? "male" : "female";
 
         if (hat != null) {
-            shopView.setHatImage(itemInteractor.getItem(hat.getId()).second);
+            shopView.setAvatarImagePart(AvatarImage.AvatarPart.HAT, itemInteractor.getItem(hat
+                    .getId()).second);
         }
 
         if (shirt != null) {
-            shopView.setShirtImage(itemInteractor.getItem(shirt.getId()).second);
+            shopView.setAvatarImagePart(AvatarImage.AvatarPart.SHIRT, itemInteractor.getItem(shirt
+                    .getId()).second);
         }
 
         if (pants != null) {
-            shopView.setPantsImage(itemInteractor.getItem(pants.getId()).second);
+            shopView.setAvatarImagePart(AvatarImage.AvatarPart.PANTS, itemInteractor.getItem(pants
+                    .getId()).second);
         }
 
         if (shoes != null) {
-            shopView.setShoesImage(itemInteractor.getItem(shoes.getId()).second);
+            shopView.setAvatarImagePart(AvatarImage.AvatarPart.SHOES, itemInteractor.getItem(shoes
+                    .getId()).second);
         }
-        shopView.setAvatarImage(itemInteractor.getModel(model));
+        shopView.setAvatarImagePart(AvatarImage.AvatarPart.MODEL, itemInteractor.getModel(model));
     }
 
     void reloadAnimations() {
@@ -73,18 +78,18 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         Item shoes = avatar.getShoes();
 
         if (hat != null && hat.isAnimated()) {
-            shopView.animateHat(true);
+            shopView.animateAvatarImagePart(AvatarImage.AvatarPart.HAT, true);
         }
         if (shirt != null && shirt.isAnimated()) {
-            shopView.animateShirt(true);
+            shopView.animateAvatarImagePart(AvatarImage.AvatarPart.SHIRT, true);
         }
         if (pants != null && pants.isAnimated()) {
-            shopView.animatePants(true);
+            shopView.animateAvatarImagePart(AvatarImage.AvatarPart.PANTS, true);
         }
         if (shoes != null && shoes.isAnimated()) {
-            shopView.animateShoes(true);
+            shopView.animateAvatarImagePart(AvatarImage.AvatarPart.SHOES, true);
         }
-        shopView.animateAvatar(true);
+        shopView.animateAvatarImagePart(AvatarImage.AvatarPart.MODEL, true);
 
     }
 
@@ -262,42 +267,42 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
                             if (hatid != 0) {
                                 Item hat = itemInteractor.getItem(hatid).first;
-                                int hatID = itemInteractor.getItem(hatid).second;
+                                int hatResId = itemInteractor.getItem(hatid).second;
                                 avatar.wearItem(hat);
-                                shopView.setHatImage(hatID);
+                                shopView.setAvatarImagePart(AvatarImage.AvatarPart.HAT, hatResId);
                             } else {
                                 avatar.removeItem(Item.Item_Type.HAT);
-                                shopView.setHatImage(0);
+                                shopView.setAvatarImagePart(AvatarImage.AvatarPart.HAT, 0);
                             }
 
                             if (shirtid != 0) {
                                 Item shirt = itemInteractor.getItem(shirtid).first;
                                 int shirtID = itemInteractor.getItem(shirtid).second;
                                 avatar.wearItem(shirt);
-                                shopView.setShirtImage(shirtID);
+                                shopView.setAvatarImagePart(AvatarImage.AvatarPart.SHIRT, shirtID);
                             } else {
                                 avatar.removeItem(Item.Item_Type.SHIRT);
-                                shopView.setShirtImage(0);
+                                shopView.setAvatarImagePart(AvatarImage.AvatarPart.SHIRT, 0);
                             }
 
                             if (pantsid != 0) {
                                 Item pants = itemInteractor.getItem(pantsid).first;
                                 int pantsID = itemInteractor.getItem(pantsid).second;
                                 avatar.wearItem(pants);
-                                shopView.setPantsImage(pantsID);
+                                shopView.setAvatarImagePart(AvatarImage.AvatarPart.PANTS, pantsID);
                             } else {
                                 avatar.removeItem(Item.Item_Type.PANTS);
-                                shopView.setPantsImage(0);
+                                shopView.setAvatarImagePart(AvatarImage.AvatarPart.PANTS, 0);
                             }
 
                             if (shoesid != 0) {
                                 Item shoes = itemInteractor.getItem(shoesid).first;
                                 int shoesID = itemInteractor.getItem(shoesid).second;
                                 avatar.wearItem(shoes);
-                                shopView.setShoesImage(shoesID);
+                                shopView.setAvatarImagePart(AvatarImage.AvatarPart.SHOES, shoesID);
                             } else {
                                 avatar.removeItem(Item.Item_Type.SHOES);
-                                shopView.setShoesImage(0);
+                                shopView.setAvatarImagePart(AvatarImage.AvatarPart.SHOES, 0);
                             }
 
                             reloadAnimations();
@@ -319,7 +324,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                         if (gender.equals("male") || gender.equals("female")) {
                             avatar.setMale(gender);
                             int modelID = itemInteractor.getModel(gender);
-                            shopView.setAvatarImage(modelID);
+                            shopView.setAvatarImagePart(AvatarImage.AvatarPart.MODEL, modelID);
                             reloadAnimations();
                         }
                     }
