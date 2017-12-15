@@ -10,6 +10,7 @@ import com.jekz.stepitup.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by evanalmonte on 12/15/17.
@@ -90,6 +91,7 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     }
 
+    //View Holder Definitions
     class ConfirmedFriendViewHolder extends RecyclerView.ViewHolder implements
             FriendRowView {
 
@@ -146,6 +148,18 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         @Override
         public void addButtonListener(FriendsListPresenter.PendingFriendButtonListener listener) {
             this.listener = listener;
+        }
+
+        @OnClick({R.id.button_confirm, R.id.button_deny})
+        void modifyButtonClicked(View view) {
+            switch (view.getId()) {
+                case R.id.button_confirm:
+                    listener.onConfirm(getLayoutPosition());
+                    break;
+                case R.id.button_deny:
+                    listener.onDeny(getLayoutPosition());
+                    break;
+            }
         }
     }
 }

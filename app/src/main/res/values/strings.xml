@@ -25,4 +25,6 @@
     <string name="menu_shop_title">Shop</string>
     <string name="menu_logut_name">Logout</string>
     <string name="menu_friends_name">Friends</string>
+    <string name="friends">Friends</string>
+    <string name="pending">Pending</string>
 </resources>
