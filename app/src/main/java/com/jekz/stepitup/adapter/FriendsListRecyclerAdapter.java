@@ -67,6 +67,8 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         void setBackgroundColor(int color);
 
         void setUsername(String username);
+
+        void addFriendClickListener(FriendsListPresenter.FriendClickListener listener);
     }
 
     //Interface Definitions
@@ -89,6 +91,10 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
             void onDeny(int position);
         }
 
+        interface FriendClickListener {
+            void onFriendClicked(int position);
+        }
+
     }
 
     //View Holder Definitions
@@ -98,7 +104,9 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         @BindView(R.id.text_username)
         TextView usernameText;
 
-        ConfirmedFriendViewHolder(View itemView) {
+        private FriendsListPresenter.FriendClickListener listener;
+
+        ConfirmedFriendViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +116,7 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                     selectedPosition = getLayoutPosition();
                     notifyItemChanged(oldPosition);
                     notifyItemChanged(selectedPosition);
+                    listener.onFriendClicked(selectedPosition);
                 }
             });
         }
@@ -115,6 +124,11 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         @Override
         public void setUsername(String username) {
             usernameText.setText(username);
+        }
+
+        @Override
+        public void addFriendClickListener(FriendsListPresenter.FriendClickListener listener) {
+            this.listener = listener;
         }
 
         @Override
@@ -138,6 +152,11 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         @Override
         public void setUsername(String username) {
             usernameText.setText(username);
+        }
+
+        @Override
+        public void addFriendClickListener(FriendsListPresenter.FriendClickListener listener) {
+            //Intentionally empty
         }
 
         @Override

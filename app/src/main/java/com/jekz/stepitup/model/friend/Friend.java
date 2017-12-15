@@ -12,9 +12,10 @@ public class Friend {
     private Avatar avatar;
     private boolean isPending = false;
 
-    public Friend(String username, int id) {
+    public Friend(String username, int id, boolean isPending) {
         this.username = username;
         this.id = id;
+        this.isPending = isPending;
     }
 
     public Avatar getAvatar() {

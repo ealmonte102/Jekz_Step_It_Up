@@ -6,23 +6,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.jekz.stepitup.R;
 import com.jekz.stepitup.adapter.FriendsListRecyclerAdapter;
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
-import com.jekz.stepitup.model.friend.Friend;
 import com.jekz.stepitup.ui.home.HomeActivity;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class FriendActivity extends AppCompatActivity implements FriendMVP.View {
-    @BindView(R.id.recycler_view_shop)
+    @BindView(R.id.recycler_view_friends)
     RecyclerView friendsRecyclerView;
 
     @BindView(R.id.avatar_image)
@@ -30,7 +29,6 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
 
     FriendMVP.Presenter presenter;
 
-    //TODO create FriendsListAdapter for recycler view
     FriendsListRecyclerAdapter adapter;
 
     @Override
@@ -47,8 +45,26 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     }
 
     @Override
-    public void reloadFriendsList(List<Friend> friends) {
-        //TODO update friendsListAdapter's data with argument.
+    protected void onStart() {
+        super.onStart();
+        presenter.onViewAttached(this);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onViewDetached();
+    }
+
+    @Override
+    public void reloadFriendsList() {
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.button_shop_back)
@@ -68,6 +84,14 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
         avatarImage.animatePart(part, shouldAnimate);
     }
 
+
+    /**
+     * Implementation intentionally empty to disable back button
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
     @OnClick({R.id.add_button, R.id.remove_button})
     public void friendsButtonClicked(View view) {
         switch (view.getId()) {
@@ -80,10 +104,17 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
         }
     }
 
-    /**
-     * Implementation intentionally empty to disable back button
-     */
-    @Override
-    public void onBackPressed() {
+
+    @OnCheckedChanged({R.id.friends_radio_button, R.id.pending_friends_radio_buton})
+    public void onRadioButtonChanged(CompoundButton button, boolean checked) {
+        if (!checked) { return; }
+        switch (button.getId()) {
+            case R.id.friends_radio_button:
+                presenter.loadFriends();
+                break;
+            case R.id.pending_friends_radio_buton:
+                presenter.loadPending();
+                break;
+        }
     }
 }
