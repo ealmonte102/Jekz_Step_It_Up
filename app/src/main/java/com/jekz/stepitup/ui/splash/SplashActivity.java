@@ -19,12 +19,6 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         SharedPrefsManager manager = SharedPrefsManager.getInstance(getApplicationContext());
         loginManager = new RemoteLoginModel(manager);
-        loginManager.logout(new LoginManager.LogoutCallback() {
-            @Override
-            public void onLogout(boolean logoutSuccessful) {
-
-            }
-        });
         Intent intent;
         if (loginManager.isLoggedIn()) {
             intent = new Intent(this, HomeActivity.class);

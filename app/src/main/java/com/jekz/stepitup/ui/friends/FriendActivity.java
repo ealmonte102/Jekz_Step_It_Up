@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.jekz.stepitup.R;
@@ -23,6 +24,8 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     @BindView(R.id.avatar_image)
     AvatarImage avatarImage;
 
+    FriendMVP.Presenter presenter;
+
     //TODO create FriendsListAdapter for recycler view
     //FriendsListAdapter friendsListAdapter;
 
@@ -31,6 +34,7 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_layout);
         ButterKnife.bind(this);
+        this.presenter = new FriendPresenter();
     }
 
     @Override
@@ -53,6 +57,18 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     @Override
     public void animateAvatarImagePart(AvatarImage.AvatarPart part, boolean shouldAnimate) {
         avatarImage.animatePart(part, shouldAnimate);
+    }
+
+    @OnClick({R.id.add_button, R.id.remove_button})
+    public void friendsButtonClicked(View view) {
+        switch (view.getId()) {
+            case R.id.add_button:
+                presenter.addFriend();
+                break;
+            case R.id.remove_button:
+                presenter.removeFriend();
+                break;
+        }
     }
 
     /**
