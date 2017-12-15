@@ -3,11 +3,13 @@ package com.jekz.stepitup.ui.friends;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
 import com.jekz.stepitup.R;
+import com.jekz.stepitup.adapter.FriendsListRecyclerAdapter;
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.model.friend.Friend;
@@ -29,15 +31,19 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     FriendMVP.Presenter presenter;
 
     //TODO create FriendsListAdapter for recycler view
-    //FriendsListAdapter friendsListAdapter;
+    FriendsListRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_layout);
         ButterKnife.bind(this);
-        this.presenter = new FriendPresenter(new RemoteLoginModel(SharedPrefsManager.getInstance
-                (getApplicationContext())));
+        FriendPresenter presenter = new FriendPresenter(
+                new RemoteLoginModel(SharedPrefsManager.getInstance(getApplicationContext())));
+        this.presenter = presenter;
+        adapter = new FriendsListRecyclerAdapter(presenter);
+        friendsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        friendsRecyclerView.setAdapter(adapter);
     }
 
     @Override

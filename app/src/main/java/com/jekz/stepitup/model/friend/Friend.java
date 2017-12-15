@@ -7,20 +7,37 @@ import com.jekz.stepitup.model.avatar.Avatar;
  */
 
 public class Friend {
-    private final Avatar avatar;
+    private final int id;
     private final String username;
+    private Avatar avatar;
+    private boolean isPending = false;
 
-    public Friend(Avatar avatar, String username) {
-        this.avatar = avatar;
+    public Friend(String username, int id) {
         this.username = username;
+        this.id = id;
     }
 
     public Avatar getAvatar() {
         return avatar;
     }
 
+    public void setAvatar(Avatar avatar) {
+
+    }
+
     public String getUsername() {
         return username;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public boolean isPending() {
+        return isPending;
+    }
+
+    public void setPending(boolean isPending) {
+        this.isPending = isPending;
+    }
 }
