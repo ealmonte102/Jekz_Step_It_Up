@@ -3,6 +3,7 @@ package com.jekz.stepitup.ui.shop;
 import android.util.Log;
 
 import com.jekz.stepitup.AvatarRepo;
+import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
@@ -10,7 +11,6 @@ import com.jekz.stepitup.model.step.IntervalStepCounter;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.StepCounter;
 import com.jekz.stepitup.ui.friends.AvatarImage;
-import com.jekz.stepitup.ui.login.LoginManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,7 +111,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     }
 
     void buyItem(Item item) {
-        updateItem(1, item.getId(), "purchase", 0, 0, 0, 0, "nogender");
+        updateItem(item.getId(), "purchase", 0, 0, 0, 0, "nogender");
     }
 
     boolean checkForItem(Item item) {
@@ -153,15 +153,15 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                 shoesid = item.getId();
                 break;
         }
-        updateItem(1, 0, "equip", hatid, shirtid, pantsid, shoesid, "nogender");
+        updateItem(0, "equip", hatid, shirtid, pantsid, shoesid, "nogender");
     }
 
     void changeGender() {
         boolean isMale = avatar.isMale();
         if (isMale) {
-            updateItem(1, 0, "gender", 0, 0, 0, 0, "female");
+            updateItem(0, "gender", 0, 0, 0, 0, "female");
         } else {
-            updateItem(1, 0, "gender", 0, 0, 0, 0, "male");
+            updateItem(0, "gender", 0, 0, 0, 0, "male");
         }
     }
 
@@ -204,7 +204,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                 shoesid = 0;
                 break;
         }
-        updateItem(1, 0, "equip", hatid, shirtid, pantsid, shoesid, "nogender");
+        updateItem(0, "equip", hatid, shirtid, pantsid, shoesid, "nogender");
     }
 
     @Override
@@ -360,19 +360,13 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     }
 
 
-    void updateItem(int userid, int itemid, String type, int hatid, int shirtid, int pantsid, int shoesid, String gender) {
-        String session = loginManager.getSession();
-        Log.d(TAG, "Current session cookie: " + session);
-        ShopRequest shopRequest = new ShopRequest(null);
-
-        shopRequest.delegate = this;
-
+    void updateItem(int itemid, String type, int hatid, int shirtid, int pantsid, int shoesid,
+                    String gender) {
         JSONObject postData = new JSONObject();
 
         if (type.equals("purchase")) {
             try {
                 postData.put("data_type", "items");
-                postData.put("userid", userid);
                 postData.put("itemid", itemid);
                 postData.put("amount", 1);
 
@@ -381,7 +375,6 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         if (type.equals("equip")) {
             try {
                 postData.put("data_type", "user_data");
-                postData.put("userid", userid);
                 postData.put("hat", hatid);
                 postData.put("shirt", shirtid);
                 postData.put("pants", pantsid);
@@ -394,7 +387,6 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         if (type.equals("gender")) {
             try {
                 postData.put("action", "update_user_info");
-                postData.put("userid", userid);
                 postData.put("weight", 0);
                 postData.put("height", 0);
                 postData.put("gender", gender);
@@ -402,13 +394,15 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
             } catch (JSONException e) {e.printStackTrace();}
         }
 
-        shopRequest.postData = postData;
+        String session = loginManager.getSession();
+        Log.d(TAG, "Current session cookie: " + session);
+        ShopRequest shopRequest = new ShopRequest(postData, session);
+        shopRequest.delegate = this;
         shopRequest.execute("https://jekz.herokuapp.com/api/db/update");
     }
 
     void retrieveItem(int userid, String datatype) {
-        ShopRequest asyncTask2 = new ShopRequest(null);
-        asyncTask2.delegate = this;
+        String session = loginManager.getSession();
 
         JSONObject postData = new JSONObject();
         try {
@@ -417,7 +411,8 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
         } catch (JSONException e) {e.printStackTrace();}
 
-        asyncTask2.postData = postData;
+        ShopRequest asyncTask2 = new ShopRequest(postData, session);
+        asyncTask2.delegate = this;
         asyncTask2.execute("https://jekz.herokuapp.com/api/db/retrieve");
     }
 

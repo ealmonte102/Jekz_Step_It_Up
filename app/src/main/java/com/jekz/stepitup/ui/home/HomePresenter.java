@@ -4,6 +4,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.jekz.stepitup.AvatarRepo;
+import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.graphtest.AsyncResponse;
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
@@ -23,12 +24,14 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
     private ItemInteractor itemInteractor;
     private Avatar avatar;
     private HomeMVP.View view;
+    private LoginManager loginManager;
 
-    public HomePresenter(ItemInteractor itemInteractor) {
+    public HomePresenter(ItemInteractor itemInteractor, LoginManager loginManager) {
         this.itemInteractor = itemInteractor;
         avatar = AvatarRepo.getInstance().getAvatar();
-        retrieveItem(1, "items");
-        retrieveItem(1, "user_data");
+        this.loginManager = loginManager;
+        retrieveItem("items");
+        retrieveItem("user_data");
     }
 
     @Override
@@ -87,16 +90,15 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
         this.view = null;
     }
 
-    private void retrieveItem(int userid, String datatype) {
-
+    private void retrieveItem(String datatype) {
+        String session = loginManager.getSession();
         JSONObject postData = new JSONObject();
         try {
             postData.put("data_type", datatype);
-            postData.put("userid", userid);
 
         } catch (JSONException e) {e.printStackTrace();}
 
-        ShopRequest asyncTask2 = new ShopRequest(postData);
+        ShopRequest asyncTask2 = new ShopRequest(postData, session);
         asyncTask2.delegate = this;
         asyncTask2.execute("https://jekz.herokuapp.com/api/db/retrieve");
     }

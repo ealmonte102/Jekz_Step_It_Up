@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.jekz.stepitup.JekzApplication;
 import com.jekz.stepitup.R;
 import com.jekz.stepitup.data.SharedPrefsManager;
+import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.ui.home.HomeActivity;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 

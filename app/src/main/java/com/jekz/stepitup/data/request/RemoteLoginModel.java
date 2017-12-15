@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.jekz.stepitup.data.LoginPreferences;
 import com.jekz.stepitup.data.SharedPrefsManager;
-import com.jekz.stepitup.ui.login.LoginManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

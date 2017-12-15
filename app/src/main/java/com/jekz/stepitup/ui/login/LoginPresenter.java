@@ -1,5 +1,7 @@
 package com.jekz.stepitup.ui.login;
 
+import com.jekz.stepitup.data.request.LoginManager;
+import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.StepCounter;
 
@@ -11,9 +13,9 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
         .LogoutCallback, StepCounter.StepCounterCallback {
     private static final String TAG = RemoteLoginModel.class.getName();
     final int STEP_GOAL = 100;
-    LoginMVP.View loginView;
-    LoginManager loginManager;
-    StepCounter stepCounter;
+    private LoginMVP.View loginView;
+    private LoginManager loginManager;
+    private StepCounter stepCounter;
 
     LoginPresenter(StepCounter stepCounter, LoginManager loginManager) {
         this.loginManager = loginManager;

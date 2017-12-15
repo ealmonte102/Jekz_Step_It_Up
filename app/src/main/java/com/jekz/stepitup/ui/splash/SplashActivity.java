@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.jekz.stepitup.data.SharedPrefsManager;
+import com.jekz.stepitup.data.request.LoginManager;
+import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.ui.home.HomeActivity;
 import com.jekz.stepitup.ui.login.LoginActivity;
-import com.jekz.stepitup.ui.login.LoginManager;
-import com.jekz.stepitup.ui.login.RemoteLoginModel;
 
 public class SplashActivity extends Activity {
     private static final String TAG = SplashActivity.class.getName();
@@ -19,7 +19,12 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         SharedPrefsManager manager = SharedPrefsManager.getInstance(getApplicationContext());
         loginManager = new RemoteLoginModel(manager);
+        loginManager.logout(new LoginManager.LogoutCallback() {
+            @Override
+            public void onLogout(boolean logoutSuccessful) {
 
+            }
+        });
         Intent intent;
         if (loginManager.isLoggedIn()) {
             intent = new Intent(this, HomeActivity.class);

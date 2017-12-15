@@ -2,7 +2,6 @@ package com.jekz.stepitup.data.request;
 
 import com.jekz.stepitup.data.LoginPreferences;
 import com.jekz.stepitup.data.SharedPrefsManager.Key;
-import com.jekz.stepitup.ui.login.LoginManager;
 
 import java.util.HashMap;
 

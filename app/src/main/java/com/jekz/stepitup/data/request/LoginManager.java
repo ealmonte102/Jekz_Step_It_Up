@@ -1,4 +1,4 @@
-package com.jekz.stepitup.ui.login;
+package com.jekz.stepitup.data.request;
 
 /**
  * Created by evanalmonte on 12/12/17.
@@ -18,6 +18,7 @@ public interface LoginManager {
     String getSession();
 
     String getUsername();
+
     /**
      * Interface representing callback to be notified on completion of login
      */

@@ -27,12 +27,12 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
 
     public AsyncResponse delegate;
 
-    JSONObject postData;
+    private JSONObject postData;
+    private String session;
 
-    public ShopRequest(JSONObject postData) {
-        if (postData != null) {
-            this.postData = postData;
-        }
+    public ShopRequest(JSONObject postData, String session) {
+        this.session = session;
+        this.postData = postData;
     }
 
     @Override
@@ -49,6 +49,7 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
 
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Cookie", session);
 
             // Send the post body
             if (this.postData != null) {
@@ -77,15 +78,12 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
             }
 
             String jsonStr = new String(b, StandardCharsets.UTF_8);
-            Log.d("myTest", "jsonStr: " + jsonStr);
 
             JSONArray resultArray;
 
             try {
                 resultArray = new JSONArray(jsonStr);
             } catch (JSONException e) { resultArray = new JSONArray("[" + jsonStr + "]");}
-
-            int statusCode = urlConnection.getResponseCode();
 
 
 
@@ -100,7 +98,6 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
 
     @Override
     protected void onPostExecute(JSONArray result) {
-
 
         if (result != null) {
             delegate.processFinish(result);

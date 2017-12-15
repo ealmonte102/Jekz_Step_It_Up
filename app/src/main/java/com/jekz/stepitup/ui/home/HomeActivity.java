@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.jekz.stepitup.JekzApplication;
 import com.jekz.stepitup.R;
+import com.jekz.stepitup.data.SharedPrefsManager;
+import com.jekz.stepitup.data.request.LoginManager;
+import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.graphtest.GraphActivity;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.IntervalStepCounter;
@@ -56,7 +59,9 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View, Ste
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        presenter = new HomePresenter(ItemInteractor.getInstance(getResources()));
+        LoginManager loginManager = new RemoteLoginModel(SharedPrefsManager.getInstance
+                (getApplicationContext()));
+        presenter = new HomePresenter(ItemInteractor.getInstance(getResources()), loginManager);
     }
 
     @Override

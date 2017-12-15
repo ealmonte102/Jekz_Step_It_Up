@@ -17,13 +17,13 @@ import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.jekz.stepitup.JekzApplication;
 import com.jekz.stepitup.R;
 import com.jekz.stepitup.data.SharedPrefsManager;
+import com.jekz.stepitup.data.request.LoginManager;
+import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.item.ItemListAdapter;
 import com.jekz.stepitup.ui.friends.AvatarImage;
 import com.jekz.stepitup.ui.home.HomeActivity;
-import com.jekz.stepitup.ui.login.LoginManager;
-import com.jekz.stepitup.ui.login.RemoteLoginModel;
 
 import java.util.List;
 
