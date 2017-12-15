@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jekz.stepitup.JekzApplication;
@@ -48,6 +49,13 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View, Ste
 
     @BindView(R.id.image_avatar_shoes_home)
     ImageView shoesImage;
+
+    @BindView(R.id.text_username)
+    TextView usernameText;
+
+    @BindView(R.id.text_currency)
+    TextView currencyText;
+
 
     HomeMVP.Presenter presenter;
     IntervalStepCounter stepCounter;
@@ -139,6 +147,16 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View, Ste
     @Override
     public void setShoesImage(int id) {
         shoesImage.setImageResource(id);
+    }
+
+    @Override
+    public void setCurrency(String currency) {
+        currencyText.setText(currency);
+    }
+
+    @Override
+    public void setUsername(String username) {
+        usernameText.setText(username);
     }
 
     @Override

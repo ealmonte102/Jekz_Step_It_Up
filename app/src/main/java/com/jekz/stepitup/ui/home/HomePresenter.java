@@ -15,12 +15,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
+
 
 /**
  * Created by evanalmonte on 12/10/17.
  */
 
 public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
+    private static final String TAG = HomePresenter.class.getName();
     private ItemInteractor itemInteractor;
     private Avatar avatar;
     private HomeMVP.View view;
@@ -82,6 +85,7 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
     @Override
     public void onViewAttached(HomeMVP.View view) {
         this.view = view;
+        view.setUsername(loginManager.getUsername());
         loadAvatar();
     }
 
@@ -106,6 +110,7 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
 
     @Override
     public void processFinish(JSONArray output) {
+        Log.d(TAG, "Recieved Output: " + output.toString());
         if (view == null) { return; }
         for (int i = 0; i < output.length(); i++) {
 
@@ -266,8 +271,7 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
                 int currency = s.getInt("currency");
 
                 avatar.setCurrency(currency);
-                //view.setCurrencyText("x" + NumberFormat.getInstance().format(avatar.getCurrency
-                // ()));
+                view.setCurrency("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
 
             } catch (JSONException e) {e.getMessage();}
         }

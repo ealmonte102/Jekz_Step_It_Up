@@ -19,6 +19,10 @@ interface HomeMVP {
 
         void setShoesImage(int id);
 
+        void setCurrency(String currency);
+
+        void setUsername(String username);
+
         void displayMessage(String message);
 
         void navigateToShop();
