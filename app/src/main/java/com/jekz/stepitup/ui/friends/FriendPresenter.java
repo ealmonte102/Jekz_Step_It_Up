@@ -1,13 +1,18 @@
 package com.jekz.stepitup.ui.friends;
 
+import com.jekz.stepitup.data.request.LoginManager;
+
 /**
  * Created by evanalmonte on 12/13/17.
  */
 
 public class FriendPresenter implements FriendMVP.Presenter {
-    FriendMVP.View view;
+    private FriendMVP.View view;
+    private LoginManager loginManager;
 
-    public FriendPresenter() { }
+    public FriendPresenter(LoginManager loginManager) {
+        this.loginManager = loginManager;
+    }
 
     @Override
     public void onViewAttached(FriendMVP.View view) {

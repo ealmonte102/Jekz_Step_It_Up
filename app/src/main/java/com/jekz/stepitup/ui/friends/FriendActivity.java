@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.jekz.stepitup.R;
+import com.jekz.stepitup.data.SharedPrefsManager;
+import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.model.friend.Friend;
 import com.jekz.stepitup.ui.home.HomeActivity;
 
@@ -34,7 +36,8 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_layout);
         ButterKnife.bind(this);
-        this.presenter = new FriendPresenter();
+        this.presenter = new FriendPresenter(new RemoteLoginModel(SharedPrefsManager.getInstance
+                (getApplicationContext())));
     }
 
     @Override
