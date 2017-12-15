@@ -1,9 +1,18 @@
 package com.jekz.stepitup.ui.friends;
 
+import android.util.Log;
+
 import com.jekz.stepitup.R;
 import com.jekz.stepitup.adapter.FriendsListRecyclerAdapter;
 import com.jekz.stepitup.data.request.LoginManager;
+import com.jekz.stepitup.graphtest.AsyncResponse;
 import com.jekz.stepitup.model.friend.Friend;
+import com.jekz.stepitup.model.item.ItemInteractor;
+import com.jekz.stepitup.ui.shop.ShopRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +26,8 @@ import static com.jekz.stepitup.adapter.FriendsListRecyclerAdapter.FriendsListPr
  */
 
 public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresenter,
-        FriendsListPresenter.PendingFriendButtonListener, FriendsListPresenter.FriendClickListener {
+        FriendsListPresenter.PendingFriendButtonListener, FriendsListPresenter
+                .FriendClickListener, AsyncResponse {
     private static final String TAG = FriendPresenter.class.getName();
 
     private List<Friend> confirmedList = new ArrayList<>();
@@ -29,10 +39,14 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
 
     private LoginManager loginManager;
 
+    private ItemInteractor itemInteractor;
 
-    FriendPresenter(LoginManager loginManager) {
+
+    FriendPresenter(LoginManager loginManager, ItemInteractor itemInteractor) {
         this.loginManager = loginManager;
-        confirmedList.add(new Friend("zia", 1, false));
+        this.itemInteractor = itemInteractor;
+        activeFriendList = confirmedList;
+        /*confirmedList.add(new Friend("zia", 1, false));
         confirmedList.add(new Friend("bob", 2, false));
         confirmedList.add(new Friend("jun", 4, false));
         confirmedList.add(new Friend("kevin", 5, false));
@@ -40,12 +54,13 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
 
         pendingList.add(new Friend("bonsy89", 1, true));
         pendingList.add(new Friend("obrenic12", 2, true));
-        activeFriendList = confirmedList;
+            */
     }
 
     @Override
     public void onViewAttached(FriendMVP.View view) {
         this.view = view;
+        retrieveFriends("friends");
     }
 
     @Override
@@ -124,5 +139,93 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     @Override
     public void onFriendClicked(int position) {
         view.showMessage("Loading " + activeFriendList.get(position).getUsername() + "'s avatar");
+        retrieveFriendEquip(activeFriendList.get(position).getId());
+    }
+
+    @Override
+    public void processFinish(JSONArray output) {
+        Log.d(TAG, "Output: " + output.toString());
+        for (int i = 0; i < output.length(); i++) {
+
+            // Friends
+            try {
+                JSONObject q = output.getJSONObject(i);
+                int friendID = q.getInt("friendid");
+                String friendName = q.getString("friendname");
+                Log.d(TAG, "FriendId: " + friendID);
+                Log.d(TAG, "Friend Name: " + friendName);
+                Friend newFriend = new Friend(friendName, friendID, false);
+                confirmedList.add(newFriend);
+                view.showAddedFriend(i);
+            } catch (JSONException e) {}
+
+            // Pending Friends
+            try {
+                JSONObject q = output.getJSONObject(i);
+                String verify = q.getString("return_data");
+                if (verify.equals("pending_friends")) {
+                    int friendID = q.getInt("friendid");
+                    String friendName = q.getString("friendname");
+                    Friend newFriend = new Friend(friendName, friendID, true);
+                    pendingList.add(newFriend);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //User Data
+            try {
+                JSONObject s = output.getJSONObject(i);
+                int filter = s.getInt("total_sessions");
+
+                String gender = s.getString("gender");
+
+                if (gender.equals("male") || gender.equals("female")) {
+                    int modelID = itemInteractor.getModel(gender);
+                    view.setAvatarImagePart(AvatarImage.AvatarPart.MODEL, modelID);
+                }
+
+                int hatid = s.getInt("hat");
+                int shirtid = s.getInt("shirt");
+                int pantsid = s.getInt("pants");
+                int shoesid = s.getInt("shoes");
+
+                int hatID = itemInteractor.getItem(hatid).second;
+                view.setAvatarImagePart(AvatarImage.AvatarPart.HAT, hatID);
+                int shirtID = itemInteractor.getItem(shirtid).second;
+                view.setAvatarImagePart(AvatarImage.AvatarPart.SHIRT, shirtID);
+                int pantsID = itemInteractor.getItem(pantsid).second;
+                view.setAvatarImagePart(AvatarImage.AvatarPart.PANTS, pantsID);
+                int shoesID = itemInteractor.getItem(shoesid).second;
+                view.setAvatarImagePart(AvatarImage.AvatarPart.SHOES, shoesID);
+            } catch (JSONException e) {
+                e.getMessage();
+            }
+        }
+    }
+
+    void retrieveFriends(String datatype) {
+        String session = loginManager.getSession();
+
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("action", datatype);
+
+        } catch (JSONException e) {e.printStackTrace();}
+
+        ShopRequest asyncTask = new ShopRequest(postData, session);
+        asyncTask.delegate = this;
+        asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
+    }
+
+    void retrieveFriendEquip(int id) {
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("data_type", "user_data");
+            postData.put("userid", id);
+        } catch (JSONException e) {e.printStackTrace();}
+
+        ShopRequest asyncTask = new ShopRequest(postData, null);
+        asyncTask.delegate = this;
+        asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
     }
 }

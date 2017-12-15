@@ -13,6 +13,7 @@ import com.jekz.stepitup.R;
 import com.jekz.stepitup.adapter.FriendsListRecyclerAdapter;
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
+import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.ui.home.HomeActivity;
 
 import butterknife.BindView;
@@ -36,8 +37,10 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_layout);
         ButterKnife.bind(this);
+
         FriendPresenter presenter = new FriendPresenter(
-                new RemoteLoginModel(SharedPrefsManager.getInstance(getApplicationContext())));
+                new RemoteLoginModel(SharedPrefsManager.getInstance(getApplicationContext())),
+                ItemInteractor.getInstance(getResources()));
         this.presenter = presenter;
         adapter = new FriendsListRecyclerAdapter(presenter);
         friendsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -61,6 +64,12 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     public void reloadFriendsList() {
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void showAddedFriend(int pos) {
+        adapter.notifyItemInserted(pos);
+    }
+
 
     @Override
     public void showMessage(String s) {
