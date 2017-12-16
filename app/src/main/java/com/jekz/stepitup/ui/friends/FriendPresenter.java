@@ -7,6 +7,7 @@ import com.jekz.stepitup.adapter.FriendsListRecyclerAdapter;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.model.friend.Friend;
 import com.jekz.stepitup.model.item.ItemInteractor;
+import com.jekz.stepitup.ui.shop.AsyncResponse;
 import com.jekz.stepitup.ui.shop.ShopRequest;
 
 import org.json.JSONArray;
@@ -24,12 +25,12 @@ import static com.jekz.stepitup.adapter.FriendsListRecyclerAdapter.FriendsListPr
 
 public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresenter,
         FriendsListPresenter.PendingFriendButtonListener, FriendsListPresenter
-                .FriendClickListener, com.jekz.stepitup.ui.shop.AsyncResponse {
+                .FriendClickListener, AsyncResponse, FriendsListPresenter.SearchClickListener {
     private static final String TAG = FriendPresenter.class.getName();
 
     private HashSet<Friend> confirmedList = new HashSet<>();
     private HashSet<Friend> pendingList = new HashSet<>();
-
+    private HashSet<Friend> searchList = new HashSet<>();
     private HashSet<Friend> activeFriendList = new HashSet<>();
 
     private int friendEditedPositon = -1;
@@ -59,10 +60,10 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
 
     @Override
     public void searchUser() {
-        //Load search bar with keyboard to type in
-        String typedName = "";
-        //Run request
-        searchUser(typedName);
+        activeFriendList = searchList;
+        view.showSearch(true);
+        view.reloadFriendsList();
+        searchUser("");
     }
 
     @Override
@@ -70,6 +71,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
         activeFriendList = pendingList;
         retrieveFriends("pending_friends");
         view.reloadFriendsList();
+        view.showSearch(false);
     }
 
     @Override
@@ -77,6 +79,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
         activeFriendList = confirmedList;
         retrieveFriends("friends");
         view.reloadFriendsList();
+        view.showSearch(false);
     }
 
     @Override
@@ -86,7 +89,6 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
 
     @Override
     public int getItemViewType(int position) {
-        Log.d(TAG, "Position: " + position);
         Friend friend = (Friend) activeFriendList.toArray()[position];
         return friend.getFriendType().ordinal();
     }
@@ -99,6 +101,8 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
         rowView.addFriendClickListener(this);
         if (activeFriendList == pendingList) {
             ((FriendsListRecyclerAdapter.PendingFriendRowView) rowView).addButtonListener(this);
+        } else if (activeFriendList == searchList) {
+            ((FriendsListRecyclerAdapter.SearchFriendRowView) rowView).addSearchClickListener(this);
         } else {
             if (position == selectedPosition) {
                 rowView.setBackgroundColor(R.drawable.shape_selected_friend);
@@ -139,6 +143,12 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
         adjustFriends("remove_friend", friend.getId());
     }
 
+    @Override
+    public void onAddFriend(int position) {
+        Friend friendToRequest = (Friend) activeFriendList.toArray()[position];
+        adjustFriends("request_friend", friendToRequest.getId());
+    }
+
     private void retrieveFriends(String datatype) {
         String session = loginManager.getSession();
 
@@ -159,6 +169,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
         JSONObject postData = new JSONObject();
         try {
             postData.put("action", "search_user");
+            postData.put("username", searchName);
 
         } catch (JSONException e) {e.printStackTrace();}
 
@@ -232,13 +243,14 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         break;
                     }
                     case "search_user": {
-                        int friendID = q.getInt("friendid");
-                        String friendName = q.getString("friendname");
+                        int friendID = q.getInt("userid");
+                        String friendName = q.getString("username");
                         Log.d(TAG, "FriendId: " + friendID);
                         Log.d(TAG, "Friend Name: " + friendName);
-                        Friend newFriend = new Friend(friendName, friendID, Friend.FriendType
+                        Friend searchedFriend = new Friend(friendName, friendID, Friend.FriendType
                                 .SEARCHED);
-                        //ADD TO SEARCH RESULTS TAB
+                        searchList.add(searchedFriend);
+                        view.showAddedFriend(activeFriendList.size() - 1);
                         break;
                     }
                     case "remove_friend": {
@@ -291,6 +303,4 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
             }
         } catch (JSONException ignored) {}
     }
-
-
 }

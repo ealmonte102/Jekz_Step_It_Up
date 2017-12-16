@@ -16,6 +16,8 @@ interface FriendMVP {
         void showRemovedFriend(int x);
 
         void showMessage(String s);
+
+        void showSearch(boolean show);
     }
 
     interface Presenter extends BasePresenter<View> {

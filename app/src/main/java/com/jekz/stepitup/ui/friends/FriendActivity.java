@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -31,6 +32,9 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
 
     @BindView(R.id.radio_group_friends)
     RadioGroup radioGroupFreinds;
+
+    @BindView(R.id.search_friends_radio_button)
+    RadioButton searchRadio;
 
     FriendMVP.Presenter presenter;
 
@@ -86,6 +90,16 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void showSearch(boolean show) {
+        if (show) {
+            searchRadio.setVisibility(View.VISIBLE);
+            radioGroupFreinds.check(R.id.search_friends_radio_button);
+        } else {
+            searchRadio.setVisibility(View.GONE);
+        }
+    }
+
     @OnClick(R.id.button_shop_back)
     public void backButtonClicked() {
         Toast.makeText(this, "Back Button Pressed", Toast.LENGTH_SHORT).show();
@@ -112,7 +126,7 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     }
 
     @OnClick(R.id.search_button)
-    public void friendsButtonClicked(View view) {
+    public void searchButtonClicked(View view) {
         presenter.searchUser();
     }
 

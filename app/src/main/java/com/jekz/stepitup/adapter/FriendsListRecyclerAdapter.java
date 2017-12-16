@@ -39,8 +39,8 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                 itemView = inflater.inflate(R.layout.friend_confirmed_row_layout, parent, false);
                 return new ConfirmedFriendViewHolder(itemView);
             case SEARCHED:
-                //itemView = inflater.inflate(R.layout.friend_search_row_layout, parent, false);
-                //return new SearchFriendViewHolder(itemView);
+                itemView = inflater.inflate(R.layout.friend_search_row_layout, parent, false);
+                return new SearchFriendViewHolder(itemView);
             default:
                 return null;
         }
@@ -62,6 +62,8 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         return presenter.getItemViewType(position);
     }
 
+
+    //Interface Definitions
     public interface FriendRowView {
         void setBackgroundColor(int color);
 
@@ -70,11 +72,14 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         void addFriendClickListener(FriendsListPresenter.FriendClickListener listener);
     }
 
-    //Interface Definitions
-
     public interface PendingFriendRowView extends FriendRowView {
         void addButtonListener(FriendsListPresenter.PendingFriendButtonListener listener);
     }
+
+    public interface SearchFriendRowView extends FriendRowView {
+        void addSearchClickListener(FriendsListPresenter.SearchClickListener listener);
+    }
+
 
     public interface FriendsListPresenter {
         int getItemCount();
@@ -94,6 +99,10 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
             void onFriendClicked(int position);
 
             void onRemoveClicked(int position);
+        }
+
+        interface SearchClickListener {
+            void onAddFriend(int position);
         }
 
     }
@@ -186,4 +195,44 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
             }
         }
     }
+
+    class SearchFriendViewHolder extends RecyclerView.ViewHolder implements
+            SearchFriendRowView {
+
+        @BindView(R.id.text_username)
+        TextView usernameText;
+
+        private FriendsListPresenter.SearchClickListener listener;
+
+        SearchFriendViewHolder(final View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void setBackgroundColor(int color) {
+            itemView.setBackgroundResource(color);
+        }
+
+        @Override
+        public void setUsername(String username) {
+            usernameText.setText(username);
+        }
+
+        @Override
+        public void addFriendClickListener(FriendsListPresenter.FriendClickListener listener) {
+
+        }
+
+        @Override
+        public void addSearchClickListener(FriendsListPresenter.SearchClickListener listener) {
+            this.listener = listener;
+        }
+
+        @OnClick(R.id.button_request)
+        public void requestClicked(View view) {
+            listener.onAddFriend(getLayoutPosition());
+        }
+    }
+
 }
