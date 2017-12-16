@@ -77,6 +77,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     @Override
     public void loadFriends() {
         activeFriendList = confirmedList;
+        confirmedList.clear();
         retrieveFriends("friends");
         view.reloadFriendsList();
         view.showSearch(false);
@@ -116,7 +117,6 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     public void onConfirm(int position) {
         Friend friend = (Friend) activeFriendList.toArray()[position];
         friendEditedPositon = position;
-        view.showMessage(friend.getUsername() + " has been accepted");
         adjustFriends("accept_friend", friend.getId());
     }
 
@@ -221,8 +221,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                     case "friends": {
                         int friendID = q.getInt("friendid");
                         String friendName = q.getString("friendname");
-                        Log.d(TAG, "FriendId: " + friendID);
-                        Log.d(TAG, "Friend Name: " + friendName);
+                        Log.d(TAG, "Friend: " + friendID + " - " + friendName);
                         Friend newFriend = new Friend(friendName, friendID, Friend.FriendType
                                 .CONFIRMED);
                         if (confirmedList.add(newFriend)) {
@@ -233,8 +232,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                     case "pending_friends": {
                         int friendID = q.getInt("friendid");
                         String friendName = q.getString("friendname");
-                        Log.d(TAG, "Pending FriendId: " + friendID);
-                        Log.d(TAG, "Pending Friend Name: " + friendName);
+                        Log.d(TAG, "Pending friend: " + friendID + " - " + friendName);
                         Friend newFriend = new Friend(friendName, friendID, Friend.FriendType
                                 .PENDING);
                         if (pendingList.add(newFriend)) {
@@ -245,8 +243,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                     case "search_user": {
                         int friendID = q.getInt("userid");
                         String friendName = q.getString("username");
-                        Log.d(TAG, "FriendId: " + friendID);
-                        Log.d(TAG, "Friend Name: " + friendName);
+                        Log.d(TAG, "Search friend: " + friendID + " - " + friendName);
                         Friend searchedFriend = new Friend(friendName, friendID, Friend.FriendType
                                 .SEARCHED);
                         searchList.add(searchedFriend);
@@ -257,23 +254,30 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         Friend friendToAccept = (Friend) activeFriendList.toArray()
                                 [friendEditedPositon];
                         confirmedList.remove(friendToAccept);
-                        view.showRemovedFriend(friendEditedPositon + 1);
+                        view.showRemovedFriend(friendEditedPositon);
                         break;
                     }
                     case "accept_friend": {
-                        Friend friendToAccept = (Friend) activeFriendList.toArray()
-                                [friendEditedPositon];
-                        pendingList.remove(friendToAccept);
-                        friendToAccept.setFriendType(Friend.FriendType.CONFIRMED);
-                        confirmedList.add(friendToAccept);
-                        view.showRemovedFriend(friendEditedPositon + 1);
+                        if (q.getBoolean("success")) {
+                            Friend friendToAccept = (Friend) activeFriendList.toArray()
+                                    [friendEditedPositon];
+
+                            pendingList.remove(friendToAccept);
+                            friendToAccept.setFriendType(Friend.FriendType.CONFIRMED);
+                            confirmedList.add(friendToAccept);
+                            view.showRemovedFriend(friendEditedPositon);
+                            view.showMessage("Friend accepted");
+                        } else {
+                            Log.d(TAG, "Could not add friend");
+                            view.showMessage("You can not add yourself");
+                        }
                         break;
                     }
                     case "deny_friend": {
                         Friend friendToDeny = (Friend) activeFriendList.toArray()
                                 [friendEditedPositon];
                         pendingList.remove(friendToDeny);
-                        view.showRemovedFriend(friendEditedPositon + 1);
+                        view.showRemovedFriend(friendEditedPositon);
                         break;
                     }
                     case "user_data": {
@@ -297,6 +301,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         view.animateAvatarImagePart(AvatarImage.AvatarPart.PANTS, true);
                         view.setAvatarImagePart(AvatarImage.AvatarPart.SHOES, shoesID);
                         view.animateAvatarImagePart(AvatarImage.AvatarPart.SHOES, true);
+                        view.showQuestonMark(false);
                         break;
                     }
                 }

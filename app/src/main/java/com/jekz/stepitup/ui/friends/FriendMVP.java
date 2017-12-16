@@ -18,6 +18,8 @@ interface FriendMVP {
         void showMessage(String s);
 
         void showSearch(boolean show);
+
+        void showQuestonMark(boolean show);
     }
 
     interface Presenter extends BasePresenter<View> {

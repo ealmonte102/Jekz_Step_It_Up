@@ -17,7 +17,7 @@
         android:fontFamily="casual"
         android:textAlignment="center"
         android:textColor="@android:color/background_dark"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/button_remove"
         app:layout_constraintEnd_toStartOf="@+id/button_remove"
         app:layout_constraintHorizontal_bias="0.5"
