@@ -10,12 +10,12 @@ public class Friend {
     private final int id;
     private final String username;
     private Avatar avatar;
-    private boolean isPending = false;
+    private FriendType friendType;
 
-    public Friend(String username, int id, boolean isPending) {
+    public Friend(String username, int id, FriendType type) {
         this.username = username;
         this.id = id;
-        this.isPending = isPending;
+        this.friendType = type;
     }
 
     public Avatar getAvatar() {
@@ -23,7 +23,7 @@ public class Friend {
     }
 
     public void setAvatar(Avatar avatar) {
-
+        this.avatar = avatar;
     }
 
     public String getUsername() {
@@ -34,11 +34,36 @@ public class Friend {
         return id;
     }
 
-    public boolean isPending() {
-        return isPending;
+    public FriendType getFriendType() { return friendType; }
+
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        result = prime * result + username.hashCode();
+        result = prime * result + (avatar != null ? avatar.hashCode() : 0);
+        result = prime * result + friendType.hashCode();
+        return result;
     }
 
-    public void setPending(boolean isPending) {
-        this.isPending = isPending;
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Friend)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+
+        final Friend o = (Friend) obj;
+        boolean isEqual = o.username.equals(username) &&
+                          o.id == id &&
+                          (o.friendType.equals(friendType));
+        return avatar != null ? avatar.equals(o.avatar) : isEqual;
+    }
+
+    public enum FriendType {
+        PENDING, SEARCHED, CONFIRMED
     }
 }

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.jekz.stepitup.R;
@@ -27,6 +28,9 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
 
     @BindView(R.id.avatar_image)
     AvatarImage avatarImage;
+
+    @BindView(R.id.radio_group_friends)
+    RadioGroup radioGroupFreinds;
 
     FriendMVP.Presenter presenter;
 
@@ -51,6 +55,7 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     protected void onStart() {
         super.onStart();
         presenter.onViewAttached(this);
+        radioGroupFreinds.check(R.id.friends_radio_button);
     }
 
 
@@ -101,16 +106,9 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     public void onBackPressed() {
     }
 
-    @OnClick({R.id.add_button, R.id.remove_button})
+    @OnClick(R.id.search_button)
     public void friendsButtonClicked(View view) {
-        switch (view.getId()) {
-            case R.id.add_button:
-                presenter.addFriend();
-                break;
-            case R.id.remove_button:
-                presenter.removeFriend();
-                break;
-        }
+        presenter.searchUser();
     }
 
 

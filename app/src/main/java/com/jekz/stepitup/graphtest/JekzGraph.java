@@ -35,7 +35,7 @@ public class JekzGraph {
         //BarChart barChart = (BarChart) findViewById(R.id.activity);
 
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(0);
+        BarChart barChart = activity.findViewById(0);
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class JekzGraph {
         //BarChart barChart = (BarChart) findViewById(R.id.barChart0);
 
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(0);
+        BarChart barChart = activity.findViewById(0);
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -168,7 +168,7 @@ public class JekzGraph {
         //BarChart barChart = (BarChart) findViewById(R.id.barChart0);
 
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(0);
+        BarChart barChart = activity.findViewById(0);
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -228,7 +228,7 @@ public class JekzGraph {
         //BarChart barChart = (BarChart) findViewById(R.id.barChart0);
 
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(0);
+        BarChart barChart = activity.findViewById(0);
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -277,7 +277,7 @@ public class JekzGraph {
         //TextView textView = (TextView) findViewById(R.id.textView1);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(0);
+        TextView textView = activity.findViewById(0);
 
         textView.setText(
                 "Lifetime total: 2000" + " minutes" + "\n" + "Lifetime average: 61" + " minutes");
@@ -288,7 +288,7 @@ public class JekzGraph {
         //TextView textView = (TextView) findViewById(R.id.textView2);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(0);
+        TextView textView = activity.findViewById(0);
 
         textView.setText(
                 "Lifetime total: 6542" + " miles" + "\n" + "Lifetime average: 3.1" + " miles");
@@ -299,7 +299,7 @@ public class JekzGraph {
         //TextView textView = (TextView) findViewById(R.id.textView3);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(0);
+        TextView textView = activity.findViewById(0);
 
         textView.setText(
                 "Lifetime total: 8621" + " steps" + "\n" + "Lifetime average: 5310" + " steps");
@@ -310,7 +310,7 @@ public class JekzGraph {
         //TextView textView = (TextView) findViewById(R.id.textView4);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(0);
+        TextView textView = activity.findViewById(0);
 
         textView.setText("Lifetime total: 94150" + " calories" + "\n" + "Lifetime average: 150" +
                          " calories");

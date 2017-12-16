@@ -3,8 +3,6 @@ package com.jekz.stepitup.ui.shop;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.jekz.stepitup.graphtest.AsyncResponse;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +19,7 @@ import java.util.LinkedList;
  * Created by Owner on 12/3/2017.
  */
 
-public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
+public class ShopRequest extends AsyncTask<String, Void, JSONObject> {
     private static final String TAG = ShopPresenter.class.getName();
 
     public AsyncResponse delegate;
@@ -35,7 +33,7 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
     }
 
     @Override
-    protected JSONArray doInBackground(String... params) {
+    protected JSONObject doInBackground(String... params) {
         try {
             Log.d(TAG, "Executing request to " + params[0]);
             // This is getting the url from the string we passed in
@@ -80,14 +78,19 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
             String jsonStr = new String(b, StandardCharsets.UTF_8);
 
             JSONArray resultArray;
+            JSONObject resultObject;
 
             try {
-                resultArray = new JSONArray(jsonStr);
-            } catch (JSONException e) { resultArray = new JSONArray("[" + jsonStr + "]");}
+                //resultArray = new JSONArray(jsonStr);
+                resultObject = new JSONObject(jsonStr);
+            } catch (JSONException e) {
+                //resultArray = new JSONArray("[" + jsonStr + "]")
+                resultObject = new JSONObject(jsonStr);
+            }
 
 
-
-            return resultArray;
+            return resultObject;
+            //return resultArray;
 
 
         } catch (Exception e) {
@@ -97,7 +100,7 @@ public class ShopRequest extends AsyncTask<String, Void, JSONArray> {
     }
 
     @Override
-    protected void onPostExecute(JSONArray result) {
+    protected void onPostExecute(JSONObject result) {
 
         if (result != null) {
             delegate.processFinish(result);

@@ -5,7 +5,6 @@ import android.util.Pair;
 
 import com.jekz.stepitup.AvatarRepo;
 import com.jekz.stepitup.data.request.LoginManager;
-import com.jekz.stepitup.graphtest.AsyncResponse;
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
@@ -22,7 +21,7 @@ import java.text.NumberFormat;
  * Created by evanalmonte on 12/10/17.
  */
 
-public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
+public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.shop.AsyncResponse {
     private static final String TAG = HomePresenter.class.getName();
     private ItemInteractor itemInteractor;
     private Avatar avatar;
@@ -33,7 +32,7 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
         this.itemInteractor = itemInteractor;
         avatar = AvatarRepo.getInstance().getAvatar();
         this.loginManager = loginManager;
-        retrieveItem("items");
+        retrieveItem("get_items");
         retrieveItem("user_data");
     }
 
@@ -109,26 +108,50 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
 
 
     @Override
-    public void processFinish(JSONArray output) {
-        Log.d(TAG, "Recieved Output: " + output.toString());
+    public void processFinish(JSONObject returnObject) {
+        Log.d(TAG, "Recieved Output: " + returnObject.toString());
         if (view == null) { return; }
-        for (int i = 0; i < output.length(); i++) {
 
-            //Equip or Unequip
-            try {
-                JSONObject q = output.getJSONObject(i);
-                String verify = q.getString("return_data");
+        try {
+            JSONArray output = returnObject.getJSONArray("rows");
+            for (int i = 0; i < output.length(); i++) {
 
-                if (verify.equals("equip")) {
-                    Log.d("EQUIP", "Equipping items");
-                    boolean succeed = q.getBoolean("success");
+                //Retrieve
+                try {
+                    JSONObject r = output.getJSONObject(i);
+                    String verify = returnObject.getString("return_data");
 
-                    if (succeed) {
-                        int hatid = q.getInt("hat_");
-                        int shirtid = q.getInt("shirt_");
-                        int pantsid = q.getInt("pants_");
-                        int shoesid = q.getInt("shoes_");
+                    if (verify.equals("get_items")) {
+                        int itemcount = r.getInt("count");
+                        if (itemcount > 0) {
+                            int itemid = r.getInt("itemid");
+                            Pair<Item, Integer> itemPair;
+                            itemPair = itemInteractor.getItem(itemid);
+                            if (itemPair != null) {
+                                avatar.addItem(itemPair.first);
+                            }
+                        }
+                    }
 
+                } catch (JSONException ignored) {
+                }
+
+                //User Data
+                try {
+                    JSONObject s = output.getJSONObject(i);
+                    String verify = returnObject.getString("return_data");
+
+                    if (verify.equals("user_data")) {
+                        String gender = s.getString("gender");
+                        if (gender.equals("male") || gender.equals("female")) {
+                            avatar.setMale(gender);
+                            int modelID = itemInteractor.getModel(gender);
+                            view.setAvatarImage(modelID);
+                        }
+                        int hatid = s.getInt("hat");
+                        int shirtid = s.getInt("shirt");
+                        int pantsid = s.getInt("pants");
+                        int shoesid = s.getInt("shoes");
                         if (hatid != 0) {
                             Item hat = itemInteractor.getItem(hatid).first;
                             int hatID = itemInteractor.getItem(hatid).second;
@@ -138,7 +161,6 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
                             avatar.removeItem(Item.Item_Type.HAT);
                             view.setHatImage(0);
                         }
-
                         if (shirtid != 0) {
                             Item shirt = itemInteractor.getItem(shirtid).first;
                             int shirtID = itemInteractor.getItem(shirtid).second;
@@ -148,7 +170,6 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
                             avatar.removeItem(Item.Item_Type.SHIRT);
                             view.setShirtImage(0);
                         }
-
                         if (pantsid != 0) {
                             Item pants = itemInteractor.getItem(pantsid).first;
                             int pantsID = itemInteractor.getItem(pantsid).second;
@@ -158,7 +179,6 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
                             avatar.removeItem(Item.Item_Type.PANTS);
                             view.setPantsImage(0);
                         }
-
                         if (shoesid != 0) {
                             Item shoes = itemInteractor.getItem(shoesid).first;
                             int shoesID = itemInteractor.getItem(shoesid).second;
@@ -168,113 +188,19 @@ public class HomePresenter implements HomeMVP.Presenter, AsyncResponse {
                             avatar.removeItem(Item.Item_Type.SHOES);
                             view.setShoesImage(0);
                         }
-
-                        //reloadAnimations();
+                        int currency = s.getInt("currency");
+                        avatar.setCurrency(currency);
+                        view.setCurrency(
+                                "x" + NumberFormat.getInstance().format(avatar.getCurrency()));
                     }
 
+                } catch (JSONException e) {
+                    e.getMessage();
                 }
-            } catch (JSONException ignored) {}
+            }
+        } catch (JSONException e) {}
 
 
-            //Retrieve
-            try {
-                JSONObject r = output.getJSONObject(i);
-                int itemcount = r.getInt("count");
-                if (itemcount > 0) {
-                    int itemid = r.getInt("itemid");
-
-                    Pair<Item, Integer> itemPair;
-                    itemPair = itemInteractor.getItem(itemid);
-                    if (itemPair != null) {
-                        avatar.addItem(itemPair.first);
-                    }
-
-                }
-            } catch (JSONException ignored) {}
-
-            //Gender
-            try {
-                JSONObject r = output.getJSONObject(i);
-                //Log.d("Test Object;", r.getInt("count") + "");
-                String gender = r.getString("gender_");
-                boolean verify = r.getBoolean("success");
-
-                if (verify) {
-                    if (gender.equals("male") || gender.equals("female")) {
-                        avatar.setMale(gender);
-                        int modelID = itemInteractor.getModel(gender);
-                        view.setAvatarImage(modelID);
-                    }
-                }
-
-            } catch (JSONException ignored) {}
-
-
-            //User Data
-            try {
-                JSONObject s = output.getJSONObject(i);
-                int filter = s.getInt("total_sessions");
-
-                String gender = s.getString("gender");
-
-                if (gender.equals("male") || gender.equals("female")) {
-                    avatar.setMale(gender);
-                    int modelID = itemInteractor.getModel(gender);
-                    view.setAvatarImage(modelID);
-                }
-
-                int hatid = s.getInt("hat");
-                int shirtid = s.getInt("shirt");
-                int pantsid = s.getInt("pants");
-                int shoesid = s.getInt("shoes");
-
-                if (hatid != 0) {
-                    Item hat = itemInteractor.getItem(hatid).first;
-                    int hatID = itemInteractor.getItem(hatid).second;
-                    avatar.wearItem(hat);
-                    view.setHatImage(hatID);
-                } else {
-                    avatar.removeItem(Item.Item_Type.HAT);
-                    view.setHatImage(0);
-                }
-
-                if (shirtid != 0) {
-                    Item shirt = itemInteractor.getItem(shirtid).first;
-                    int shirtID = itemInteractor.getItem(shirtid).second;
-                    avatar.wearItem(shirt);
-                    view.setShirtImage(shirtID);
-                } else {
-                    avatar.removeItem(Item.Item_Type.SHIRT);
-                    view.setShirtImage(0);
-                }
-
-                if (pantsid != 0) {
-                    Item pants = itemInteractor.getItem(pantsid).first;
-                    int pantsID = itemInteractor.getItem(pantsid).second;
-                    avatar.wearItem(pants);
-                    view.setPantsImage(pantsID);
-                } else {
-                    avatar.removeItem(Item.Item_Type.PANTS);
-                    view.setPantsImage(0);
-                }
-
-                if (shoesid != 0) {
-                    Item shoes = itemInteractor.getItem(shoesid).first;
-                    int shoesID = itemInteractor.getItem(shoesid).second;
-                    avatar.wearItem(shoes);
-                    view.setShoesImage(shoesID);
-                } else {
-                    avatar.removeItem(Item.Item_Type.SHOES);
-                    view.setShoesImage(0);
-                }
-
-                int currency = s.getInt("currency");
-
-                avatar.setCurrency(currency);
-                view.setCurrency("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
-
-            } catch (JSONException e) {e.getMessage();}
-        }
     }
 
 }

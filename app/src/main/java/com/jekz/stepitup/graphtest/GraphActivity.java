@@ -45,7 +45,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //BarChart barChart = (BarChart) findViewById(R.id.activity);
 
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(id);
+        BarChart barChart = activity.findViewById(id);
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -110,7 +110,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //BarChart barChart = (BarChart) findViewById(R.id.barChart0);
 
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(id);
+        BarChart barChart = activity.findViewById(id);
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -178,7 +178,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //BarChart barChart = (BarChart) findViewById(R.id.barChart0);
 
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(id);
+        BarChart barChart = activity.findViewById(id);
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -238,7 +238,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //BarChart barChart = (BarChart) findViewById(R.id.barChart0);
 
         //edit this to match id in xml
-        BarChart barChart = (BarChart) activity.findViewById(id);
+        BarChart barChart = activity.findViewById(id);
 
         List<BarEntry> barEntries = new ArrayList<>();
 
@@ -287,7 +287,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //TextView textView = (TextView) findViewById(R.id.textView1);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(id);
+        TextView textView = activity.findViewById(id);
 
         textView.setText(
                 "Lifetime total: 2000" + " minutes" + "\n" + "Lifetime average: 61" + " minutes");
@@ -298,7 +298,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //TextView textView = (TextView) findViewById(R.id.textView2);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(id);
+        TextView textView = activity.findViewById(id);
 
         textView.setText(
                 "Lifetime total: 6542" + " miles" + "\n" + "Lifetime average: 3.1" + " miles");
@@ -309,7 +309,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //TextView textView = (TextView) findViewById(R.id.textView3);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(id);
+        TextView textView = activity.findViewById(id);
 
         textView.setText(
                 "Lifetime total: 8621" + " steps" + "\n" + "Lifetime average: 5310" + " steps");
@@ -320,7 +320,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //TextView textView = (TextView) findViewById(R.id.textView4);
 
         //Edit this based on xml
-        TextView textView = (TextView) activity.findViewById(id);
+        TextView textView = activity.findViewById(id);
 
         textView.setText("Lifetime total: 94150" + " calories" + "\n" + "Lifetime average: 150" +
                          " calories");
@@ -330,10 +330,10 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -165,31 +165,17 @@
         app:layout_constraintTop_toTopOf="@+id/avatar_image">
 
         <Button
-            android:id="@+id/add_button"
+            android:id="@+id/search_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/friends_button"
             android:fontFamily="casual"
-            android:text="@string/add"
+            android:text="@string/add_friends"
             android:textAllCaps="false"
             android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="@+id/button_box"
             app:layout_constraintStart_toStartOf="@+id/button_box"
             tools:layout_editor_absoluteY="103dp" />
-
-        <Button
-            android:id="@+id/remove_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/friends_button"
-            android:fontFamily="casual"
-            android:text="@string/remove"
-            android:textAllCaps="false"
-            android:textColor="#000000"
-            app:layout_constraintEnd_toEndOf="@+id/button_box"
-            app:layout_constraintStart_toStartOf="@+id/button_box"
-            tools:layout_editor_absoluteY="151dp" />
     </LinearLayout>
 
 

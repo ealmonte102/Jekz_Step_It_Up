@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jekz.stepitup.R;
+import com.jekz.stepitup.model.friend.Friend;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +30,7 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView;
-        FriendType type = FriendType.values()[viewType];
+        Friend.FriendType type = Friend.FriendType.values()[viewType];
         switch (type) {
             case PENDING:
                 itemView = inflater.inflate(R.layout.friend_pending_row_layout, parent, false);
@@ -37,6 +38,9 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
             case CONFIRMED:
                 itemView = inflater.inflate(R.layout.friend_confirmed_row_layout, parent, false);
                 return new ConfirmedFriendViewHolder(itemView);
+            case SEARCHED:
+                //itemView = inflater.inflate(R.layout.friend_search_row_layout, parent, false);
+                //return new SearchFriendViewHolder(itemView);
             default:
                 return null;
         }
@@ -56,11 +60,6 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public int getItemViewType(int position) {
         return presenter.getItemViewType(position);
-    }
-
-
-    public enum FriendType {
-        PENDING, CONFIRMED
     }
 
     public interface FriendRowView {

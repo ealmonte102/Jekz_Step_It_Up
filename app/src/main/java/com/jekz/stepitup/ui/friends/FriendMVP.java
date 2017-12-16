@@ -21,6 +21,8 @@ interface FriendMVP {
 
         void removeFriend();
 
+        void searchUser();
+
         void loadPending();
 
         void loadFriends();

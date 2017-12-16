@@ -23,7 +23,7 @@ import java.text.NumberFormat;
  */
 
 public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback,
-        com.jekz.stepitup.graphtest.AsyncResponse {
+        com.jekz.stepitup.ui.shop.AsyncResponse {
     private static final String TAG = ShopPresenter.class.getName();
 
     private ItemInteractor itemInteractor;
@@ -245,26 +245,24 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     }
 
     @Override
-    public void processFinish(JSONArray output) {
+    public void processFinish(JSONObject returnObject) {
 
-
+        try {
+            JSONArray output = returnObject.getJSONArray("rows");
             for (int i = 0; i < output.length(); i++) {
 
-                //Update Equipped Items
+                //Update Equipped Items (Equip / Unequip)
                 try {
                     JSONObject q = output.getJSONObject(i);
-                    String verify = q.getString("return_data");
+                    String verify = returnObject.getString("return_data");
 
-                    if (verify.equals("equip")) {
-
+                    if (verify.equals("equip_items")) {
                         boolean succeed = q.getBoolean("success");
-
                         if (succeed) {
                             int hatid = q.getInt("hat");
                             int shirtid = q.getInt("shirt");
                             int pantsid = q.getInt("pants");
                             int shoesid = q.getInt("shoes");
-
                             if (hatid != 0) {
                                 Item hat = itemInteractor.getItem(hatid).first;
                                 int hatResId = itemInteractor.getItem(hatid).second;
@@ -274,7 +272,6 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                                 avatar.removeItem(Item.Item_Type.HAT);
                                 shopView.setAvatarImagePart(AvatarImage.AvatarPart.HAT, 0);
                             }
-
                             if (shirtid != 0) {
                                 Item shirt = itemInteractor.getItem(shirtid).first;
                                 int shirtID = itemInteractor.getItem(shirtid).second;
@@ -284,7 +281,6 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                                 avatar.removeItem(Item.Item_Type.SHIRT);
                                 shopView.setAvatarImagePart(AvatarImage.AvatarPart.SHIRT, 0);
                             }
-
                             if (pantsid != 0) {
                                 Item pants = itemInteractor.getItem(pantsid).first;
                                 int pantsID = itemInteractor.getItem(pantsid).second;
@@ -294,7 +290,6 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                                 avatar.removeItem(Item.Item_Type.PANTS);
                                 shopView.setAvatarImagePart(AvatarImage.AvatarPart.PANTS, 0);
                             }
-
                             if (shoesid != 0) {
                                 Item shoes = itemInteractor.getItem(shoesid).first;
                                 int shoesID = itemInteractor.getItem(shoesid).second;
@@ -304,12 +299,11 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                                 avatar.removeItem(Item.Item_Type.SHOES);
                                 shopView.setAvatarImagePart(AvatarImage.AvatarPart.SHOES, 0);
                             }
-
                             reloadAnimations();
                             shopView.reloadAdapter();
                         }
-
                     }
+
                 } catch (JSONException ignored) {
                     Log.d(TAG, "Error parsing during equip items update: " + ignored.getMessage());
                 }
@@ -317,15 +311,18 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                 //Update Gender
                 try {
                     JSONObject r = output.getJSONObject(i);
-                    String gender = r.getString("gender");
-                    boolean verify = r.getBoolean("success");
+                    String verify = returnObject.getString("return_data");
 
-                    if (verify) {
-                        if (gender.equals("male") || gender.equals("female")) {
-                            avatar.setMale(gender);
-                            int modelID = itemInteractor.getModel(gender);
-                            shopView.setAvatarImagePart(AvatarImage.AvatarPart.MODEL, modelID);
-                            reloadAnimations();
+                    if (verify.equals("update_user_info")) {
+                        boolean succeed = r.getBoolean("success");
+                        if (succeed) {
+                            String gender = r.getString("gender");
+                            if (gender.equals("male") || gender.equals("female")) {
+                                avatar.setMale(gender);
+                                int modelID = itemInteractor.getModel(gender);
+                                shopView.setAvatarImagePart(AvatarImage.AvatarPart.MODEL, modelID);
+                                reloadAnimations();
+                            }
                         }
                     }
 
@@ -333,10 +330,11 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                     Log.d(TAG, "Error parsing during gender update: " + ignored.getMessage());
                 }
 
-                //Update Currency
+                //Purchase Item, Update Currency
                 try {
                     JSONObject t = output.getJSONObject(i);
-                    String verify = t.getString("return_data");
+                    String verify = returnObject.getString("return_data");
+
                     if (verify.equals("purchase")) {
                         boolean success = t.getBoolean("success");
                         Log.d(TAG, "Purchase result: " + success);
@@ -357,6 +355,9 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
                     Log.d(TAG, "Error parsing during currency update: " + ignored.getMessage());
                 }
             }
+
+        } catch (JSONException ignored) {}
+
     }
 
 
@@ -366,7 +367,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
 
         if (type.equals("purchase")) {
             try {
-                postData.put("data_type", "items");
+                postData.put("action", "purchase");
                 postData.put("itemid", itemid);
                 postData.put("amount", 1);
 
@@ -374,7 +375,7 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         }
         if (type.equals("equip")) {
             try {
-                postData.put("data_type", "user_data");
+                postData.put("action", "equip_items");
                 postData.put("hat", hatid);
                 postData.put("shirt", shirtid);
                 postData.put("pants", pantsid);
@@ -401,19 +402,5 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         shopRequest.execute("https://jekz.herokuapp.com/api/db/update");
     }
 
-    void retrieveItem(int userid, String datatype) {
-        String session = loginManager.getSession();
-
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("data_type", datatype);
-            postData.put("userid", userid);
-
-        } catch (JSONException e) {e.printStackTrace();}
-
-        ShopRequest asyncTask2 = new ShopRequest(postData, session);
-        asyncTask2.delegate = this;
-        asyncTask2.execute("https://jekz.herokuapp.com/api/db/retrieve");
-    }
 
 }
