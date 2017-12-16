@@ -169,18 +169,6 @@
         app:layout_constraintTop_toTopOf="@id/text_title"
         app:layout_constraintVertical_bias="1.0" />
 
-    <ImageView
-        android:id="@+id/question_mark_image"
-        android:layout_width="58dp"
-        android:layout_height="124dp"
-        android:src="@drawable/questionmark"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar_image"
-        app:layout_constraintEnd_toEndOf="@+id/avatar_image"
-        app:layout_constraintStart_toStartOf="@+id/avatar_image"
-        app:layout_constraintTop_toTopOf="@+id/avatar_image"
-        avatarimage:srcCompat="@drawable/questionmark" />
-
     <LinearLayout
         android:id="@+id/button_box"
         android:layout_width="0dp"

@@ -19,7 +19,7 @@ interface FriendMVP {
 
         void showSearch(boolean show);
 
-        void showQuestonMark(boolean show);
+        void showAvatar(boolean show);
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -27,11 +27,12 @@
 
     <Button
         android:id="@+id/button_confirm"
-        android:layout_width="84dp"
-        android:layout_height="wrap_content"
+        android:layout_width="72dp"
+        android:layout_height="33dp"
         android:background="@drawable/shape_button_buy"
         android:fontFamily="casual"
         android:text="Confirm"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_deny"
         app:layout_constraintHorizontal_bias="0.5"
@@ -40,11 +41,12 @@
 
     <Button
         android:id="@+id/button_deny"
-        android:layout_width="83dp"
-        android:layout_height="wrap_content"
+        android:layout_width="72dp"
+        android:layout_height="33dp"
         android:background="@drawable/shape_button_equip"
         android:fontFamily="casual"
         android:text="Deny"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/button_confirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

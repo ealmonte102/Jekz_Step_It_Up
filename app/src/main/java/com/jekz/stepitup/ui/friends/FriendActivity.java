@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -36,9 +35,6 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
 
     @BindView(R.id.search_friends_radio_button)
     RadioButton searchRadio;
-
-    @BindView(R.id.question_mark_image)
-    ImageView questionMarkImage;
 
     FriendMVP.Presenter presenter;
 
@@ -105,13 +101,11 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     }
 
     @Override
-    public void showQuestonMark(boolean show) {
+    public void showAvatar(boolean show) {
         if (show) {
-            avatarImage.setVisibility(View.INVISIBLE);
-            questionMarkImage.setVisibility(View.VISIBLE);
-        } else {
             avatarImage.setVisibility(View.VISIBLE);
-            questionMarkImage.setVisibility(View.INVISIBLE);
+        } else {
+            avatarImage.setVisibility(View.INVISIBLE);
         }
     }
 

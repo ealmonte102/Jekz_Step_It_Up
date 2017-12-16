@@ -301,7 +301,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         view.animateAvatarImagePart(AvatarImage.AvatarPart.PANTS, true);
                         view.setAvatarImagePart(AvatarImage.AvatarPart.SHOES, shoesID);
                         view.animateAvatarImagePart(AvatarImage.AvatarPart.SHOES, true);
-                        view.showQuestonMark(false);
+                        view.showAvatar(true);
                         break;
                     }
                 }
