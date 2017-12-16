@@ -75,6 +75,11 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
         adapter.notifyItemInserted(pos);
     }
 
+    @Override
+    public void showRemovedFriend(int x) {
+        adapter.notifyItemRemoved(x);
+    }
+
 
     @Override
     public void showMessage(String s) {
@@ -112,14 +117,14 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     }
 
 
-    @OnCheckedChanged({R.id.friends_radio_button, R.id.pending_friends_radio_buton})
+    @OnCheckedChanged({R.id.friends_radio_button, R.id.pending_friends_radio_button})
     public void onRadioButtonChanged(CompoundButton button, boolean checked) {
         if (!checked) { return; }
         switch (button.getId()) {
             case R.id.friends_radio_button:
                 presenter.loadFriends();
                 break;
-            case R.id.pending_friends_radio_buton:
+            case R.id.pending_friends_radio_button:
                 presenter.loadPending();
                 break;
         }

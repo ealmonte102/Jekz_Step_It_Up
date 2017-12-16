@@ -13,14 +13,12 @@ interface FriendMVP {
 
         void showAddedFriend(int x);
 
+        void showRemovedFriend(int x);
+
         void showMessage(String s);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void addFriend();
-
-        void removeFriend();
-
         void searchUser();
 
         void loadPending();

@@ -38,7 +38,7 @@
             android:typeface="normal" />
 
         <RadioButton
-            android:id="@+id/pending_friends_radio_buton"
+            android:id="@+id/pending_friends_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_marginEnd="2dp"
@@ -51,6 +51,22 @@
             android:textColor="@drawable/radiobutton_text"
             android:textSize="12sp"
             android:typeface="normal" />
+
+        <RadioButton
+            android:id="@+id/search_friends_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/radiobutton"
+            android:button="@null"
+            android:text="@android:string/search_go"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@drawable/radiobutton_text"
+            android:textSize="12sp"
+            android:typeface="normal"
+            android:visibility="gone" />
     </RadioGroup>
 
     <com.jekz.stepitup.ui.friends.AvatarImage

@@ -56,20 +56,6 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     }
 
     @Override
-    public void addFriend() {
-        if (view == null) { return; }
-        adjustFriends("add_friend");
-        //TODO add friend here, than call view.reloadFriendsList(List<Friends> you get from db);
-    }
-
-    @Override
-    public void removeFriend() {
-        if (view == null) { return; }
-        adjustFriends("remove_friend");
-        //TODO remove friend here, than call view.reloadFriendsList(List<Friends> you get from db);
-    }
-
-    @Override
     public void searchUser() {
         //Load search bar with keyboard to type in
         String typedName = "";
@@ -124,14 +110,14 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     public void onConfirm(int position) {
         Friend friend = (Friend) activeFriendList.toArray()[position];
         view.showMessage(friend.getUsername() + " has been accepted");
-        adjustFriends("accept_friend");
+        adjustFriends("accept_friend", friend.getId());
     }
 
     @Override
     public void onDeny(int position) {
         Friend friend = (Friend) activeFriendList.toArray()[position];
         view.showMessage(friend.getUsername() + " has been denied");
-        adjustFriends("deny_friend");
+        adjustFriends("deny_friend", friend.getId());
     }
 
     @Override
@@ -139,6 +125,64 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
         Friend friend = (Friend) activeFriendList.toArray()[position];
         view.showMessage("Loading " + friend.getUsername() + "'s avatar");
         retrieveFriendEquip(friend.getId());
+    }
+
+    private void retrieveFriends(String datatype) {
+        String session = loginManager.getSession();
+
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("action", datatype);
+
+        } catch (JSONException e) {e.printStackTrace();}
+
+        ShopRequest asyncTask = new ShopRequest(postData, session);
+        asyncTask.delegate = this;
+        asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
+    }
+
+    private void searchUser(String searchName) {
+        String session = loginManager.getSession();
+
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("action", "search_user");
+
+        } catch (JSONException e) {e.printStackTrace();}
+
+        ShopRequest asyncTask = new ShopRequest(postData, session);
+        asyncTask.delegate = this;
+        asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
+    }
+
+    // TYPE = add_friend, remove_friend, deny_friend or accept_friend.
+    private void adjustFriends(String type, int id) {
+        String session = loginManager.getSession();
+
+        JSONObject postData = new JSONObject();
+
+        try {
+            postData.put("action", type);
+            postData.put("friendid", id);
+
+        } catch (JSONException e) {e.printStackTrace();}
+
+
+        ShopRequest asyncTask = new ShopRequest(postData, session);
+        asyncTask.delegate = this;
+        asyncTask.execute("https://jekz.herokuapp.com/api/db/update");
+    }
+
+    private void retrieveFriendEquip(int id) {
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("action", "user_data");
+            postData.put("userid", id);
+        } catch (JSONException e) {e.printStackTrace();}
+
+        ShopRequest asyncTask = new ShopRequest(postData, null);
+        asyncTask.delegate = this;
+        asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
     }
 
     @Override
@@ -209,7 +253,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                     String verify = returnObject.getString("return_data");
 
                     if (verify.equals("remove_friends")) {
-                        //TODO: remove friend from list of friends
+                        //TODO: Remove friend from list of friends
                     }
 
                 } catch (JSONException ignored) {}
@@ -220,6 +264,9 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                     String verify = returnObject.getString("return_data");
 
                     if (verify.equals("deny_friends")) {
+                        Friend friendToRemove = (Friend) pendingList.toArray()[i];
+                        pendingList.remove(friendToRemove);
+                        view.showRemovedFriend(i);
                         //TODO: Remove friend from list of pending friends
                     }
 
@@ -231,6 +278,10 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                     String verify = returnObject.getString("return_data");
 
                     if (verify.equals("accept_friends")) {
+                        Friend friendToRemove = (Friend) pendingList.toArray()[i];
+                        pendingList.remove(friendToRemove);
+                        confirmedList.add(friendToRemove);
+                        view.showRemovedFriend(i);
                         //TODO: Remove friend from list of pending friends and add to list of
                     }
 
@@ -253,15 +304,15 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         int pantsid = s.getInt("pants");
                         int shoesid = s.getInt("shoes");
                         int hatID = itemInteractor.getItem(hatid).second;
+                        int shirtID = itemInteractor.getItem(shirtid).second;
+                        int pantsID = itemInteractor.getItem(pantsid).second;
+                        int shoesID = itemInteractor.getItem(shoesid).second;
                         view.setAvatarImagePart(AvatarImage.AvatarPart.HAT, hatID);
                         view.animateAvatarImagePart(AvatarImage.AvatarPart.HAT, true);
-                        int shirtID = itemInteractor.getItem(shirtid).second;
                         view.setAvatarImagePart(AvatarImage.AvatarPart.SHIRT, shirtID);
                         view.animateAvatarImagePart(AvatarImage.AvatarPart.SHIRT, true);
-                        int pantsID = itemInteractor.getItem(pantsid).second;
                         view.setAvatarImagePart(AvatarImage.AvatarPart.PANTS, pantsID);
                         view.animateAvatarImagePart(AvatarImage.AvatarPart.PANTS, true);
-                        int shoesID = itemInteractor.getItem(shoesid).second;
                         view.setAvatarImagePart(AvatarImage.AvatarPart.SHOES, shoesID);
                         view.animateAvatarImagePart(AvatarImage.AvatarPart.SHOES, true);
                     }
@@ -272,60 +323,5 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
         } catch (JSONException ignored) { }
     }
 
-    private void retrieveFriends(String datatype) {
-        String session = loginManager.getSession();
 
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("action", datatype);
-
-        } catch (JSONException e) {e.printStackTrace();}
-
-        ShopRequest asyncTask = new ShopRequest(postData, session);
-        asyncTask.delegate = this;
-        asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
-    }
-
-    private void searchUser(String searchName) {
-        String session = loginManager.getSession();
-
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("action", "search_user");
-
-        } catch (JSONException e) {e.printStackTrace();}
-
-        ShopRequest asyncTask = new ShopRequest(postData, session);
-        asyncTask.delegate = this;
-        asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
-    }
-
-    // TYPE = add_friend, remove_friend, deny_friend or accept_friend.
-    private void adjustFriends(String type) {
-        String session = loginManager.getSession();
-
-        JSONObject postData = new JSONObject();
-
-        try {
-            postData.put("action", type);
-
-        } catch (JSONException e) {e.printStackTrace();}
-
-
-        ShopRequest asyncTask = new ShopRequest(postData, session);
-        asyncTask.delegate = this;
-        asyncTask.execute("https://jekz.herokuapp.com/api/db/update");
-    }
-
-    private void retrieveFriendEquip(int id) {
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("action", "user_data");
-            postData.put("userid", id);
-        } catch (JSONException e) {e.printStackTrace();}
-
-        ShopRequest asyncTask = new ShopRequest(postData, null);
-        asyncTask.delegate = this;
-        asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
-    }
 }
