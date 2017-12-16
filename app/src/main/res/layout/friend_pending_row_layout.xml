@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="69.5dp"
+    android:layout_height="50.5dp"
     android:layout_marginBottom="4dp"
     android:layout_marginEnd="16dp"
     android:layout_marginStart="16dp"
@@ -21,13 +21,13 @@
         app:layout_constraintEnd_toStartOf="@+id/button_confirm"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="@+id/button_confirm"
         tools:text="evanalmonte" />
 
     <Button
         android:id="@+id/button_confirm"
-        android:layout_width="72dp"
+        android:layout_width="55dp"
         android:layout_height="33dp"
         android:background="@drawable/shape_button_buy"
         android:fontFamily="casual"
@@ -41,16 +41,30 @@
 
     <Button
         android:id="@+id/button_deny"
-        android:layout_width="72dp"
+        android:layout_width="55dp"
         android:layout_height="33dp"
         android:background="@drawable/shape_button_equip"
         android:fontFamily="casual"
         android:text="Deny"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/button_confirm"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button_confirm"
         app:layout_constraintTop_toTopOf="@+id/button_confirm" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="12dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.93" />
 
 </android.support.constraint.ConstraintLayout>
