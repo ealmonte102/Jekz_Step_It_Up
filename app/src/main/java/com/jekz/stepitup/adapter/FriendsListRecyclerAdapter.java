@@ -92,6 +92,8 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
         interface FriendClickListener {
             void onFriendClicked(int position);
+
+            void onRemoveClicked(int position);
         }
 
     }
@@ -102,7 +104,6 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
         @BindView(R.id.text_username)
         TextView usernameText;
-
         private FriendsListPresenter.FriendClickListener listener;
 
         ConfirmedFriendViewHolder(final View itemView) {
@@ -118,6 +119,11 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                     listener.onFriendClicked(selectedPosition);
                 }
             });
+        }
+
+        @OnClick(R.id.button_remove)
+        void removeFriendClicked(View view) {
+            listener.onRemoveClicked(getAdapterPosition());
         }
 
         @Override

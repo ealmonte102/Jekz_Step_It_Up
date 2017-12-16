@@ -36,6 +36,10 @@ public class Friend {
 
     public FriendType getFriendType() { return friendType; }
 
+    public void setFriendType(FriendType friendType) {
+        this.friendType = friendType;
+    }
+
     @Override
     public int hashCode() {
         int prime = 31;

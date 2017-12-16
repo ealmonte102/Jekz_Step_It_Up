@@ -131,6 +131,14 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
         retrieveFriendEquip(friend.getId());
     }
 
+    @Override
+    public void onRemoveClicked(int position) {
+        Friend friend = (Friend) activeFriendList.toArray()[position];
+        friendEditedPositon = position;
+        view.showMessage(friend.getUsername() + " has been removed");
+        adjustFriends("remove_friend", friend.getId());
+    }
+
     private void retrieveFriends(String datatype) {
         String session = loginManager.getSession();
 
@@ -233,17 +241,19 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         //ADD TO SEARCH RESULTS TAB
                         break;
                     }
-                    case "remove_friends": {
-                        //TODO Remove friend from local list;
+                    case "remove_friend": {
+                        Friend friendToAccept = (Friend) activeFriendList.toArray()
+                                [friendEditedPositon];
+                        confirmedList.remove(friendToAccept);
+                        view.showRemovedFriend(friendEditedPositon + 1);
                         break;
                     }
                     case "accept_friend": {
                         Friend friendToAccept = (Friend) activeFriendList.toArray()
                                 [friendEditedPositon];
-                        Log.d(TAG, "Friendlist size before: " + activeFriendList.size());
                         pendingList.remove(friendToAccept);
+                        friendToAccept.setFriendType(Friend.FriendType.CONFIRMED);
                         confirmedList.add(friendToAccept);
-                        Log.d(TAG, "Friendlist size before: " + activeFriendList.size());
                         view.showRemovedFriend(friendEditedPositon + 1);
                         break;
                     }
