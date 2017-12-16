@@ -32,6 +32,8 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
 
     private HashSet<Friend> activeFriendList = new HashSet<>();
 
+    private int friendEditedPositon = -1;
+
     private FriendMVP.View view;
 
     private LoginManager loginManager;
@@ -109,6 +111,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     @Override
     public void onConfirm(int position) {
         Friend friend = (Friend) activeFriendList.toArray()[position];
+        friendEditedPositon = position;
         view.showMessage(friend.getUsername() + " has been accepted");
         adjustFriends("accept_friend", friend.getId());
     }
@@ -116,6 +119,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     @Override
     public void onDeny(int position) {
         Friend friend = (Friend) activeFriendList.toArray()[position];
+        friendEditedPositon = position;
         view.showMessage(friend.getUsername() + " has been denied");
         adjustFriends("deny_friend", friend.getId());
     }
@@ -189,15 +193,13 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     public void processFinish(JSONObject returnObject) {
         try {
             JSONArray output = returnObject.getJSONArray("rows");
+            String actionType = returnObject.getString("return_data");
             Log.d(TAG, output.toString());
+            Log.d(TAG, "Action type: " + actionType);
             for (int i = 0; i < output.length(); i++) {
-
-                // Load Friends
-                try {
-                    JSONObject q = output.getJSONObject(i);
-                    String verify = returnObject.getString("return_data");
-
-                    if (verify.equals("friends")) {
+                JSONObject q = output.getJSONObject(i);
+                switch (actionType) {
+                    case "friends": {
                         int friendID = q.getInt("friendid");
                         String friendName = q.getString("friendname");
                         Log.d(TAG, "FriendId: " + friendID);
@@ -205,18 +207,11 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         Friend newFriend = new Friend(friendName, friendID, Friend.FriendType
                                 .CONFIRMED);
                         if (confirmedList.add(newFriend)) {
-                            view.showAddedFriend(i);
+                            view.showAddedFriend(activeFriendList.size() - 1);
                         }
+                        break;
                     }
-
-                } catch (JSONException ignored) {}
-
-                // Load Pending Friends
-                try {
-                    JSONObject q = output.getJSONObject(i);
-                    String verify = returnObject.getString("return_data");
-
-                    if (verify.equals("pending_friends")) {
+                    case "pending_friends": {
                         int friendID = q.getInt("friendid");
                         String friendName = q.getString("friendname");
                         Log.d(TAG, "Pending FriendId: " + friendID);
@@ -224,18 +219,11 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         Friend newFriend = new Friend(friendName, friendID, Friend.FriendType
                                 .PENDING);
                         if (pendingList.add(newFriend)) {
-                            view.showAddedFriend(i);
+                            view.showAddedFriend(activeFriendList.size() - 1);
                         }
+                        break;
                     }
-
-                } catch (JSONException ignored) { Log.d(TAG, ignored.getMessage());}
-
-                // Load Search Results
-                try {
-                    JSONObject q = output.getJSONObject(i);
-                    String verify = returnObject.getString("return_data");
-
-                    if (verify.equals("search_user")) {
+                    case "search_user": {
                         int friendID = q.getInt("friendid");
                         String friendName = q.getString("friendname");
                         Log.d(TAG, "FriendId: " + friendID);
@@ -243,66 +231,38 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         Friend newFriend = new Friend(friendName, friendID, Friend.FriendType
                                 .SEARCHED);
                         //ADD TO SEARCH RESULTS TAB
+                        break;
                     }
-
-                } catch (JSONException ignored) {}
-
-                // Remove Friend
-                try {
-                    JSONObject q = output.getJSONObject(i);
-                    String verify = returnObject.getString("return_data");
-
-                    if (verify.equals("remove_friends")) {
-                        //TODO: Remove friend from list of friends
+                    case "remove_friends": {
+                        //TODO Remove friend from local list;
+                        break;
                     }
-
-                } catch (JSONException ignored) {}
-
-                // Deny Pending Friend
-                try {
-                    JSONObject q = output.getJSONObject(i);
-                    String verify = returnObject.getString("return_data");
-
-                    if (verify.equals("deny_friends")) {
-                        Friend friendToRemove = (Friend) pendingList.toArray()[i];
-                        pendingList.remove(friendToRemove);
-                        view.showRemovedFriend(i);
-                        //TODO: Remove friend from list of pending friends
+                    case "accept_friend": {
+                        Friend friendToAccept = (Friend) activeFriendList.toArray()
+                                [friendEditedPositon];
+                        Log.d(TAG, "Friendlist size before: " + activeFriendList.size());
+                        pendingList.remove(friendToAccept);
+                        confirmedList.add(friendToAccept);
+                        Log.d(TAG, "Friendlist size before: " + activeFriendList.size());
+                        view.showRemovedFriend(friendEditedPositon + 1);
+                        break;
                     }
-
-                } catch (JSONException ignored) {}
-
-                // Accept Pending Friend
-                try {
-                    JSONObject q = output.getJSONObject(i);
-                    String verify = returnObject.getString("return_data");
-
-                    if (verify.equals("accept_friends")) {
-                        Friend friendToRemove = (Friend) pendingList.toArray()[i];
-                        pendingList.remove(friendToRemove);
-                        confirmedList.add(friendToRemove);
-                        view.showRemovedFriend(i);
-                        //TODO: Remove friend from list of pending friends and add to list of
+                    case "deny_friend": {
+                        Friend friendToDeny = (Friend) activeFriendList.toArray()
+                                [friendEditedPositon];
+                        pendingList.remove(friendToDeny);
+                        view.showRemovedFriend(friendEditedPositon + 1);
+                        break;
                     }
-
-                } catch (JSONException ignored) {}
-
-                //Retrieve Friend Data
-                try {
-                    JSONObject s = output.getJSONObject(i);
-                    String verify = returnObject.getString("return_data");
-
-                    if (verify.equals("user_data")) {
-                        String gender = s.getString("gender");
-                        if (gender.equals("male") || gender.equals("female")) {
-                            int modelID = itemInteractor.getModel(gender);
-                            view.setAvatarImagePart(AvatarImage.AvatarPart.MODEL, modelID);
-                            view.animateAvatarImagePart(AvatarImage.AvatarPart.MODEL, true);
-                        }
-                        int hatid = s.getInt("hat");
-                        int shirtid = s.getInt("shirt");
-                        int pantsid = s.getInt("pants");
-                        int shoesid = s.getInt("shoes");
+                    case "user_data": {
+                        String gender = q.getString("gender");
+                        int modelID = itemInteractor.getModel(gender);
+                        view.setAvatarImagePart(AvatarImage.AvatarPart.MODEL, modelID);
+                        view.animateAvatarImagePart(AvatarImage.AvatarPart.MODEL, true);
+                        int hatid = q.getInt("hat");
+                        int shirtid = q.getInt("shirt");
+                        int pantsid = q.getInt("pants");
+                        int shoesid = q.getInt("shoes");
                         int hatID = itemInteractor.getItem(hatid).second;
                         int shirtID = itemInteractor.getItem(shirtid).second;
                         int pantsID = itemInteractor.getItem(pantsid).second;
@@ -315,12 +275,11 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         view.animateAvatarImagePart(AvatarImage.AvatarPart.PANTS, true);
                         view.setAvatarImagePart(AvatarImage.AvatarPart.SHOES, shoesID);
                         view.animateAvatarImagePart(AvatarImage.AvatarPart.SHOES, true);
+                        break;
                     }
-
-                } catch (JSONException ignored) {}
+                }
             }
-
-        } catch (JSONException ignored) { }
+        } catch (JSONException ignored) {}
     }
 
 
