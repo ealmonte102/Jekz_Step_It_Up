@@ -31,12 +31,13 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     AvatarImage avatarImage;
 
     @BindView(R.id.radio_group_friends)
-    RadioGroup radioGroupFreinds;
+    RadioGroup radioGroupFriends;
 
     @BindView(R.id.search_friends_radio_button)
     RadioButton searchRadio;
 
     FriendMVP.Presenter presenter;
+    FriendsListRecyclerAdapter.FriendsListPresenter friendsListPresenter;
 
     FriendsListRecyclerAdapter adapter;
 
@@ -45,11 +46,11 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_layout);
         ButterKnife.bind(this);
-
         FriendPresenter presenter = new FriendPresenter(
                 new RemoteLoginModel(SharedPrefsManager.getInstance(getApplicationContext())),
                 ItemInteractor.getInstance(getResources()));
         this.presenter = presenter;
+        this.friendsListPresenter = presenter;
         adapter = new FriendsListRecyclerAdapter(presenter);
         friendsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         friendsRecyclerView.setAdapter(adapter);
@@ -59,7 +60,7 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     protected void onStart() {
         super.onStart();
         presenter.onViewAttached(this);
-        radioGroupFreinds.check(R.id.friends_radio_button);
+        radioGroupFriends.check(R.id.friends_radio_button);
     }
 
 
@@ -94,7 +95,7 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     public void showSearch(boolean show) {
         if (show) {
             searchRadio.setVisibility(View.VISIBLE);
-            radioGroupFreinds.check(R.id.search_friends_radio_button);
+            radioGroupFriends.check(R.id.search_friends_radio_button);
         } else {
             searchRadio.setVisibility(View.GONE);
         }

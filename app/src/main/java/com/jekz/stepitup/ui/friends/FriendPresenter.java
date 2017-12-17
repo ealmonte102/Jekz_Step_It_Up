@@ -3,7 +3,6 @@ package com.jekz.stepitup.ui.friends;
 import android.util.Log;
 
 import com.jekz.stepitup.R;
-import com.jekz.stepitup.adapter.FriendsListRecyclerAdapter;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.model.friend.Friend;
 import com.jekz.stepitup.model.item.ItemInteractor;
@@ -23,9 +22,7 @@ import static com.jekz.stepitup.adapter.FriendsListRecyclerAdapter.FriendsListPr
  * Created by Evan and Kevin
  */
 
-public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresenter,
-        FriendsListPresenter.PendingFriendButtonListener, FriendsListPresenter
-                .FriendClickListener, AsyncResponse, FriendsListPresenter.SearchClickListener {
+public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresenter, AsyncResponse {
     private static final String TAG = FriendPresenter.class.getName();
 
     private HashSet<Friend> confirmedList = new HashSet<>();
@@ -99,29 +96,22 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
             rowView, int selectedPosition) {
         Friend friend = (Friend) activeFriendList.toArray()[position];
         rowView.setUsername(friend.getUsername());
-        rowView.addFriendClickListener(this);
-        if (activeFriendList == pendingList) {
-            ((FriendsListRecyclerAdapter.PendingFriendRowView) rowView).addButtonListener(this);
-        } else if (activeFriendList == searchList) {
-            ((FriendsListRecyclerAdapter.SearchFriendRowView) rowView).addSearchClickListener(this);
+        if (position == selectedPosition) {
+            rowView.setBackgroundColor(R.drawable.shape_selected_friend);
         } else {
-            if (position == selectedPosition) {
-                rowView.setBackgroundColor(R.drawable.shape_selected_friend);
-            } else {
-                rowView.setBackgroundColor(R.drawable.shape_shop_item_border);
-            }
+            rowView.setBackgroundColor(R.drawable.shape_shop_item_border);
         }
     }
 
     @Override
-    public void onConfirm(int position) {
+    public void confirmFriend(int position) {
         Friend friend = (Friend) activeFriendList.toArray()[position];
         friendEditedPositon = position;
         adjustFriends("accept_friend", friend.getId());
     }
 
     @Override
-    public void onDeny(int position) {
+    public void denyFriend(int position) {
         Friend friend = (Friend) activeFriendList.toArray()[position];
         friendEditedPositon = position;
         view.showMessage(friend.getUsername() + " has been denied");
@@ -129,14 +119,14 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     }
 
     @Override
-    public void onFriendClicked(int position) {
+    public void friendSelected(int position) {
         Friend friend = (Friend) activeFriendList.toArray()[position];
         view.showMessage("Loading " + friend.getUsername() + "'s avatar");
         retrieveFriendEquip(friend.getId());
     }
 
     @Override
-    public void onRemoveClicked(int position) {
+    public void removeFriend(int position) {
         Friend friend = (Friend) activeFriendList.toArray()[position];
         friendEditedPositon = position;
         view.showMessage(friend.getUsername() + " has been removed");
@@ -144,7 +134,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     }
 
     @Override
-    public void onAddFriend(int position) {
+    public void requestFriend(int position) {
         Friend friendToRequest = (Friend) activeFriendList.toArray()[position];
         adjustFriends("request_friend", friendToRequest.getId());
     }
@@ -178,7 +168,6 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
         asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
     }
 
-    // TYPE = add_friend, remove_friend, deny_friend or accept_friend.
     private void adjustFriends(String type, int id) {
         String session = loginManager.getSession();
 

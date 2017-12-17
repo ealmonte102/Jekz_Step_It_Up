@@ -68,18 +68,7 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         void setBackgroundColor(int color);
 
         void setUsername(String username);
-
-        void addFriendClickListener(FriendsListPresenter.FriendClickListener listener);
     }
-
-    public interface PendingFriendRowView extends FriendRowView {
-        void addButtonListener(FriendsListPresenter.PendingFriendButtonListener listener);
-    }
-
-    public interface SearchFriendRowView extends FriendRowView {
-        void addSearchClickListener(FriendsListPresenter.SearchClickListener listener);
-    }
-
 
     public interface FriendsListPresenter {
         int getItemCount();
@@ -89,21 +78,15 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         void onBindFriendsRowViewAtPosition(int position, FriendRowView rowView, int
                 selectedPosition);
 
-        interface PendingFriendButtonListener {
-            void onConfirm(int position);
+        void requestFriend(int position);
 
-            void onDeny(int position);
-        }
+        void confirmFriend(int position);
 
-        interface FriendClickListener {
-            void onFriendClicked(int position);
+        void denyFriend(int position);
 
-            void onRemoveClicked(int position);
-        }
+        void removeFriend(int position);
 
-        interface SearchClickListener {
-            void onAddFriend(int position);
-        }
+        void friendSelected(int position);
 
     }
 
@@ -113,7 +96,6 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
         @BindView(R.id.text_username)
         TextView usernameText;
-        private FriendsListPresenter.FriendClickListener listener;
 
         ConfirmedFriendViewHolder(final View itemView) {
             super(itemView);
@@ -125,14 +107,14 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                     selectedPosition = getLayoutPosition();
                     notifyItemChanged(oldPosition);
                     notifyItemChanged(selectedPosition);
-                    listener.onFriendClicked(selectedPosition);
+                    presenter.friendSelected(selectedPosition);
                 }
             });
         }
 
         @OnClick(R.id.button_remove)
         void removeFriendClicked(View view) {
-            listener.onRemoveClicked(getAdapterPosition());
+            presenter.removeFriend(getAdapterPosition());
         }
 
         @Override
@@ -141,22 +123,15 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         }
 
         @Override
-        public void addFriendClickListener(FriendsListPresenter.FriendClickListener listener) {
-            this.listener = listener;
-        }
-
-        @Override
         public void setBackgroundColor(int colorId) {
             itemView.setBackgroundResource(colorId);
         }
     }
 
-    class PendingFriendViewHolder extends RecyclerView.ViewHolder implements PendingFriendRowView {
+    class PendingFriendViewHolder extends RecyclerView.ViewHolder implements FriendRowView {
 
         @BindView(R.id.text_username)
         TextView usernameText;
-
-        FriendsListPresenter.PendingFriendButtonListener listener;
 
         PendingFriendViewHolder(View itemView) {
             super(itemView);
@@ -169,40 +144,27 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         }
 
         @Override
-        public void addFriendClickListener(FriendsListPresenter.FriendClickListener listener) {
-            //Intentionally empty
-        }
-
-        @Override
         public void setBackgroundColor(int color) {
-            itemView.setBackgroundColor(color);
-        }
-
-        @Override
-        public void addButtonListener(FriendsListPresenter.PendingFriendButtonListener listener) {
-            this.listener = listener;
         }
 
         @OnClick({R.id.button_confirm, R.id.button_deny})
         void modifyButtonClicked(View view) {
             switch (view.getId()) {
                 case R.id.button_confirm:
-                    listener.onConfirm(getLayoutPosition());
+                    presenter.confirmFriend(getLayoutPosition());
                     break;
                 case R.id.button_deny:
-                    listener.onDeny(getLayoutPosition());
+                    presenter.denyFriend(getLayoutPosition());
                     break;
             }
         }
     }
 
     class SearchFriendViewHolder extends RecyclerView.ViewHolder implements
-            SearchFriendRowView {
+            FriendRowView {
 
         @BindView(R.id.text_username)
         TextView usernameText;
-
-        private FriendsListPresenter.SearchClickListener listener;
 
         SearchFriendViewHolder(final View itemView) {
             super(itemView);
@@ -210,8 +172,7 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         }
 
         @Override
-        public void setBackgroundColor(int color) {
-            itemView.setBackgroundResource(color);
+        public void setBackgroundColor(int color) { // Intentionally left empty
         }
 
         @Override
@@ -219,20 +180,8 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
             usernameText.setText(username);
         }
 
-        @Override
-        public void addFriendClickListener(FriendsListPresenter.FriendClickListener listener) {
-
-        }
-
-        @Override
-        public void addSearchClickListener(FriendsListPresenter.SearchClickListener listener) {
-            this.listener = listener;
-        }
-
         @OnClick(R.id.button_request)
-        public void requestClicked(View view) {
-            listener.onAddFriend(getLayoutPosition());
-        }
+        void requestClicked(View view) {presenter.requestFriend(getLayoutPosition()); }
     }
 
 }
