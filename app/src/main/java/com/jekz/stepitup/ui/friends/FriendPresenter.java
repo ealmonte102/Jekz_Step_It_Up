@@ -25,12 +25,7 @@ import static com.jekz.stepitup.adapter.FriendsListRecyclerAdapter.FriendsListPr
 public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresenter, AsyncResponse {
     private static final String TAG = FriendPresenter.class.getName();
 
-    private HashSet<Friend> confirmedList = new HashSet<>();
-    private HashSet<Friend> pendingList = new HashSet<>();
-    private HashSet<Friend> searchList = new HashSet<>();
-    private HashSet<Friend> activeFriendList = new HashSet<>();
-
-    private int friendEditedPositon = -1;
+    private HashSet<Friend> friendList = new HashSet<>();
 
     private FriendMVP.View view;
 
@@ -42,7 +37,6 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     FriendPresenter(LoginManager loginManager, ItemInteractor itemInteractor) {
         this.loginManager = loginManager;
         this.itemInteractor = itemInteractor;
-        activeFriendList = confirmedList;
     }
 
     @Override
@@ -57,7 +51,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
 
     @Override
     public void searchUser() {
-        activeFriendList = searchList;
+        friendList.clear();
         view.showSearch(true);
         view.reloadFriendsList();
         searchUser("");
@@ -65,7 +59,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
 
     @Override
     public void loadPending() {
-        activeFriendList = pendingList;
+        friendList.clear();
         retrieveFriends("pending_friends");
         view.reloadFriendsList();
         view.showSearch(false);
@@ -73,8 +67,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
 
     @Override
     public void loadFriends() {
-        activeFriendList = confirmedList;
-        confirmedList.clear();
+        friendList.clear();
         retrieveFriends("friends");
         view.reloadFriendsList();
         view.showSearch(false);
@@ -82,19 +75,19 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
 
     @Override
     public int getItemCount() {
-        return activeFriendList.size();
+        return friendList.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        Friend friend = (Friend) activeFriendList.toArray()[position];
+        Friend friend = (Friend) friendList.toArray()[position];
         return friend.getFriendType().ordinal();
     }
 
     @Override
     public void onBindFriendsRowViewAtPosition(int position, FriendRowView
             rowView, int selectedPosition) {
-        Friend friend = (Friend) activeFriendList.toArray()[position];
+        Friend friend = (Friend) friendList.toArray()[position];
         rowView.setUsername(friend.getUsername());
         if (position == selectedPosition) {
             rowView.setBackgroundColor(R.drawable.shape_selected_friend);
@@ -105,38 +98,35 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
 
     @Override
     public void confirmFriend(int position) {
-        Friend friend = (Friend) activeFriendList.toArray()[position];
-        friendEditedPositon = position;
+        Friend friend = (Friend) friendList.toArray()[position];
         adjustFriends("accept_friend", friend.getId());
     }
 
     @Override
     public void denyFriend(int position) {
-        Friend friend = (Friend) activeFriendList.toArray()[position];
-        friendEditedPositon = position;
+        Friend friend = (Friend) friendList.toArray()[position];
         view.showMessage(friend.getUsername() + " has been denied");
         adjustFriends("deny_friend", friend.getId());
     }
 
     @Override
     public void friendSelected(int position) {
-        Friend friend = (Friend) activeFriendList.toArray()[position];
+        Friend friend = (Friend) friendList.toArray()[position];
         view.showMessage("Loading " + friend.getUsername() + "'s avatar");
         retrieveFriendEquip(friend.getId());
     }
 
     @Override
     public void removeFriend(int position) {
-        Friend friend = (Friend) activeFriendList.toArray()[position];
-        friendEditedPositon = position;
+        Friend friend = (Friend) friendList.toArray()[position];
         view.showMessage(friend.getUsername() + " has been removed");
         adjustFriends("remove_friend", friend.getId());
     }
 
     @Override
     public void requestFriend(int position) {
-        Friend friendToRequest = (Friend) activeFriendList.toArray()[position];
-        adjustFriends("request_friend", friendToRequest.getId());
+        Friend friend = (Friend) friendList.toArray()[position];
+        adjustFriends("request_friend", friend.getId());
     }
 
     private void retrieveFriends(String datatype) {
@@ -213,9 +203,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         Log.d(TAG, "Friend: " + friendID + " - " + friendName);
                         Friend newFriend = new Friend(friendName, friendID, Friend.FriendType
                                 .CONFIRMED);
-                        if (confirmedList.add(newFriend)) {
-                            view.showAddedFriend(activeFriendList.size() - 1);
-                        }
+                        friendList.add(newFriend);
                         break;
                     }
                     case "pending_friends": {
@@ -224,9 +212,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         Log.d(TAG, "Pending friend: " + friendID + " - " + friendName);
                         Friend newFriend = new Friend(friendName, friendID, Friend.FriendType
                                 .PENDING);
-                        if (pendingList.add(newFriend)) {
-                            view.showAddedFriend(activeFriendList.size() - 1);
-                        }
+                        friendList.add(newFriend);
                         break;
                     }
                     case "search_user": {
@@ -235,27 +221,26 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         Log.d(TAG, "Search friend: " + friendID + " - " + friendName);
                         Friend searchedFriend = new Friend(friendName, friendID, Friend.FriendType
                                 .SEARCHED);
-                        searchList.add(searchedFriend);
-                        view.showAddedFriend(activeFriendList.size() - 1);
+                        friendList.add(searchedFriend);
                         break;
                     }
                     case "remove_friend": {
-                        Friend friendToAccept = (Friend) activeFriendList.toArray()
-                                [friendEditedPositon];
-                        confirmedList.remove(friendToAccept);
-                        view.showRemovedFriend(friendEditedPositon);
+                        int friendID = q.getInt("userid");
+                        String friendName = q.getString("username");
+                        Log.d(TAG, "Removed friend: " + friendID + " - " + friendName);
+                        Friend removedFriend = new Friend(friendName, friendID, Friend.FriendType
+                                .SEARCHED);
+                        friendList.remove(removedFriend);
                         break;
                     }
                     case "accept_friend": {
+                        int friendID = q.getInt("userid");
+                        String friendName = q.getString("username");
+                        Log.d(TAG, "Accepted friend: " + friendID + " - " + friendName);
+                        Friend acceptedFriend = new Friend(friendName, friendID, Friend.FriendType
+                                .SEARCHED);
                         if (q.getBoolean("success")) {
-                            Friend friendToAccept = (Friend) activeFriendList.toArray()
-                                    [friendEditedPositon];
-
-                            pendingList.remove(friendToAccept);
-                            friendToAccept.setFriendType(Friend.FriendType.CONFIRMED);
-                            confirmedList.add(friendToAccept);
-                            view.showRemovedFriend(friendEditedPositon);
-                            view.showMessage("Friend accepted");
+                            friendList.remove(acceptedFriend);
                         } else {
                             Log.d(TAG, "Could not add friend");
                             view.showMessage("You can not add yourself");
@@ -263,10 +248,12 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         break;
                     }
                     case "deny_friend": {
-                        Friend friendToDeny = (Friend) activeFriendList.toArray()
-                                [friendEditedPositon];
-                        pendingList.remove(friendToDeny);
-                        view.showRemovedFriend(friendEditedPositon);
+                        int friendID = q.getInt("userid");
+                        String friendName = q.getString("username");
+                        Log.d(TAG, "Denied friend: " + friendID + " - " + friendName);
+                        Friend deniedFriend = new Friend(friendName, friendID, Friend.FriendType
+                                .SEARCHED);
+                        friendList.remove(deniedFriend);
                         break;
                     }
                     case "user_data": {
@@ -296,5 +283,6 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                 }
             }
         } catch (JSONException ignored) {}
+        view.reloadFriendsList();
     }
 }

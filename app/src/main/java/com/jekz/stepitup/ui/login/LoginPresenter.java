@@ -23,10 +23,9 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
     public void onViewAttached(LoginMVP.View loginView) {
         this.loginView = loginView;
         if (loginManager.isLoggedIn()) {
-            loginView.enableLogin(false);
+            loginView.disableLogin();
         } else {
-            loginView.enableLogin(true);
-            loginView.enableLogin(false);
+            loginView.enableLogin();
         }
     }
 
@@ -40,7 +39,7 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
         if (username.isEmpty() || password.isEmpty()) {
             loginView.showMessage("Please enter both username and password");
         } else {
-            loginView.enableLogin(false);
+            loginView.disableLogin();
             loginManager.login(username, password, this);
         }
     }
@@ -48,13 +47,13 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
     @Override
     public void logout() {
         loginManager.logout(this);
-        loginView.enableLogin(false);
+        loginView.enableLogin();
     }
 
     @Override
     public void loginResult(boolean loginSuccess) {
         if (loginView == null) { return; }
-        loginView.enableLogin(true);
+        loginView.enableLogin();
         if (loginSuccess) {
             loginView.showMessage("Login Successful!");
             loginView.startHomeActivity();

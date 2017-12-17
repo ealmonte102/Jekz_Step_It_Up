@@ -76,17 +76,6 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
     }
 
     @Override
-    public void showAddedFriend(int pos) {
-        adapter.notifyItemInserted(pos);
-    }
-
-    @Override
-    public void showRemovedFriend(int x) {
-        adapter.notifyItemRemoved(x);
-    }
-
-
-    @Override
     public void showMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }

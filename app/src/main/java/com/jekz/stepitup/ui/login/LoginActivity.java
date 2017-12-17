@@ -29,6 +29,9 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     Button loginButton;
 
 
+    @BindView(R.id.button_logout)
+    Button logoutButton;
+
 
     LoginMVP.Presenter loginPresenter;
 
@@ -63,12 +66,16 @@ public class LoginActivity extends Activity implements LoginMVP.View {
         super.onPause();
     }
 
-    @OnClick({R.id.button_login})
+    @OnClick({R.id.button_login, R.id.button_logout})
     public void onButtonClicked(View view) {
         switch (view.getId()) {
             case R.id.button_login:
                 loginPresenter.login(usernameText.getText().toString(),
                         passwordText.getText().toString());
+                break;
+            case R.id.button_logout:
+                loginPresenter.logout();
+                break;
         }
     }
 
@@ -79,12 +86,18 @@ public class LoginActivity extends Activity implements LoginMVP.View {
         finish();
     }
 
-    public void enableLogin(boolean enableLogin) {
-        float loginAlpha = enableLogin ? 1 : 0.5f;
-        if (enableLogin) {
-            loginButton.setAlpha(loginAlpha);
-            loginButton.setEnabled(enableLogin);
-        }
+    public void enableLogin() {
+        loginButton.setAlpha(1);
+        loginButton.setEnabled(true);
+        logoutButton.setEnabled(false);
+        logoutButton.setAlpha(.5f);
+    }
+
+    public void disableLogin() {
+        loginButton.setAlpha(0.5f);
+        loginButton.setEnabled(false);
+        logoutButton.setEnabled(true);
+        logoutButton.setAlpha(1);
     }
 
     @Override

@@ -11,10 +11,6 @@ interface FriendMVP {
     interface View extends AvatarView {
         void reloadFriendsList();
 
-        void showAddedFriend(int x);
-
-        void showRemovedFriend(int x);
-
         void showMessage(String s);
 
         void showSearch(boolean show);

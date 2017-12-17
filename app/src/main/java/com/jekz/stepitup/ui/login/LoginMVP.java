@@ -26,7 +26,9 @@ interface LoginMVP {
          */
         void startHomeActivity();
 
-        void enableLogin(boolean enabled);
+        void enableLogin();
+
+        void disableLogin();
     }
 
     /**
