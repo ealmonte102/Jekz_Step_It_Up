@@ -22,7 +22,7 @@ public class JekzApplication extends Application {
     @Override
     public void onCreate() {
         SensorManager manager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        stepCounter = new AndroidStepCounter(manager, TimeUnit.SECONDS.toMillis(10));
+        stepCounter = new AndroidStepCounter(manager, TimeUnit.SECONDS.toMillis(120));
         stepCounter.registerSensor();
         stepCounter.startAutoCount();
         super.onCreate();

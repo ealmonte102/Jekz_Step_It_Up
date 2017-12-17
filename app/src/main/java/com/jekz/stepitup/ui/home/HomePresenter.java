@@ -116,6 +116,7 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
     @Override
     public void onViewAttached(HomeMVP.View view) {
         this.view = view;
+        view.setCurrency("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
         view.setUsername(loginManager.getUsername());
         if (loginManager.isLoggedIn()) {
             view.hideLogin();
