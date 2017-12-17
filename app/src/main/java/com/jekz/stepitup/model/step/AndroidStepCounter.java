@@ -23,6 +23,7 @@ public class AndroidStepCounter implements IntervalStepCounter, SensorEventListe
     private ArrayList<StepCounterCallback> listeners = new ArrayList<>();
 
     private int sessionStartedSteps;
+    private int baseSteps;
     private int mostRecentSteps;
     private long sessionStartTime;
 
@@ -68,7 +69,7 @@ public class AndroidStepCounter implements IntervalStepCounter, SensorEventListe
     }
 
     private synchronized void resetCount() {
-        mostRecentSteps = 0;
+        sessionStartedSteps = mostRecentSteps;
         sessionStartTime = System.currentTimeMillis();
     }
 
@@ -99,6 +100,7 @@ public class AndroidStepCounter implements IntervalStepCounter, SensorEventListe
     @Override
     public synchronized void startAutoCount() {
         if (!autoCounting) {
+            Log.d(TAG, "Starting auto-count");
             resetCount();
             autoCounting = true;
             handler.postDelayed(runnable, intervalInMillis);
@@ -108,6 +110,7 @@ public class AndroidStepCounter implements IntervalStepCounter, SensorEventListe
     @Override
     public void stopAutoCount() {
         if (autoCounting) {
+            Log.d(TAG, "Stopping auto-count");
             notifySessionEnded(new Session(sessionStartTime, System.currentTimeMillis(),
                     mostRecentSteps - sessionStartedSteps));
             resetCount();
@@ -119,8 +122,10 @@ public class AndroidStepCounter implements IntervalStepCounter, SensorEventListe
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
-            if (sessionStartedSteps < 1) {
-                sessionStartedSteps = (int) sensorEvent.values[0];
+            if (baseSteps < 1) {
+                baseSteps = (int) sensorEvent.values[0];
+                mostRecentSteps = baseSteps;
+                sessionStartedSteps = baseSteps;
             }
             mostRecentSteps = (int) sensorEvent.values[0];
             notiftyListeners(mostRecentSteps - sessionStartedSteps);

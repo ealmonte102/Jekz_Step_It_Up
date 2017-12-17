@@ -12,8 +12,12 @@ public class Session {
     public final int totalSteps;
 
     public Session(long startTime, long endTime, int totalSteps) {
-        if (startTime < 0 || endTime < 0 || totalSteps < 0) {
-            throw new IllegalArgumentException();
+        if (startTime < 0) {
+            throw new IllegalArgumentException("Start time is less than 0");
+        } else if (endTime < 0) {
+            throw new IllegalArgumentException("End time is less than 0");
+        } else if (totalSteps < 0) {
+            throw new IllegalArgumentException("Total steps are less than 0");
         }
         this.startTime = startTime;
         this.endTime = endTime;
