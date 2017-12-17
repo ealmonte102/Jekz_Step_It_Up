@@ -42,8 +42,8 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
     @Override
     public void loginResult(boolean loginSuccess) {
         if (loginView == null) { return; }
+        loginView.hideProgress();
         if (loginSuccess) {
-            loginView.hideProgress();
             loginView.showMessage("Login Successful!");
             loginView.startHomeActivity();
         } else {
