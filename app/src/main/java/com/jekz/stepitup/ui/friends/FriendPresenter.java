@@ -50,11 +50,11 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     }
 
     @Override
-    public void searchUser() {
+    public void searchUser(String username) {
         friendList.clear();
         view.showSearch(true);
         view.reloadFriendsList();
-        searchUser("");
+        doSearchRequest(username);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
         asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
     }
 
-    private void searchUser(String searchName) {
+    private void doSearchRequest(String searchName) {
         String session = loginManager.getSession();
 
         JSONObject postData = new JSONObject();

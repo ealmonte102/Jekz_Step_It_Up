@@ -1,12 +1,17 @@
 package com.jekz.stepitup.ui.friends;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -23,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
-public class FriendActivity extends AppCompatActivity implements FriendMVP.View {
+public class FriendActivity extends Activity implements FriendMVP.View {
     @BindView(R.id.recycler_view_friends)
     RecyclerView friendsRecyclerView;
 
@@ -126,7 +131,26 @@ public class FriendActivity extends AppCompatActivity implements FriendMVP.View 
 
     @OnClick(R.id.search_button)
     public void searchButtonClicked(View view) {
-        presenter.searchUser();
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this,
+                R.style.SearchDialog));
+        builder.setTitle("Enter User Name");
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        builder.setView(input);
+
+        builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                presenter.searchUser(input.getText().toString());
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
 

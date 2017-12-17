@@ -19,7 +19,7 @@ interface FriendMVP {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void searchUser();
+        void searchUser(String username);
 
         void loadPending();
 
