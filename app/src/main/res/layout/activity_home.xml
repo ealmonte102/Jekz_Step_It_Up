@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/home_background"
-    tools:context="com.jekz.stepitup.ui.home.HomeActivity">
+    tools:context="com.jekz.stepitup.ui.home.HomeActivity"
+    tools:layout_editor_absoluteY="25dp">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_home"
@@ -14,70 +15,106 @@
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toTopOf="@+id/topCL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <com.jekz.stepitup.ui.friends.AvatarImage
-        android:id="@+id/avatar_image_home"
-        android:layout_width="@dimen/avatar_item_width"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/topCL"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_avatar_bottom"
+        android:orientation="horizontal"
+        android:padding="@dimen/default_container_margin"
+        app:layout_constraintBottom_toTopOf="@+id/middleCL"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline_avatar_top" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_home"
+        app:layout_constraintVertical_weight="5"
+        tools:background="@color/shop_category_unfocused_background">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_avatar_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.34920636" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/text_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:drawableLeft="@drawable/footprint_icon"
+            android:maxLines="1"
+            android:text="TextView"
+            android:textAlignment="textEnd"
+            android:textColor="#000"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            app:autoSizeMaxTextSize="18sp"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:fontFamily="casual"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="3,000" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_avatar_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.64902997" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/text_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="#000"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            app:autoSizeMaxTextSize="18sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:fontFamily="casual"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="evanalmonte" />
+    </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/text_currency"
-        android:layout_width="98dp"
-        android:layout_height="47dp"
-        android:text="TextView"
-        android:textColor="#000"
-        app:autoSizeMaxTextSize="18sp"
-        app:autoSizeMinTextSize="10sp"
-        app:autoSizeStepGranularity="1sp"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        tools:text="3,000" />
-
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/text_username"
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/middleCL"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="TextView"
-        android:textColor="#000"
-        android:textSize="18sp"
-        app:autoSizeMaxTextSize="18sp"
-        app:autoSizeMinTextSize="8sp"
-        app:autoSizeStepGranularity="1sp"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="@+id/text_currency"
+        app:layout_constraintBottom_toTopOf="@+id/bottomCL"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        tools:text="evanalmonte" />
+        app:layout_constraintTop_toBottomOf="@+id/topCL"
+        app:layout_constraintVertical_weight="10"
+        tools:background="@color/shop_buy_button_pressed">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="72dp" />
+        <com.jekz.stepitup.ui.friends.AvatarImage
+            android:id="@+id/avatar_image_home"
+            android:layout_width="117dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/bottomCL"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/default_container_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/middleCL"
+        app:layout_constraintVertical_weight="10">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/friends_button"
+            android:text="Logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
 
 </android.support.constraint.ConstraintLayout>
