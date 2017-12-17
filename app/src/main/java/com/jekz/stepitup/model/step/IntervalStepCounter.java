@@ -10,4 +10,6 @@ public interface IntervalStepCounter extends StepCounter {
     void notifySessionEnded(Session session);
 
     void startAutoCount();
+
+    void stopAutoCount();
 }
