@@ -26,10 +26,6 @@ interface LoginMVP {
          */
         void startHomeActivity();
 
-        void enableLogin();
-
-        void disableLogin();
-
         void showProgress();
 
         void hideProgress();
@@ -50,12 +46,5 @@ interface LoginMVP {
          * @param password string representing password
          */
         void login(String username, String password);
-
-        /**
-         * Logs out of the application
-         */
-        void logout();
-
-
     }
 }

@@ -22,11 +22,6 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
     @Override
     public void onViewAttached(LoginMVP.View loginView) {
         this.loginView = loginView;
-        if (loginManager.isLoggedIn()) {
-            loginView.disableLogin();
-        } else {
-            loginView.enableLogin();
-        }
     }
 
     @Override
@@ -39,22 +34,14 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
         if (username.isEmpty() || password.isEmpty()) {
             loginView.showMessage("Please enter both username and password");
         } else {
-            loginView.disableLogin();
             loginView.showProgress();
             loginManager.login(username, password, this);
         }
     }
 
     @Override
-    public void logout() {
-        loginManager.logout(this);
-        loginView.enableLogin();
-    }
-
-    @Override
     public void loginResult(boolean loginSuccess) {
         if (loginView == null) { return; }
-        loginView.enableLogin();
         if (loginSuccess) {
             loginView.hideProgress();
             loginView.showMessage("Login Successful!");

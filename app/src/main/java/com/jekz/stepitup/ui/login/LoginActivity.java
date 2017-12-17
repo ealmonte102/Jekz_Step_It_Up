@@ -29,10 +29,6 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     @BindView(R.id.button_login)
     Button loginButton;
 
-
-    @BindView(R.id.button_logout)
-    Button logoutButton;
-
     @BindView(R.id.login_progress)
     ProgressBar progressBar;
 
@@ -70,17 +66,9 @@ public class LoginActivity extends Activity implements LoginMVP.View {
         super.onPause();
     }
 
-    @OnClick({R.id.button_login, R.id.button_logout})
+    @OnClick(R.id.button_login)
     public void onButtonClicked(View view) {
-        switch (view.getId()) {
-            case R.id.button_login:
-                loginPresenter.login(usernameText.getText().toString(),
-                        passwordText.getText().toString());
-                break;
-            case R.id.button_logout:
-                loginPresenter.logout();
-                break;
-        }
+        loginPresenter.login(usernameText.getText().toString(), passwordText.getText().toString());
     }
 
     @Override
@@ -90,28 +78,18 @@ public class LoginActivity extends Activity implements LoginMVP.View {
         finish();
     }
 
-    public void enableLogin() {
-        loginButton.setAlpha(1);
-        loginButton.setEnabled(true);
-        logoutButton.setEnabled(false);
-        logoutButton.setAlpha(.5f);
-    }
-
-    public void disableLogin() {
-        loginButton.setAlpha(0.5f);
-        loginButton.setEnabled(false);
-        logoutButton.setEnabled(true);
-        logoutButton.setAlpha(1);
-    }
-
     @Override
     public void showProgress() {
         progressBar.setVisibility(View.VISIBLE);
+        loginButton.setEnabled(false);
+        loginButton.setAlpha(.5f);
     }
 
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
+        loginButton.setEnabled(true);
+        loginButton.setAlpha(1);
     }
 
     @Override
