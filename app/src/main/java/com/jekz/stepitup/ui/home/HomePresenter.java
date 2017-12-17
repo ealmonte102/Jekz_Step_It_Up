@@ -99,13 +99,9 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
             public void onLogout(boolean logoutSuccessful) {
                 view.showMessage("Succesfully logged out");
                 repo.resetAvatar();
-                avatar = repo.getAvatar();
-                view.showLogin();
+                view.navigateToLoginScreen();
             }
         });
-        view.resetAvatar(itemInteractor.getModel("male"));
-        view.setCurrency("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
-        view.setUsername("");
     }
 
     @Override
@@ -118,11 +114,6 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
         this.view = view;
         view.setCurrency("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
         view.setUsername(loginManager.getUsername());
-        if (loginManager.isLoggedIn()) {
-            view.hideLogin();
-        } else {
-            view.showLogin();
-        }
         loadAvatar();
     }
 

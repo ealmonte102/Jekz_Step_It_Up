@@ -23,12 +23,6 @@ interface HomeMVP {
 
         void navigateToFriendsScreen();
 
-        void resetAvatar(int defaultGenderResId);
-
-        void showLogin();
-
-        void hideLogin();
-
         void showMessage(String s);
     }
 

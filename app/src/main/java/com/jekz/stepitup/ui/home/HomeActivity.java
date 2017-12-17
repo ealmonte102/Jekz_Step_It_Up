@@ -48,9 +48,6 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     @BindView(R.id.button_logout)
     Button logoutButton;
 
-    @BindView(R.id.button_login)
-    Button loginButton;
-
     HomeMVP.Presenter presenter;
     IntervalStepCounter stepCounter;
 
@@ -148,29 +145,6 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     }
 
     @Override
-    public void resetAvatar(int defaultGenderResId) {
-        AvatarPart[] partsToRest = {AvatarPart.HAT, AvatarPart.SHIRT, AvatarPart.PANTS,
-                                    AvatarPart.SHOES};
-        avatarImage.setAvatarPartImage(AvatarPart.MODEL, defaultGenderResId);
-        for (AvatarPart part : partsToRest) {
-            avatarImage.setAvatarPartImage(part, 0);
-        }
-        avatarImage.animatePart(AvatarPart.MODEL, true);
-    }
-
-    @Override
-    public void showLogin() {
-        loginButton.setVisibility(View.VISIBLE);
-        logoutButton.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void hideLogin() {
-        loginButton.setVisibility(View.INVISIBLE);
-        logoutButton.setVisibility(View.VISIBLE);
-    }
-
-    @Override
     public void showMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
@@ -178,6 +152,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     private void navigateToActivity(Context context, Class<?> activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -195,14 +170,11 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
         avatarImage.animatePart(part, shouldAnimate);
     }
 
-    @OnClick({R.id.button_logout, R.id.button_login})
+    @OnClick({R.id.button_logout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_logout:
                 presenter.logout();
-                break;
-            case R.id.button_login:
-                presenter.login();
                 break;
         }
     }
