@@ -29,6 +29,10 @@ interface LoginMVP {
         void enableLogin();
 
         void disableLogin();
+
+        void showProgress();
+
+        void hideProgress();
     }
 
     /**

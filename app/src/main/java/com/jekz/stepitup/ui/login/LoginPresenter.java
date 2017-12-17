@@ -40,6 +40,7 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
             loginView.showMessage("Please enter both username and password");
         } else {
             loginView.disableLogin();
+            loginView.showProgress();
             loginManager.login(username, password, this);
         }
     }
@@ -55,6 +56,7 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
         if (loginView == null) { return; }
         loginView.enableLogin();
         if (loginSuccess) {
+            loginView.hideProgress();
             loginView.showMessage("Login Successful!");
             loginView.startHomeActivity();
         } else {

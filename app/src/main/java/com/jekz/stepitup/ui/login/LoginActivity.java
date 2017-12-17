@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jekz.stepitup.R;
@@ -31,6 +32,9 @@ public class LoginActivity extends Activity implements LoginMVP.View {
 
     @BindView(R.id.button_logout)
     Button logoutButton;
+
+    @BindView(R.id.login_progress)
+    ProgressBar progressBar;
 
 
     LoginMVP.Presenter loginPresenter;
@@ -98,6 +102,16 @@ public class LoginActivity extends Activity implements LoginMVP.View {
         loginButton.setEnabled(false);
         logoutButton.setEnabled(true);
         logoutButton.setAlpha(1);
+    }
+
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
