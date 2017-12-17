@@ -133,8 +133,9 @@ public class FriendActivity extends Activity implements FriendMVP.View {
     public void searchButtonClicked(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this,
                 R.style.SearchDialog));
-        builder.setTitle("Enter User Name");
+        builder.setTitle("Search For Users");
         final EditText input = new EditText(this);
+        input.setHint("Search");
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         builder.setView(input);
 
@@ -142,12 +143,6 @@ public class FriendActivity extends Activity implements FriendMVP.View {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 presenter.searchUser(input.getText().toString());
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
             }
         });
         builder.show();
