@@ -22,6 +22,14 @@ interface HomeMVP {
         void navigateToLoginScreen();
 
         void navigateToFriendsScreen();
+
+        void resetAvatar();
+
+        void showLogin();
+
+        void hideLogin();
+
+        void showMessage(String s);
     }
 
     interface Presenter extends BasePresenter<HomeMVP.View> {
@@ -38,6 +46,10 @@ interface HomeMVP {
         void onViewDetached();
 
         void accessFriends();
+
+        void logout();
+
+        void login();
     }
 
     interface Model {

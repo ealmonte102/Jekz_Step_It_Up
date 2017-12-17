@@ -25,13 +25,15 @@ import java.text.NumberFormat;
 public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.shop.AsyncResponse {
     private static final String TAG = HomePresenter.class.getName();
     private ItemInteractor itemInteractor;
+    private AvatarRepo repo;
     private Avatar avatar;
     private HomeMVP.View view;
     private LoginManager loginManager;
 
     public HomePresenter(ItemInteractor itemInteractor, LoginManager loginManager) {
         this.itemInteractor = itemInteractor;
-        avatar = AvatarRepo.getInstance().getAvatar();
+        repo = AvatarRepo.getInstance();
+        avatar = repo.getAvatar();
         this.loginManager = loginManager;
         retrieveItem("get_items");
         retrieveItem("user_data");
@@ -43,20 +45,24 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
         Item shirt = avatar.getShirt();
         Item pants = avatar.getPants();
         Item shoes = avatar.getShoes();
+
         String model = avatar.isMale() ? "male" : "female";
         if (hat != null) {
             view.setAvatarImagePart(AvatarImage.AvatarPart.HAT, itemInteractor.getItem(hat.getId()
             ).second);
+
         }
 
         if (shirt != null) {
             view.setAvatarImagePart(AvatarImage.AvatarPart.SHIRT, itemInteractor.getItem(shirt
                     .getId()).second);
+
         }
 
         if (pants != null) {
             view.setAvatarImagePart(AvatarImage.AvatarPart.PANTS, itemInteractor.getItem(pants
                     .getId()).second);
+
         }
 
         if (shoes != null) {
@@ -87,9 +93,35 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
     }
 
     @Override
+    public void logout() {
+        loginManager.logout(new LoginManager.LogoutCallback() {
+            @Override
+            public void onLogout(boolean logoutSuccessful) {
+                view.showMessage("Succesfully logged out");
+                repo.resetAvatar();
+                avatar = repo.getAvatar();
+                view.showLogin();
+            }
+        });
+        view.resetAvatar();
+        view.setCurrency("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
+        view.setUsername("");
+    }
+
+    @Override
+    public void login() {
+        view.navigateToLoginScreen();
+    }
+
+    @Override
     public void onViewAttached(HomeMVP.View view) {
         this.view = view;
         view.setUsername(loginManager.getUsername());
+        if (loginManager.isLoggedIn()) {
+            view.hideLogin();
+        } else {
+            view.showLogin();
+        }
         loadAvatar();
     }
 

@@ -21,4 +21,8 @@ public class AvatarRepo {
     public Avatar getAvatar() {
         return avatar;
     }
+
+    public void resetAvatar() {
+        avatar = new Avatar();
+    }
 }
