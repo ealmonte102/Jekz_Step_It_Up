@@ -34,6 +34,7 @@ public class AndroidStepCounter implements IntervalStepCounter, SensorEventListe
             notifySessionEnded(new Session(sessionStartTime, System.currentTimeMillis(),
                     mostRecentSteps - sessionStartedSteps));
             resetCount();
+            handler.postDelayed(runnable, intervalInMillis);
         }
     };
 
