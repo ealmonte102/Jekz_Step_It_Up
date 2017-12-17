@@ -26,21 +26,7 @@ interface LoginMVP {
          */
         void startHomeActivity();
 
-        /**
-         * Display the number of steps walked so far
-         * @param text number of steps walked for the current session
-         */
-        void setStepText(String text);
-
-        /**
-         * Display the current progress
-         * @param progress current progress
-         */
-        void setStepProgress(float progress);
-
-        void enableLoginButton(boolean enabled);
-
-        void enableLogoutButton(boolean enabled);
+        void enableLogin(boolean enabled);
     }
 
     /**
@@ -64,6 +50,6 @@ interface LoginMVP {
          */
         void logout();
 
-        void registerSensor(boolean register);
+
     }
 }

@@ -2,41 +2,36 @@ package com.jekz.stepitup.ui.login;
 
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
-import com.jekz.stepitup.model.step.Session;
-import com.jekz.stepitup.model.step.StepCounter;
 
 /**
  * Created by evanalmonte on 12/8/17.
  */
 
 class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, LoginManager
-        .LogoutCallback, StepCounter.StepCounterCallback {
+        .LogoutCallback {
     private static final String TAG = RemoteLoginModel.class.getName();
-    final int STEP_GOAL = 100;
+
     private LoginMVP.View loginView;
     private LoginManager loginManager;
-    private StepCounter stepCounter;
 
-    LoginPresenter(StepCounter stepCounter, LoginManager loginManager) {
+
+    LoginPresenter(LoginManager loginManager) {
         this.loginManager = loginManager;
-        this.stepCounter = stepCounter;
     }
 
     @Override
     public void onViewAttached(LoginMVP.View loginView) {
         this.loginView = loginView;
-        stepCounter.addListener(this);
         if (loginManager.isLoggedIn()) {
-            loginView.enableLoginButton(false);
+            loginView.enableLogin(false);
         } else {
-            loginView.enableLogoutButton(true);
-            loginView.enableLogoutButton(false);
+            loginView.enableLogin(true);
+            loginView.enableLogin(false);
         }
     }
 
     @Override
     public void onViewDetached() {
-        stepCounter.removeListener(this);
         loginView = null;
     }
 
@@ -45,7 +40,7 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
         if (username.isEmpty() || password.isEmpty()) {
             loginView.showMessage("Please enter both username and password");
         } else {
-            loginView.enableLoginButton(false);
+            loginView.enableLogin(false);
             loginManager.login(username, password, this);
         }
     }
@@ -53,23 +48,13 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
     @Override
     public void logout() {
         loginManager.logout(this);
-        loginView.enableLoginButton(true);
-        loginView.enableLogoutButton(false);
-    }
-
-    @Override
-    public void registerSensor(boolean register) {
-        if (register) {
-            stepCounter.registerSensor();
-        } else {
-            stepCounter.unregisterSensor();
-        }
+        loginView.enableLogin(false);
     }
 
     @Override
     public void loginResult(boolean loginSuccess) {
         if (loginView == null) { return; }
-        loginView.enableLoginButton(true);
+        loginView.enableLogin(true);
         if (loginSuccess) {
             loginView.showMessage("Login Successful!");
             loginView.startHomeActivity();
@@ -86,14 +71,4 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
             loginView.showMessage("You are already logged out");
         }
     }
-
-    @Override
-    public void onStepDetected(int x) {
-        if (loginView == null) { return; }
-        loginView.setStepProgress((float) x / STEP_GOAL * 100);
-        loginView.setStepText(String.valueOf(x));
-    }
-
-    @Override
-    public void onSessionEnded(Session session) { }
 }

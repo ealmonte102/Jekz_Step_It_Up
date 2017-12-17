@@ -9,7 +9,7 @@
     <color name="shop_inventory_background">#e8e0d8</color>
     <color name="shop_background">#e2f3fa</color>
     <color name="shop_dark_background">#4e4c60</color>
-    <color name="shop_category_focused_text">#000</color>
+    <color name="black">#000</color>
     <color name="shop_buy_button">#65c878</color>
     <color name="shop_buy_button_pressed">#016414</color>
     <color name="equip_item_border">#b5bdbd</color>
@@ -19,5 +19,6 @@
     <color name="white">#fff</color>
     <color name="friends_button">#FF8800</color>
     <color name="friends_button_unpressed">#FFCC00</color>
+    <color name="navy_blue">#4169e1</color>
 
 </resources>
