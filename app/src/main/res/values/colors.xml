@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#4169e1</color>
+    <color name="colorPrimaryDark">#003fae</color>
     <color name="colorAccent">#FF4081</color>
     <color name="shop_category_unfocused_text">#fdf3b4</color>
     <color name="shop_category_unfocused_background">#614f4f</color>
@@ -19,6 +19,5 @@
     <color name="white">#fff</color>
     <color name="friends_button">#FF8800</color>
     <color name="friends_button_unpressed">#FFCC00</color>
-    <color name="navy_blue">#4169e1</color>
 
 </resources>
