@@ -20,7 +20,7 @@ import java.util.LinkedList;
  */
 
 public class ShopRequest extends AsyncTask<String, Void, JSONObject> {
-    private static final String TAG = ShopPresenter.class.getName();
+    private static final String TAG = ShopRequest.class.getName();
 
     public AsyncResponse delegate;
 
