@@ -64,4 +64,9 @@
         <item name="android:typeface">monospace</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="Home.LogoutButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/friends_button</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

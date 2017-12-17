@@ -19,5 +19,6 @@
     <color name="white">#fff</color>
     <color name="friends_button">#FF8800</color>
     <color name="friends_button_unpressed">#FFCC00</color>
-
+    <color name="red">#f53b38</color>
+    <color name="light_red">#f1302c</color>
 </resources>
