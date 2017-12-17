@@ -29,6 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.jekz.stepitup.ui.friends.AvatarImage.AvatarPart;
+
 public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
 
     @BindView(R.id.toolbar_home)
@@ -146,12 +148,14 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     }
 
     @Override
-    public void resetAvatar() {
-        avatarImage.setAvatarPartImage(AvatarImage.AvatarPart.HAT, 0);
-        avatarImage.setAvatarPartImage(AvatarImage.AvatarPart.SHIRT, 0);
-        avatarImage.setAvatarPartImage(AvatarImage.AvatarPart.SHOES, 0);
-        avatarImage.setAvatarPartImage(AvatarImage.AvatarPart.PANTS, 0);
-
+    public void resetAvatar(int defaultGenderResId) {
+        AvatarPart[] partsToRest = {AvatarPart.HAT, AvatarPart.SHIRT, AvatarPart.PANTS,
+                                    AvatarPart.SHOES};
+        avatarImage.setAvatarPartImage(AvatarPart.MODEL, defaultGenderResId);
+        for (AvatarPart part : partsToRest) {
+            avatarImage.setAvatarPartImage(part, 0);
+        }
+        avatarImage.animatePart(AvatarPart.MODEL, true);
     }
 
     @Override
@@ -182,12 +186,12 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     }
 
     @Override
-    public void setAvatarImagePart(AvatarImage.AvatarPart part, int id) {
+    public void setAvatarImagePart(AvatarPart part, int id) {
         avatarImage.setAvatarPartImage(part, id);
     }
 
     @Override
-    public void animateAvatarImagePart(AvatarImage.AvatarPart part, boolean shouldAnimate) {
+    public void animateAvatarImagePart(AvatarPart part, boolean shouldAnimate) {
         avatarImage.animatePart(part, shouldAnimate);
     }
 

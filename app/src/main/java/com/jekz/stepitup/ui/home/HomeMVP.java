@@ -23,7 +23,7 @@ interface HomeMVP {
 
         void navigateToFriendsScreen();
 
-        void resetAvatar();
+        void resetAvatar(int defaultGenderResId);
 
         void showLogin();
 

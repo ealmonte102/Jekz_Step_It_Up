@@ -103,7 +103,7 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
                 view.showLogin();
             }
         });
-        view.resetAvatar();
+        view.resetAvatar(itemInteractor.getModel("male"));
         view.setCurrency("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
         view.setUsername("");
     }
