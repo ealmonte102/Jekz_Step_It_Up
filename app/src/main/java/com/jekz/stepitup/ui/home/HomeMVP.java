@@ -1,5 +1,6 @@
 package com.jekz.stepitup.ui.home;
 
+import com.jekz.stepitup.ui.AvatarView;
 import com.jekz.stepitup.ui.BasePresenter;
 
 /**
@@ -7,18 +8,7 @@ import com.jekz.stepitup.ui.BasePresenter;
  */
 
 interface HomeMVP {
-    interface View {
-
-        void setAvatarImage(int id);
-
-        void setHatImage(int id);
-
-        void setPantsImage(int id);
-
-        void setShirtImage(int id);
-
-        void setShoesImage(int id);
-
+    interface View extends AvatarView {
         void setCurrency(String currency);
 
         void setUsername(String username);

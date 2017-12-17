@@ -19,70 +19,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <ImageView
-        android:id="@+id/image_avatar_home"
+    <com.jekz.stepitup.ui.friends.AvatarImage
+        android:id="@+id/avatar_image_home"
         android:layout_width="@dimen/avatar_item_width"
         android:layout_height="0dp"
-        android:src="@drawable/body_animation"
         app:layout_constraintBottom_toTopOf="@+id/guideline_avatar_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline_avatar_top" />
-
-    <ImageView
-        android:id="@+id/image_avatar_shoes_home"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/blank"
-        app:layout_constraintBottom_toBottomOf="@+id/image_avatar_home"
-        app:layout_constraintEnd_toEndOf="@+id/image_avatar_home"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/image_avatar_home"
-        app:layout_constraintTop_toTopOf="@+id/image_avatar_home"
-        app:layout_constraintVertical_bias="0.0"
-        tools:src="@drawable/boots_0" />
-
-    <ImageView
-        android:id="@+id/image_avatar_pants_home"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/avatar_pants"
-        android:src="@drawable/blank"
-        app:layout_constraintBottom_toBottomOf="@+id/image_avatar_home"
-        app:layout_constraintEnd_toEndOf="@+id/image_avatar_home"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/image_avatar_home"
-        app:layout_constraintTop_toTopOf="@+id/image_avatar_home"
-        app:layout_constraintVertical_bias="0.0"
-        tools:src="@drawable/dresspants_0" />
-
-    <ImageView
-        android:id="@+id/image_avatar_shirt_home"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/avatar_shirt"
-        android:src="@drawable/blank"
-        app:layout_constraintBottom_toBottomOf="@+id/image_avatar_home"
-        app:layout_constraintEnd_toEndOf="@+id/image_avatar_home"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/image_avatar_home"
-        app:layout_constraintTop_toTopOf="@+id/image_avatar_home"
-        app:layout_constraintVertical_bias="0.0"
-        tools:src="@drawable/spotpjshirtblue_animation" />
-
-    <ImageView
-        android:id="@+id/image_avatar_hat_home"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/avatar_hat"
-        android:src="@drawable/blank"
-        app:layout_constraintBottom_toBottomOf="@+id/image_avatar_home"
-        app:layout_constraintEnd_toEndOf="@+id/image_avatar_home"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/image_avatar_home"
-        app:layout_constraintTop_toTopOf="@+id/image_avatar_home"
-        app:layout_constraintVertical_bias="0.0" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_avatar_top"
@@ -108,7 +53,7 @@
         app:autoSizeMinTextSize="10sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         tools:text="3,000" />
 
@@ -124,16 +69,9 @@
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="@+id/text_currency"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         tools:text="evanalmonte" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"
@@ -141,12 +79,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="72dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="395dp" />
 
 </android.support.constraint.ConstraintLayout>

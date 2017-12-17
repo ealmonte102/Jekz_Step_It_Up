@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.IntervalStepCounter;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.StepCounter;
+import com.jekz.stepitup.ui.friends.AvatarImage;
 import com.jekz.stepitup.ui.friends.FriendActivity;
 import com.jekz.stepitup.ui.login.LoginActivity;
 import com.jekz.stepitup.ui.shop.ShopActivity;
@@ -35,20 +35,8 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View, Ste
     @BindView(R.id.toolbar_home)
     Toolbar toolbar;
 
-    @BindView(R.id.image_avatar_hat_home)
-    ImageView hatImage;
-
-    @BindView(R.id.image_avatar_home)
-    ImageView avatarImage;
-
-    @BindView(R.id.image_avatar_shirt_home)
-    ImageView shirtImage;
-
-    @BindView(R.id.image_avatar_pants_home)
-    ImageView pantsImage;
-
-    @BindView(R.id.image_avatar_shoes_home)
-    ImageView shoesImage;
+    @BindView(R.id.avatar_image_home)
+    AvatarImage avatarImage;
 
     @BindView(R.id.text_username)
     TextView usernameText;
@@ -125,31 +113,6 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View, Ste
     }
 
     @Override
-    public void setAvatarImage(int id) {
-        avatarImage.setImageResource(id);
-    }
-
-    @Override
-    public void setHatImage(int id) {
-        hatImage.setImageResource(id);
-    }
-
-    @Override
-    public void setPantsImage(int id) {
-        pantsImage.setImageResource(id);
-    }
-
-    @Override
-    public void setShirtImage(int id) {
-        shirtImage.setImageResource(id);
-    }
-
-    @Override
-    public void setShoesImage(int id) {
-        shoesImage.setImageResource(id);
-    }
-
-    @Override
     public void setCurrency(String currency) {
         currencyText.setText(currency);
     }
@@ -205,5 +168,15 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View, Ste
     public void onSessionEnded(Session session) {
         Log.i("Autocount Home SESSION", session.toString
                 ());
+    }
+
+    @Override
+    public void setAvatarImagePart(AvatarImage.AvatarPart part, int id) {
+        avatarImage.setAvatarPartImage(part, id);
+    }
+
+    @Override
+    public void animateAvatarImagePart(AvatarImage.AvatarPart part, boolean shouldAnimate) {
+        avatarImage.animatePart(part, shouldAnimate);
     }
 }
