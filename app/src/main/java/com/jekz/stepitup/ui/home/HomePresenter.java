@@ -32,9 +32,9 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
 
     public HomePresenter(ItemInteractor itemInteractor, LoginManager loginManager) {
         this.itemInteractor = itemInteractor;
+        this.loginManager = loginManager;
         repo = AvatarRepo.getInstance();
         avatar = repo.getAvatar();
-        this.loginManager = loginManager;
         retrieveItem("get_items");
         retrieveItem("user_data");
     }
