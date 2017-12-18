@@ -26,6 +26,7 @@ import com.jekz.stepitup.ui.friends.AvatarImage;
 import com.jekz.stepitup.ui.friends.FriendActivity;
 import com.jekz.stepitup.ui.login.LoginActivity;
 import com.jekz.stepitup.ui.shop.ShopActivity;
+import com.jekz.stepitup.util.SessionSaver;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,16 +75,18 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ManualStepCounter stepCounter = ((JekzApplication) (getApplication())).getStepCounter();
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        ManualStepCounter stepCounter = ((JekzApplication) (getApplication())).getStepCounter();
+        SessionSaver sessionSaver = ((JekzApplication) (getApplication())).getSessionSaver();
         LoginManager loginManager = new RemoteLoginModel(SharedPrefsManager.getInstance
                 (getApplicationContext()));
         presenter = new HomePresenter(ItemInteractor.getInstance(getResources()),
                 loginManager,
                 stepCounter,
-                SharedPrefsManager.getInstance(getApplicationContext()));
+                sessionSaver);
         sessionButton.setOnCheckedChangeListener(checkedChangeListener);
     }
 

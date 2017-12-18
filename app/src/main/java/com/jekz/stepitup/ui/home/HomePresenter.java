@@ -4,8 +4,6 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.jekz.stepitup.AvatarRepo;
-import com.jekz.stepitup.data.LoginPreferences;
-import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
@@ -33,29 +31,27 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
         SessionStepCounter.SessionListener {
     private static final String TAG = HomePresenter.class.getName();
     private ItemInteractor itemInteractor;
-    private AvatarRepo repo;
-    private Avatar avatar;
+    private AvatarRepo repo = AvatarRepo.getInstance();
     private HomeContract.View view;
 
     private LoginManager loginManager;
     private ManualStepCounter stepCounter;
-    private LoginPreferences prefsManager;
+    private SessionSaver sessionSaver;
 
     public HomePresenter(ItemInteractor itemInteractor, LoginManager loginManager,
-                         ManualStepCounter stepCounter, LoginPreferences prefsManager) {
+                         ManualStepCounter stepCounter, SessionSaver sessionSaver) {
         this.itemInteractor = itemInteractor;
         this.loginManager = loginManager;
         this.stepCounter = stepCounter;
-        this.prefsManager = prefsManager;
+        this.sessionSaver = sessionSaver;
         stepCounter.addSessionListener(this);
-        repo = AvatarRepo.getInstance();
-        avatar = repo.getAvatar();
         retrieveItem("get_items");
         retrieveItem("user_data");
     }
 
     @Override
     public void loadAvatar() {
+        Avatar avatar = repo.getAvatar();
         Item hat = avatar.getHat();
         Item shirt = avatar.getShirt();
         Item pants = avatar.getPants();
@@ -128,17 +124,15 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
 
     @Override
     public void endSession() {
-        if (prefsManager.getBoolean(SharedPrefsManager.Key.COUNTING, false)) {
+        if (sessionSaver.stopStoringSession()) {
             stepCounter.endSession();
-            prefsManager.remove(SharedPrefsManager.Key.COUNTING);
         }
     }
 
     @Override
     public void startSession() {
-        if (!prefsManager.getBoolean(SharedPrefsManager.Key.COUNTING, false)) {
+        if (sessionSaver.startStoringSession()) {
             stepCounter.startSession();
-            prefsManager.put(SharedPrefsManager.Key.COUNTING, true);
         }
     }
 
@@ -146,11 +140,10 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
     public void onViewAttached(HomeContract.View view) {
         this.view = view;
         stepCounter.addSessionListener(this);
-        view.setCurrency("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
+        view.setCurrency("x" + NumberFormat.getInstance().format(repo.getAvatar().getCurrency()));
         view.setUsername(loginManager.getUsername());
-        view.setSteps(
-                formatSteps(prefsManager.getInt(SharedPrefsManager.Key.STEPS_COUNTED, 0)));
-        if (prefsManager.getBoolean(SharedPrefsManager.Key.COUNTING, false)) {
+        view.setSteps(formatSteps(sessionSaver.getCurrentSteps()));
+        if (sessionSaver.isStoringSteps()) {
             view.disableSession();
         } else {
             view.enableSession();
@@ -160,8 +153,8 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
 
     @Override
     public void onViewDetached() {
-        this.view = null;
         stepCounter.removeSessionListener(this);
+        this.view = null;
     }
 
     private void retrieveItem(String datatype) {
@@ -180,6 +173,7 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
 
     @Override
     public void processFinish(JSONObject returnObject) {
+        Avatar avatar = repo.getAvatar();
         try {
             String actionType = returnObject.getString("return_data");
             Log.d(TAG, "Recieved Output: " + returnObject.toString());
@@ -241,16 +235,16 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
 
     @Override
     public void sessionEnded(Session session) {
-        SessionSaver.saveSession(session, prefsManager);
-        view.setSteps(formatSteps(0));
-        prefsManager.remove(SharedPrefsManager.Key.STEPS_COUNTED);
+        if (view != null) {
+            view.setSteps(formatSteps(0));
+        }
     }
 
     @Override
     public void onStepCountIncreased(int stepcount) {
-        if (view == null) { return; }
-        view.setSteps(NumberFormat.getInstance().format(stepcount) + " steps");
-        prefsManager.put(SharedPrefsManager.Key.STEPS_COUNTED, stepcount);
+        if (view != null) {
+            view.setSteps(NumberFormat.getInstance().format(stepcount) + " steps");
+        }
     }
 
     private String formatSteps(int steps) {
