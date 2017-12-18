@@ -1,12 +1,23 @@
 package com.jekz.stepitup.model.step;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by evanalmonte on 12/9/17.
  */
 
 public class Session {
+    private static final DateFormat df = new SimpleDateFormat("yyyy-dd-MM hh:mm:ss ZZZZZ",
+            Locale.US);
+
+    static {
+        df.setTimeZone(TimeZone.getTimeZone("EST"));
+    }
+
     public final long startTime;
     public final long endTime;
     public final int totalSteps;
@@ -26,8 +37,8 @@ public class Session {
 
     @Override
     public String toString() {
-        String startDate = new Date(startTime).toString();
-        String endDate = new Date(endTime).toString();
-        return startDate + " - " + endDate + " : " + String.valueOf(totalSteps) + " step(s) walked";
+        Date startDate = new Date(startTime);
+        Date endDate = new Date(endTime);
+        return df.format(startDate) + "," + df.format(endDate) + "," + totalSteps;
     }
 }
