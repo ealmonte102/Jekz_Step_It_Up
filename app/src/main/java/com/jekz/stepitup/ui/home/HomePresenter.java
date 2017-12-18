@@ -99,7 +99,7 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
 
     @Override
     public void accessGraphs() {
-        view.displayMessage("Graph functionality not supported yet");
+        view.navigateToGraphs();
     }
 
     @Override
