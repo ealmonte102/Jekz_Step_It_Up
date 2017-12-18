@@ -41,6 +41,10 @@ public interface StepCounter {
      */
     void unregisterSensor();
 
+    void startSession();
+
+    void endSession();
+
     /**
      * Interface representing a callback which is called when a step is detected
      */
@@ -51,12 +55,5 @@ public interface StepCounter {
          * @param numOfSteps The number of steps counted
          */
         void onStepDetected(int numOfSteps);
-
-        /**
-         * Sends the session that has transpired to the callback
-         *
-         * @param session The session created.
-         */
-        void onSessionEnded(Session session);
     }
 }

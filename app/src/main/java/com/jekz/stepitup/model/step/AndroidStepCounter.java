@@ -68,6 +68,16 @@ public class AndroidStepCounter implements IntervalStepCounter, SensorEventListe
         manager.unregisterListener(this);
     }
 
+    @Override
+    public void startSession() {
+
+    }
+
+    @Override
+    public void endSession() {
+
+    }
+
     private synchronized void resetCount() {
         sessionStartedSteps = mostRecentSteps;
         sessionStartTime = System.currentTimeMillis();
