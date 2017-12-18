@@ -15,7 +15,7 @@ public class Session {
             Locale.US);
 
     static {
-        df.setTimeZone(TimeZone.getTimeZone("EST"));
+        df.setTimeZone(TimeZone.getDefault());
     }
 
     public final long startTime;
