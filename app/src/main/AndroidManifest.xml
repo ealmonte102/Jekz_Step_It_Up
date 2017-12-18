@@ -29,7 +29,7 @@
 
         <activity
             android:name=".ui.signup.SignupActivity"
-            android:theme="@style/AppTheme.Dark" />
+            android:theme="@style/AppTheme.Dark.Gray" />
 
         <activity
             android:name=".graphtest.GraphActivity"

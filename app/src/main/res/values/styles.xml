@@ -34,16 +34,6 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
-    <!-- Login Theme. -->
-    <style name="LoginTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">#ffffff</item>
-        <item name="colorControlActivated">@color/accent</item>
-        <item name="colorControlHighlight">@color/accent</item>
-        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
-        <item name="android:autoCompleteTextViewStyle">@style/RobotoAutoCompleteTextViewStyle</item>
-        <item name="android:editTextStyle">@style/RobotoEditTextStyle</item>
-    </style>
-
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
@@ -80,6 +70,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -93,5 +84,10 @@
         <item name="android:textColorHint">@color/iron</item>
 
         <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
+
+
+    <style name="AppTheme.Dark.Gray" parent="AppTheme.Dark">
+        <item name="colorPrimaryDark">#93aebd</item>
     </style>
 </resources>
