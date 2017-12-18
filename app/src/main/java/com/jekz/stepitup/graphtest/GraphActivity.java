@@ -1,5 +1,6 @@
 package com.jekz.stepitup.graphtest;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.jekz.stepitup.customview.LifeStatText;
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
+import com.jekz.stepitup.ui.home.HomeActivity;
 import com.jekz.stepitup.ui.shop.AsyncResponse;
 import com.jekz.stepitup.ui.shop.ShopRequest;
 
@@ -454,5 +456,13 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
                     "Estimated lifetime total: " + total_calorie + " calories" + "\n" +
                     "Estimated lifetime average: " + average_calorie + " calories");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
