@@ -8,4 +8,8 @@
         <attr name="pants" format="reference" />
 
     </declare-styleable>
+    <declare-styleable name="LifeStatText">
+        <attr name="toptext" format="string" />
+        <attr name="bottomtext" format="string" />
+    </declare-styleable>
 </resources>
