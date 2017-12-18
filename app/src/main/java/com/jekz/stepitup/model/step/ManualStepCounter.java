@@ -13,14 +13,15 @@ import java.util.ArrayList;
  */
 
 public class ManualStepCounter implements SessionStepCounter, SensorEventListener {
-    private static final String TAG = AndroidStepCounter.class.getName();
+    private static final String TAG = ManualStepCounter.class.getName();
     boolean sessionActive;
     private SensorManager manager;
     private Sensor stepSensor;
     private ArrayList<SessionListener> listeners = new ArrayList<>();
     private int baseSteps;
-    private int sessionStartedSteps;
+    private int startSteps;
     private int mostRecentSteps;
+    private int stepOffset;
     private long sessionStartTime;
 
     public ManualStepCounter(SensorManager manager) {
@@ -53,19 +54,21 @@ public class ManualStepCounter implements SessionStepCounter, SensorEventListene
     @Override
     public void startSession() {
         if (sessionActive) { return; }
+        Log.d(TAG, "Session started");
         sessionActive = true;
-        sessionStartedSteps = baseSteps;
-        mostRecentSteps = baseSteps;
         sessionStartTime = System.currentTimeMillis();
     }
 
     @Override
     public void endSession() {
         if (!sessionActive) { return; }
-        notifySessionListeners(new Session(sessionStartTime, System.currentTimeMillis(),
-                mostRecentSteps -
-                sessionStartedSteps));
+        Session session = new Session(sessionStartTime, System.currentTimeMillis(),
+                mostRecentSteps - startSteps);
+        notifySessionListeners(session);
         sessionActive = false;
+        startSteps = mostRecentSteps;
+        Log.d(TAG, "Session ended: " + session.toString());
+
     }
 
     @Override
@@ -73,11 +76,13 @@ public class ManualStepCounter implements SessionStepCounter, SensorEventListene
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             if (baseSteps < 1) {
                 baseSteps = (int) sensorEvent.values[0];
+                startSteps = baseSteps;
                 mostRecentSteps = baseSteps;
-                sessionStartedSteps = baseSteps;
+            } else if (sessionActive) {
+                mostRecentSteps = (int) sensorEvent.values[0] - stepOffset;
+            } else {
+                stepOffset = (int) sensorEvent.values[0] - mostRecentSteps;
             }
-            mostRecentSteps = (int) sensorEvent.values[0];
-            Log.d("Steps", String.valueOf(mostRecentSteps));
         }
     }
 
@@ -87,7 +92,6 @@ public class ManualStepCounter implements SessionStepCounter, SensorEventListene
     }
 
     private void notifySessionListeners(Session session) {
-        Log.d("Manual session counter", "Session ended: " + session.toString());
         for (SessionListener listener : listeners) {
             listener.sessionEnded(session);
         }
