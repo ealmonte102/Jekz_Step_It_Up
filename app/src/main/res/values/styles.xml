@@ -56,8 +56,6 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
-    <color name="accent">#ffffff</color>
-
     <!-- Friend Theme -->
     <style name="FriendTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -80,5 +78,20 @@
     <style name="Home.LogoutButton" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/friends_button</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="android:windowBackground">@color/colorPrimary</item>
+
+        <item name="colorControlNormal">@color/iron</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="android:textColorHint">@color/iron</item>
+
+        <item name="colorButtonNormal">@color/colorPrimaryDarker</item>
     </style>
 </resources>
