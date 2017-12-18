@@ -9,7 +9,6 @@ import com.jekz.stepitup.data.request.CookieRequest;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.data.request.LoginRequest;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
-import com.jekz.stepitup.ui.home.HomeActivity;
 import com.jekz.stepitup.ui.login.LoginActivity;
 
 public class SplashActivity extends Activity {
@@ -23,11 +22,13 @@ public class SplashActivity extends Activity {
         loginManager = new RemoteLoginModel(manager);
 
         Intent intent;
+        intent = new Intent(this, LoginActivity.class);
+        /*
         if (loginManager.isLoggedIn()) {
             intent = new Intent(this, HomeActivity.class);
         } else {
             intent = new Intent(this, LoginActivity.class);
-        }
+        }*/
         startActivity(intent);
         finish();
     }

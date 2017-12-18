@@ -92,6 +92,6 @@
         <item name="colorControlHighlight">@color/white</item>
         <item name="android:textColorHint">@color/iron</item>
 
-        <item name="colorButtonNormal">@color/colorPrimaryDarker</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
     </style>
 </resources>

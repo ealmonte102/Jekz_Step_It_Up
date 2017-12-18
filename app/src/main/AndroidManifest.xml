@@ -26,7 +26,12 @@
             android:name=".ui.shop.ShopActivity"
             android:theme="@style/ShopTheme" />
         <activity android:name=".ui.home.HomeActivity" />
-        <activity android:name=".ui.login.LoginActivity" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".ui.signup.SignupActivity"
+            android:theme="@style/AppTheme.Dark" />
         <activity android:name=".graphtest.GraphActivity" />
         <activity android:name=".graphtest.MainActivity" />
         <activity android:name=".graphtest.CharacterInfoActivity" />
@@ -34,9 +39,11 @@
             android:name=".ui.friends.FriendActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FriendTheme" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>
