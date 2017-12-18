@@ -11,6 +11,8 @@ import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.ManualStepCounter;
+import com.jekz.stepitup.model.step.Session;
+import com.jekz.stepitup.model.step.SessionStepCounter;
 import com.jekz.stepitup.ui.friends.AvatarImage;
 import com.jekz.stepitup.ui.shop.ShopRequest;
 
@@ -25,7 +27,8 @@ import java.text.NumberFormat;
  * Created by evanalmonte on 12/10/17.
  */
 
-public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.shop.AsyncResponse {
+public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.shop.AsyncResponse,
+        SessionStepCounter.SessionListener {
     private static final String TAG = HomePresenter.class.getName();
     private ItemInteractor itemInteractor;
     private AvatarRepo repo;
@@ -42,6 +45,7 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
         this.loginManager = loginManager;
         this.stepCounter = stepCounter;
         this.prefsManager = prefsManager;
+        stepCounter.addSessionListener(this);
         repo = AvatarRepo.getInstance();
         avatar = repo.getAvatar();
         retrieveItem("get_items");
@@ -103,10 +107,12 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
 
     @Override
     public void logout() {
+        endSession();
+
         loginManager.logout(new LoginManager.LogoutCallback() {
             @Override
             public void onLogout(boolean logoutSuccessful) {
-                view.showMessage("Succesfully logged out");
+                view.showMessage("Successfully logged out");
                 repo.resetAvatar();
                 view.navigateToLoginScreen();
             }
@@ -225,5 +231,16 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
                 }
             }
         } catch (JSONException ignored) {}
+    }
+
+    @Override
+    public void sessionEnded(Session session) {
+        String stepData = prefsManager.getString(SharedPrefsManager.Key.STEP_DATA, "");
+        if (stepData.isEmpty()) {
+            stepData = session.toString();
+        } else {
+            stepData = stepData + ";" + session.toString();
+        }
+        prefsManager.put(SharedPrefsManager.Key.STEP_DATA, stepData);
     }
 }
