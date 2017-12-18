@@ -16,6 +16,8 @@ public class SignupContract {
     }
 
     interface Presenter extends BasePresenter<SignupContract.View> {
+        void register(String username, String password);
 
+        void login();
     }
 }
