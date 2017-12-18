@@ -67,14 +67,14 @@ public class LoginActivity extends Activity implements LoginMVP.View {
         super.onPause();
     }
 
-    @OnClick({R.id.button_login, R.id.signUpTextView})
+    @OnClick({R.id.button_login, R.id.link_signup})
     public void onButtonClicked(View view) {
         switch (view.getId()) {
             case R.id.button_login:
                 loginPresenter.login(usernameText.getText().toString(), passwordText.getText()
                         .toString());
                 break;
-            case R.id.signUpTextView:
+            case R.id.link_signup:
                 loginPresenter.signup();
                 break;
         }

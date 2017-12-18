@@ -28,4 +28,5 @@
     <string name="friends">Friends</string>
     <string name="pending">Pending</string>
     <string name="add_friends">Add Friends</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
