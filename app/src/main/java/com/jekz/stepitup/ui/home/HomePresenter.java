@@ -15,6 +15,7 @@ import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.SessionStepCounter;
 import com.jekz.stepitup.ui.friends.AvatarImage;
 import com.jekz.stepitup.ui.shop.ShopRequest;
+import com.jekz.stepitup.util.SessionSaver;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -235,12 +236,6 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
 
     @Override
     public void sessionEnded(Session session) {
-        String stepData = prefsManager.getString(SharedPrefsManager.Key.STEP_DATA, "");
-        if (stepData.isEmpty()) {
-            stepData = session.toString();
-        } else {
-            stepData = stepData + ";" + session.toString();
-        }
-        prefsManager.put(SharedPrefsManager.Key.STEP_DATA, stepData);
+        SessionSaver.saveSession(session, prefsManager);
     }
 }
