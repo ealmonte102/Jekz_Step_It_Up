@@ -9,8 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.jekz.stepitup.JekzApplication;
 import com.jekz.stepitup.R;
@@ -27,6 +29,7 @@ import com.jekz.stepitup.ui.shop.ShopActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 import static com.jekz.stepitup.ui.friends.AvatarImage.AvatarPart;
@@ -48,11 +51,8 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     @BindView(R.id.button_logout)
     Button logoutButton;
 
-    @BindView(R.id.button_start_session)
-    Button startButton;
-
-    @BindView(R.id.button_end_session)
-    Button endButton;
+    @BindView(R.id.button_session)
+    ToggleButton sessionButton;
 
     HomeMVP.Presenter presenter;
     IntervalStepCounter stepCounter;
@@ -176,20 +176,19 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
         avatarImage.animatePart(part, shouldAnimate);
     }
 
-    @OnClick({R.id.button_logout, R.id.button_start_session, R.id.button_end_session})
+    @OnClick({R.id.button_logout, R.id.button_session})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_logout:
                 presenter.logout();
                 break;
-            case R.id.button_start_session:
-                startButton.setVisibility(View.GONE);
-                endButton.setVisibility(View.VISIBLE);
-                break;
-            case R.id.button_end_session:
-                startButton.setVisibility(View.VISIBLE);
-                endButton.setVisibility(View.GONE);
-                break;
+        }
+    }
+
+    @OnCheckedChanged(R.id.button_session)
+    public void onButtonChanged(CompoundButton button, boolean checked) {
+        if (checked) {
+        } else {
         }
     }
 }
