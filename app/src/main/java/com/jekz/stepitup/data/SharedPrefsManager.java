@@ -89,6 +89,12 @@ public class SharedPrefsManager implements LoginPreferences {
         SESSION,
         EXPIRE_DATE,
         COUNTING,
-        STEP_DATA
+        STEP_DATA_MON,
+        STEP_DATA_TUE,
+        STEP_DATA_WED,
+        STEP_DATA_THU,
+        STEP_DATA_FRI,
+        STEP_DATA_SAT,
+        STEP_DATA_SUN
     }
 }
