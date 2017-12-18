@@ -3,8 +3,7 @@ package com.jekz.stepitup.data.register;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.jekz.stepitup.data.register.RegisterRequest.RegisterRequestCallback
-        .RegisterRequestResult;
+import com.jekz.stepitup.data.register.RegisterRequest.RegisterRequestCallback.RegisterResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,26 +67,26 @@ public class RegisterRequest extends AsyncTask<String, Integer, String> {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        return RegisterRequestResult.NETWORK_ERROR.name();
+        return RegisterResult.NETWORK_ERROR.name();
     }
 
     @Override
     protected void onPostExecute(String result) {
         Log.d(TAG, result);
-        if (result.equals(RegisterRequestResult.NETWORK_ERROR.toString())) {
-            callback.processRegistration(RegisterRequestResult.NETWORK_ERROR);
+        if (result.equals(RegisterResult.NETWORK_ERROR.toString())) {
+            callback.processRegistration(RegisterResult.NETWORK_ERROR);
         } else if (result.contains("Error signing up")) {
-            callback.processRegistration(RegisterRequestResult.UNSUCCESSFUL);
+            callback.processRegistration(RegisterResult.USERNAME_TAKEN);
         } else {
-            callback.processRegistration(RegisterRequestResult.SUCCESSFUL);
+            callback.processRegistration(RegisterResult.SUCCESSFUL);
         }
     }
 
     public interface RegisterRequestCallback {
-        void processRegistration(RegisterRequestResult result);
+        void processRegistration(RegisterResult result);
 
-        enum RegisterRequestResult {
-            UNSUCCESSFUL,
+        enum RegisterResult {
+            USERNAME_TAKEN,
             SUCCESSFUL,
             NETWORK_ERROR
         }
