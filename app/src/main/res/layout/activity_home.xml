@@ -104,11 +104,36 @@
         app:layout_constraintVertical_weight="10">
 
         <Button
+            android:id="@+id/button_start_session"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/start_session"
+            android:textColor="#ffffffff"
+            android:textStyle="bold"
+            android:theme="@style/Home.LogoutButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/button_end_session"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/end_session"
+            android:textColor="#ffffffff"
+            android:textStyle="bold"
+            android:theme="@style/Home.LogoutButton"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
             android:id="@+id/button_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Log Out"
+            android:text="@string/log_out"
             android:textColor="#ffffffff"
             android:textStyle="bold"
             android:theme="@style/Home.LogoutButton"

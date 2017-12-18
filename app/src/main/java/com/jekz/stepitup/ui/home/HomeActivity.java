@@ -48,6 +48,12 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     @BindView(R.id.button_logout)
     Button logoutButton;
 
+    @BindView(R.id.button_start_session)
+    Button startButton;
+
+    @BindView(R.id.button_end_session)
+    Button endButton;
+
     HomeMVP.Presenter presenter;
     IntervalStepCounter stepCounter;
 
@@ -170,11 +176,19 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
         avatarImage.animatePart(part, shouldAnimate);
     }
 
-    @OnClick({R.id.button_logout})
+    @OnClick({R.id.button_logout, R.id.button_start_session, R.id.button_end_session})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_logout:
                 presenter.logout();
+                break;
+            case R.id.button_start_session:
+                startButton.setVisibility(View.GONE);
+                endButton.setVisibility(View.VISIBLE);
+                break;
+            case R.id.button_end_session:
+                startButton.setVisibility(View.VISIBLE);
+                endButton.setVisibility(View.GONE);
                 break;
         }
     }
