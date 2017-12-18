@@ -32,7 +32,8 @@
         <activity android:name=".graphtest.CharacterInfoActivity" />
         <activity
             android:name=".ui.friends.FriendActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/FriendTheme" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

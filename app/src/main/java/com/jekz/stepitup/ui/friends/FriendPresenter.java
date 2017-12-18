@@ -225,22 +225,16 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         break;
                     }
                     case "remove_friend": {
-                        int friendID = q.getInt("userid");
-                        String friendName = q.getString("username");
-                        Log.d(TAG, "Removed friend: " + friendID + " - " + friendName);
-                        Friend removedFriend = new Friend(friendName, friendID, Friend.FriendType
-                                .SEARCHED);
-                        friendList.remove(removedFriend);
+                        int friendID = q.getInt("friendid");
+                        Log.d(TAG, "Removed friend with id: " + friendID);
+                        removeFriendFromList(friendID);
                         break;
                     }
                     case "accept_friend": {
-                        int friendID = q.getInt("userid");
-                        String friendName = q.getString("username");
-                        Log.d(TAG, "Accepted friend: " + friendID + " - " + friendName);
-                        Friend acceptedFriend = new Friend(friendName, friendID, Friend.FriendType
-                                .SEARCHED);
                         if (q.getBoolean("success")) {
-                            friendList.remove(acceptedFriend);
+                            int friendID = q.getInt("friendid");
+                            Log.d(TAG, "Accepted friend with id: " + friendID);
+                            removeFriendFromList(friendID);
                         } else {
                             Log.d(TAG, "Could not add friend");
                             view.showMessage("You can not add yourself");
@@ -248,12 +242,8 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                         break;
                     }
                     case "deny_friend": {
-                        int friendID = q.getInt("userid");
-                        String friendName = q.getString("username");
-                        Log.d(TAG, "Denied friend: " + friendID + " - " + friendName);
-                        Friend deniedFriend = new Friend(friendName, friendID, Friend.FriendType
-                                .SEARCHED);
-                        friendList.remove(deniedFriend);
+                        int friendID = q.getInt("friendid");
+                        removeFriendFromList(friendID);
                         break;
                     }
                     case "user_data": {
@@ -282,7 +272,17 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
                     }
                 }
             }
-        } catch (JSONException ignored) {}
+        } catch (JSONException ignored) {
+            Log.d(TAG, ignored.getMessage());
+        }
         view.reloadFriendsList();
+    }
+
+    private void removeFriendFromList(int id) {
+        for (Friend friend : friendList) {
+            if (friend.getId() == id) {
+                friendList.remove(friend);
+            }
+        }
     }
 }
