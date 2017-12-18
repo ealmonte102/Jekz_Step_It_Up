@@ -13,6 +13,7 @@ import com.jekz.stepitup.R;
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.ui.home.HomeActivity;
+import com.jekz.stepitup.ui.signup.SignupActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,15 +67,31 @@ public class LoginActivity extends Activity implements LoginMVP.View {
         super.onPause();
     }
 
-    @OnClick(R.id.button_login)
+    @OnClick({R.id.button_login, R.id.signUpTextView})
     public void onButtonClicked(View view) {
-        loginPresenter.login(usernameText.getText().toString(), passwordText.getText().toString());
+        switch (view.getId()) {
+            case R.id.button_login:
+                loginPresenter.login(usernameText.getText().toString(), passwordText.getText()
+                        .toString());
+                break;
+            case R.id.signUpTextView:
+                loginPresenter.signup();
+                break;
+        }
     }
 
     @Override
     public void startHomeActivity() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void startSignUpActivity() {
+        Intent intent = new Intent(this, SignupActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
 

@@ -26,6 +26,8 @@ interface LoginMVP {
          */
         void startHomeActivity();
 
+        void startSignUpActivity();
+
         void showProgress();
 
         void hideProgress();
@@ -46,5 +48,7 @@ interface LoginMVP {
          * @param password string representing password
          */
         void login(String username, String password);
+
+        void signup();
     }
 }

@@ -40,6 +40,11 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
     }
 
     @Override
+    public void signup() {
+        loginView.startSignUpActivity();
+    }
+
+    @Override
     public void loginResult(LoginResult result) {
         if (loginView == null) { return; }
         loginView.hideProgress();
