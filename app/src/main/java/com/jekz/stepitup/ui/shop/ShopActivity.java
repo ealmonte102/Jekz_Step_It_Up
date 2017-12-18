@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
-import com.jekz.stepitup.JekzApplication;
 import com.jekz.stepitup.R;
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.LoginManager;
@@ -76,10 +75,7 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
 
         SharedPrefsManager manager = SharedPrefsManager.getInstance(getApplicationContext());
         LoginManager loginManager = new RemoteLoginModel(manager);
-        shopPresenter = new ShopPresenter(
-                ((JekzApplication) (getApplication())).getStepCounter(),
-                ItemInteractor.getInstance(getResources()),
-                loginManager);
+        shopPresenter = new ShopPresenter(ItemInteractor.getInstance(getResources()), loginManager);
         setContentView(R.layout.activity_shop_layout);
         ButterKnife.bind(this);
         initRecyclerView();
@@ -102,14 +98,12 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
         super.onResume();
         shopPresenter.reloadImages();
         shopPresenter.reloadAnimations();
-        shopPresenter.listenToStepCounter(true);
         categoryRadioGroup.check(R.id.hat);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        shopPresenter.listenToStepCounter(false);
     }
 
     @Override

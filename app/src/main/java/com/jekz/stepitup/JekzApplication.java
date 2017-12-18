@@ -3,17 +3,14 @@ package com.jekz.stepitup;
 import android.app.Application;
 import android.hardware.SensorManager;
 
-import com.jekz.stepitup.model.step.AndroidStepCounter;
-import com.jekz.stepitup.model.step.IntervalStepCounter;
-
-import java.util.concurrent.TimeUnit;
+import com.jekz.stepitup.model.step.ManualStepCounter;
 
 /**
  * Created by evanalmonte on 12/11/17.
  */
 
 public class JekzApplication extends Application {
-    IntervalStepCounter stepCounter;
+    ManualStepCounter stepCounter;
 
     public JekzApplication() {
         super();
@@ -22,9 +19,8 @@ public class JekzApplication extends Application {
     @Override
     public void onCreate() {
         SensorManager manager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        stepCounter = new AndroidStepCounter(manager, TimeUnit.SECONDS.toMillis(120));
+        stepCounter = new ManualStepCounter(manager);
         stepCounter.registerSensor();
-        stepCounter.startAutoCount();
         super.onCreate();
     }
 
@@ -34,7 +30,7 @@ public class JekzApplication extends Application {
         stepCounter.unregisterSensor();
     }
 
-    public IntervalStepCounter getStepCounter() {
+    public ManualStepCounter getStepCounter() {
         return stepCounter;
     }
 }

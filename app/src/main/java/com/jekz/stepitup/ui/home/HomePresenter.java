@@ -4,10 +4,13 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.jekz.stepitup.AvatarRepo;
+import com.jekz.stepitup.data.LoginPreferences;
+import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
+import com.jekz.stepitup.model.step.ManualStepCounter;
 import com.jekz.stepitup.ui.friends.AvatarImage;
 import com.jekz.stepitup.ui.shop.ShopRequest;
 
@@ -28,11 +31,17 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
     private AvatarRepo repo;
     private Avatar avatar;
     private HomeMVP.View view;
-    private LoginManager loginManager;
 
-    public HomePresenter(ItemInteractor itemInteractor, LoginManager loginManager) {
+    private LoginManager loginManager;
+    private ManualStepCounter stepCounter;
+    private LoginPreferences prefsManager;
+
+    public HomePresenter(ItemInteractor itemInteractor, LoginManager loginManager,
+                         ManualStepCounter stepCounter, LoginPreferences prefsManager) {
         this.itemInteractor = itemInteractor;
         this.loginManager = loginManager;
+        this.stepCounter = stepCounter;
+        this.prefsManager = prefsManager;
         repo = AvatarRepo.getInstance();
         avatar = repo.getAvatar();
         retrieveItem("get_items");
@@ -110,10 +119,31 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
     }
 
     @Override
+    public void endSession() {
+        if (prefsManager.getBoolean(SharedPrefsManager.Key.COUNTING, false)) {
+            stepCounter.endSession();
+            prefsManager.remove(SharedPrefsManager.Key.COUNTING);
+        }
+    }
+
+    @Override
+    public void startSession() {
+        if (!prefsManager.getBoolean(SharedPrefsManager.Key.COUNTING, false)) {
+            stepCounter.startSession();
+            prefsManager.put(SharedPrefsManager.Key.COUNTING, true);
+        }
+    }
+
+    @Override
     public void onViewAttached(HomeMVP.View view) {
         this.view = view;
         view.setCurrency("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
         view.setUsername(loginManager.getUsername());
+        if (prefsManager.getBoolean(SharedPrefsManager.Key.COUNTING, false)) {
+            view.disableSession();
+        } else {
+            view.enableSession();
+        }
         loadAvatar();
     }
 

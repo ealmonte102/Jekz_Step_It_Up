@@ -21,7 +21,7 @@ import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.graphtest.GraphActivity;
 import com.jekz.stepitup.model.item.ItemInteractor;
-import com.jekz.stepitup.model.step.IntervalStepCounter;
+import com.jekz.stepitup.model.step.ManualStepCounter;
 import com.jekz.stepitup.ui.friends.AvatarImage;
 import com.jekz.stepitup.ui.friends.FriendActivity;
 import com.jekz.stepitup.ui.login.LoginActivity;
@@ -29,7 +29,6 @@ import com.jekz.stepitup.ui.shop.ShopActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 import static com.jekz.stepitup.ui.friends.AvatarImage.AvatarPart;
@@ -55,18 +54,34 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     ToggleButton sessionButton;
 
     HomeMVP.Presenter presenter;
-    IntervalStepCounter stepCounter;
+    private CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton
+            .OnCheckedChangeListener() {
+
+
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            if (b) {
+                presenter.startSession();
+            } else {
+                presenter.endSession();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        stepCounter = ((JekzApplication) (getApplication())).getStepCounter();
+        ManualStepCounter stepCounter = ((JekzApplication) (getApplication())).getStepCounter();
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         LoginManager loginManager = new RemoteLoginModel(SharedPrefsManager.getInstance
                 (getApplicationContext()));
-        presenter = new HomePresenter(ItemInteractor.getInstance(getResources()), loginManager);
+        presenter = new HomePresenter(ItemInteractor.getInstance(getResources()),
+                loginManager,
+                stepCounter,
+                SharedPrefsManager.getInstance(getApplicationContext()));
+        sessionButton.setOnCheckedChangeListener(checkedChangeListener);
     }
 
     @Override
@@ -155,6 +170,20 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void disableSession() {
+        sessionButton.setOnCheckedChangeListener(null);
+        sessionButton.setChecked(true);
+        sessionButton.setOnCheckedChangeListener(checkedChangeListener);
+    }
+
+    @Override
+    public void enableSession() {
+        sessionButton.setOnCheckedChangeListener(null);
+        sessionButton.setChecked(false);
+        sessionButton.setOnCheckedChangeListener(checkedChangeListener);
+    }
+
     private void navigateToActivity(Context context, Class<?> activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
@@ -182,13 +211,6 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
             case R.id.button_logout:
                 presenter.logout();
                 break;
-        }
-    }
-
-    @OnCheckedChanged(R.id.button_session)
-    public void onButtonChanged(CompoundButton button, boolean checked) {
-        if (checked) {
-        } else {
         }
     }
 }

@@ -7,9 +7,6 @@ import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
-import com.jekz.stepitup.model.step.IntervalStepCounter;
-import com.jekz.stepitup.model.step.Session;
-import com.jekz.stepitup.model.step.StepCounter;
 import com.jekz.stepitup.ui.friends.AvatarImage;
 
 import org.json.JSONArray;
@@ -22,7 +19,7 @@ import java.text.NumberFormat;
  * Created by evanalmonte on 12/2/17.
  */
 
-public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback,
+public class ShopPresenter implements Presenter,
         com.jekz.stepitup.ui.shop.AsyncResponse {
     private static final String TAG = ShopPresenter.class.getName();
 
@@ -31,13 +28,10 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     private Avatar avatar;
     private LoginManager loginManager;
     private NumberFormat numberFormat = NumberFormat.getInstance();
-    private IntervalStepCounter stepCounter;
 
 
-    ShopPresenter(IntervalStepCounter stepCounter, ItemInteractor instance, LoginManager
-            loginManager) {
+    ShopPresenter(ItemInteractor instance, LoginManager loginManager) {
         this.itemInteractor = instance;
-        this.stepCounter = stepCounter;
         this.loginManager = loginManager;
         avatar = AvatarRepo.getInstance().getAvatar();
     }
@@ -211,7 +205,6 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
     public void onViewAttached(ShopView view) {
         this.shopView = view;
         shopView.setCurrencyText("x" + numberFormat.format(avatar.getCurrency()));
-        stepCounter.startAutoCount();
     }
 
     @Override
@@ -223,26 +216,6 @@ public class ShopPresenter implements Presenter, StepCounter.StepCounterCallback
         return avatar.isItemEquipped(item);
     }
 
-    void listenToStepCounter(boolean b) {
-        if (b) {
-            stepCounter.addListener(this);
-        } else {
-            stepCounter.removeListener(this);
-        }
-    }
-
-    @Override
-    public void onStepDetected(int x) {
-        avatar.addCurrency(1);
-        if (shopView != null) {
-            Log.i(TAG, "Steps Detected: " + String.valueOf(x));
-        }
-    }
-
-    @Override
-    public void onSessionEnded(Session session) {
-        Log.i(TAG, "Session Ended: " + String.valueOf(session));
-    }
 
     @Override
     public void processFinish(JSONObject returnObject) {

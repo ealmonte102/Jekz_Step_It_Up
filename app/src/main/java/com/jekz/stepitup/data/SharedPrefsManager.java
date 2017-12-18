@@ -41,6 +41,14 @@ public class SharedPrefsManager implements LoginPreferences {
     }
 
     @Override
+    public void put(Key key, boolean value) {
+        editor = prefs.edit();
+        editor.putBoolean(key.name(), value);
+        editor.apply();
+        editor = null;
+    }
+
+    @Override
     public String getString(Key key, String defaultValue) {
         return prefs.getString(key.name(), defaultValue);
     }
@@ -62,6 +70,11 @@ public class SharedPrefsManager implements LoginPreferences {
     }
 
     @Override
+    public boolean getBoolean(Key key, boolean defaultValue) {
+        return prefs.getBoolean(key.name(), defaultValue);
+    }
+
+    @Override
     public void remove(Key... keys) {
         editor = prefs.edit();
         for (Key key : keys) {
@@ -74,6 +87,8 @@ public class SharedPrefsManager implements LoginPreferences {
     public enum Key {
         USERNAME,
         SESSION,
-        EXPIRE_DATE
+        EXPIRE_DATE,
+        COUNTING,
+        STEP_DATA
     }
 }

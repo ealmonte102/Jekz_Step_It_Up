@@ -24,6 +24,10 @@ interface HomeMVP {
         void navigateToFriendsScreen();
 
         void showMessage(String s);
+
+        void disableSession();
+
+        void enableSession();
     }
 
     interface Presenter extends BasePresenter<HomeMVP.View> {
@@ -44,6 +48,10 @@ interface HomeMVP {
         void logout();
 
         void login();
+
+        void endSession();
+
+        void startSession();
     }
 
     interface Model {
