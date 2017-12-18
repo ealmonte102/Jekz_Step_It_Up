@@ -15,6 +15,10 @@ public class SignupContract {
         void navigateToLogin();
 
         void showMessage(String message);
+
+        void showProgress();
+
+        void hideProgress();
     }
 
     interface Presenter extends BasePresenter<SignupContract.View> {

@@ -41,6 +41,7 @@ public class SignupPresenter implements SignupContract.Presenter, RegisterReques
             emptyString = true;
         }
         if (emptyString) { return; }
+        view.showProgress();
         registrationManager.register(username, password, this);
     }
 
@@ -52,6 +53,7 @@ public class SignupPresenter implements SignupContract.Presenter, RegisterReques
 
     @Override
     public void processRegistration(RegisterResult result) {
+        view.hideProgress();
         switch (result) {
             case NETWORK_ERROR:
                 view.showMessage("Error connecting with server, Please try again");

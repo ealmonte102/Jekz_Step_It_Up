@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jekz.stepitup.R;
@@ -23,6 +27,12 @@ public class SignupActivity extends Activity implements SignupContract.View {
 
     @BindView(R.id.edittext_password)
     EditText passwordEditText;
+
+    @BindView(R.id.button_signup)
+    Button signupButton;
+
+    @BindView(R.id.login_progress)
+    ProgressBar progressBar;
 
     SignupContract.Presenter presenter;
 
@@ -49,11 +59,15 @@ public class SignupActivity extends Activity implements SignupContract.View {
     @Override
     public void showUsernameError(String message) {
         usernameEditText.setError(message);
+        Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+        usernameEditText.startAnimation(shake);
     }
 
     @Override
     public void showPasswordError(String message) {
         passwordEditText.setError(message);
+        Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+        passwordEditText.startAnimation(shake);
     }
 
     @Override
@@ -67,6 +81,20 @@ public class SignupActivity extends Activity implements SignupContract.View {
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+        signupButton.setEnabled(false);
+        signupButton.setAlpha(.5f);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+        signupButton.setEnabled(true);
+        signupButton.setAlpha(1);
     }
 
     @OnClick({R.id.button_signup, R.id.link_login})
