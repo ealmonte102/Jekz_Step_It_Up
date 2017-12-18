@@ -26,5 +26,7 @@ public interface SessionStepCounter {
          * @param session The session created.
          */
         void sessionEnded(Session session);
+
+        void onStepCountIncreased(int stepcount);
     }
 }
