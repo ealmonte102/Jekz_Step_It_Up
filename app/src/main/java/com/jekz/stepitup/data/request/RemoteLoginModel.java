@@ -17,10 +17,9 @@ import java.util.Locale;
 
 public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequestCallback {
     private static final String TAG = RemoteLoginModel.class.getName();
-    private final static String LOGIN_URL = "https://jekz.herokuapp.com/login";
+    private final static String COOKIE_URL = "https://jekz.herokuapp.com";
+    private final static String LOGIN_URL = COOKIE_URL + "/login";
     private LoginPreferences loginPreferences;
-    private String username;
-    private String password;
     private LoginCallback callback;
 
     public RemoteLoginModel(LoginPreferences loginPreferences) {
@@ -28,14 +27,18 @@ public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequest
     }
 
     @Override
-    public void login(String username, String password, final LoginCallback callback) {
-        Log.d(TAG, "Trying remote connection login");
-        this.username = username;
-        this.password = password;
+    public void login(final String username, final String password, final LoginCallback callback) {
         this.callback = callback;
         String cookie = loginPreferences.getString(SharedPrefsManager.Key.SESSION);
-        LoginRequest loginRequest = new LoginRequest(username, password, cookie, this);
-        loginRequest.execute(LOGIN_URL);
+        CookieRequest request = new CookieRequest(new CookieRequest.AsynchCookieCallback() {
+            @Override
+            public void processCookie(String result) {
+                LoginRequest loginRequest = new LoginRequest(username, password, result,
+                        RemoteLoginModel.this);
+                loginRequest.execute(LOGIN_URL);
+            }
+        });
+        request.execute(COOKIE_URL);
     }
 
     @Override
@@ -86,26 +89,22 @@ public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequest
     }
 
     @Override
-    public void onValidCredentials(String cookie) {
-        String[] cookieheader = cookie.split(";");
-        String sessionID = cookieheader[0];
-        String expirationDate = cookieheader[2].split("=")[1];
-        Log.d(TAG, "New generated cookie: " + sessionID + "\n" +
-                   "Expires:" + expirationDate);
-        loginPreferences.put(SharedPrefsManager.Key.SESSION, sessionID);
-        loginPreferences.put(SharedPrefsManager.Key.EXPIRE_DATE, expirationDate);
+    public void onProcessLogin(String cookie, String username) {
+        Log.d(TAG, "Success");
+        loginPreferences.put(SharedPrefsManager.Key.SESSION, cookie);
         loginPreferences.put(SharedPrefsManager.Key.USERNAME, username);
-        callback.loginResult(true);
+        callback.loginResult(LoginCallback.LoginResult.SUCCESS);
     }
 
     @Override
-    public void onInvalidCredentials() {
-        callback.loginResult(false);
+    public void invalidCredentials() {
+        Log.d(TAG, "Invalid credentials");
+        callback.loginResult(LoginCallback.LoginResult.INVALID_CREDENTIALS);
     }
 
     @Override
-    public void cookieValid() {
-        callback.loginResult(true);
+    public void networkError() {
+        Log.d(TAG, "Network error");
+        callback.loginResult(LoginCallback.LoginResult.NETWORK_ERROR);
     }
-
 }

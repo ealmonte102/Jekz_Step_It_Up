@@ -3,7 +3,15 @@ package com.jekz.stepitup.data.request;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.security.cert.Certificate;
 
@@ -20,14 +28,14 @@ public class LoginRequest extends AsyncTask<String, Integer, String> {
     private String password;
     private LoginRequest.LoginRequestCallback callback;
 
-    LoginRequest(String username, String password, String cookie, LoginRequestCallback callback) {
+    public LoginRequest(String username, String password, String cookie, LoginRequestCallback
+            callback) {
         this.username = username;
         this.password = password;
         this.cookie = cookie;
         this.callback = callback;
     }
 
-    //CHECK IF COOKIE IS VALID
     @Override
     protected String doInBackground(String... params) {
         try {
@@ -35,14 +43,30 @@ public class LoginRequest extends AsyncTask<String, Integer, String> {
 
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             urlConnection.setDoOutput(true);
-            urlConnection.setDoInput(false);
+            urlConnection.setDoInput(true);
             urlConnection.setRequestMethod("POST");
             urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             urlConnection.setRequestProperty("Cookie", cookie);
-            printHttpsCert(urlConnection);
+            //printHttpsCert(urlConnection);
+            OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream());
+            JSONObject data = new JSONObject();
+            data.put("username", username);
+            data.put("password", password);
+            out.write(data.toString());
+            out.flush();
+            out.close();
 
-            return urlConnection.getHeaderField("Set-Cookie");
-        } catch (IOException e) {
+
+            StringBuilder builder = new StringBuilder();
+            InputStream is;
+            is = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String inputLine;
+            while ((inputLine = br.readLine()) != null) {
+                builder.append(inputLine).append("\n");
+            }
+            return builder.toString();
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         return "ERROR";
@@ -50,17 +74,13 @@ public class LoginRequest extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        StringBuilder builder = new StringBuilder();
-        if (result == null) {
-            builder.append("Cookie is VALID");
-            Log.d(TAG, builder.toString());
-            callback.cookieValid();
+        Log.d(TAG, result);
+        if (result.contains(username.toLowerCase() + "'s Home Page")) {
+            callback.onProcessLogin(cookie, username);
+        } else if (result.contains("ERROR")) {
+            callback.networkError();
         } else {
-            builder.append("Cookie is INVALID");
-            builder.append("\nNew Cookie: ").append(result);
-            Log.d(TAG, builder.toString());
-            LoginVerifier verifier = new LoginVerifier(result, username, password, callback);
-            verifier.execute("http://jekz.herokuapp.com/login");
+            callback.invalidCredentials();
         }
     }
 
@@ -89,7 +109,11 @@ public class LoginRequest extends AsyncTask<String, Integer, String> {
 
     }
 
-    interface LoginRequestCallback extends LoginVerifier.VerifierCallback {
-        void cookieValid();
+    public interface LoginRequestCallback {
+        void onProcessLogin(String cookie, String username);
+
+        void invalidCredentials();
+
+        void networkError();
     }
 }

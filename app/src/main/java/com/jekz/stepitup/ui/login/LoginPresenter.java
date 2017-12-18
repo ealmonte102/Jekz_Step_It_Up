@@ -40,23 +40,24 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
     }
 
     @Override
-    public void loginResult(boolean loginSuccess) {
+    public void loginResult(LoginResult result) {
         if (loginView == null) { return; }
         loginView.hideProgress();
-        if (loginSuccess) {
-            loginView.showMessage("Login Successful!");
-            loginView.startHomeActivity();
-        } else {
-            loginView.showMessage("Error Logging In");
+        switch (result) {
+            case SUCCESS:
+                loginView.showMessage("Login Successful!");
+                loginView.startHomeActivity();
+                break;
+            case INVALID_CREDENTIALS:
+                loginView.showMessage("Username and password do not match");
+                break;
+            case NETWORK_ERROR:
+                loginView.showMessage("Could not connect, please try again with internet " +
+                                      "connection");
+                break;
         }
     }
 
     @Override
-    public void onLogout(boolean logoutSuccessful) {
-        if (logoutSuccessful) {
-            loginView.showMessage("You are now logged out");
-        } else {
-            loginView.showMessage("You are already logged out");
-        }
-    }
+    public void onLogout(boolean logoutSuccessful) { }
 }

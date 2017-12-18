@@ -26,7 +26,13 @@ public interface LoginManager {
         /**
          * @param loginSuccess true if login success, false otherwise
          */
-        void loginResult(boolean loginSuccess);
+        void loginResult(LoginResult result);
+
+        enum LoginResult {
+            NETWORK_ERROR,
+            INVALID_CREDENTIALS,
+            SUCCESS
+        }
     }
 
     interface LogoutCallback {
