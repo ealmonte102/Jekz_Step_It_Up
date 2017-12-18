@@ -13,6 +13,8 @@ interface HomeContract {
 
         void setUsername(String username);
 
+        void setSteps(String stepString);
+
         void displayMessage(String message);
 
         void navigateToShop();

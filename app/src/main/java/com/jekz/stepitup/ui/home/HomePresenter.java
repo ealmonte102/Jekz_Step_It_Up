@@ -145,8 +145,11 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
     @Override
     public void onViewAttached(HomeContract.View view) {
         this.view = view;
+        stepCounter.addSessionListener(this);
         view.setCurrency("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
         view.setUsername(loginManager.getUsername());
+        view.setSteps(
+                formatSteps(prefsManager.getInt(SharedPrefsManager.Key.STEPS_COUNTED, 0)));
         if (prefsManager.getBoolean(SharedPrefsManager.Key.COUNTING, false)) {
             view.disableSession();
         } else {
@@ -158,6 +161,7 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
     @Override
     public void onViewDetached() {
         this.view = null;
+        stepCounter.removeSessionListener(this);
     }
 
     private void retrieveItem(String datatype) {
@@ -238,5 +242,18 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
     @Override
     public void sessionEnded(Session session) {
         SessionSaver.saveSession(session, prefsManager);
+        view.setSteps(formatSteps(0));
+        prefsManager.remove(SharedPrefsManager.Key.STEPS_COUNTED);
+    }
+
+    @Override
+    public void onStepCountIncreased(int stepcount) {
+        if (view == null) { return; }
+        view.setSteps(NumberFormat.getInstance().format(stepcount) + " steps");
+        prefsManager.put(SharedPrefsManager.Key.STEPS_COUNTED, stepcount);
+    }
+
+    private String formatSteps(int steps) {
+        return NumberFormat.getInstance().format(steps) + " steps";
     }
 }

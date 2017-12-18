@@ -138,7 +138,6 @@
             android:layout_marginStart="8dp"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:text="2,000 steps"
             android:textColor="@color/black"
             app:autoSizeMaxTextSize="18sp"
             app:autoSizeMinTextSize="17sp"

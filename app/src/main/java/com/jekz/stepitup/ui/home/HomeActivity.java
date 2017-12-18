@@ -53,6 +53,9 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @BindView(R.id.button_session)
     ToggleButton sessionButton;
 
+    @BindView(R.id.text_steps)
+    TextView stepText;
+
     HomeContract.Presenter presenter;
     private CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton
             .OnCheckedChangeListener() {
@@ -138,6 +141,11 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @Override
     public void setUsername(String username) {
         usernameText.setText(username);
+    }
+
+    @Override
+    public void setSteps(String stepString) {
+        stepText.setText(stepString);
     }
 
     @Override
