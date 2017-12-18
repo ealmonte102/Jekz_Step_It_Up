@@ -13,6 +13,8 @@ public class SignupContract {
         void showPasswordError(String message);
 
         void navigateToLogin();
+
+        void showMessage(String message);
     }
 
     interface Presenter extends BasePresenter<SignupContract.View> {

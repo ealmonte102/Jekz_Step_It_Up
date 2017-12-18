@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jekz.stepitup.R;
+import com.jekz.stepitup.data.register.RemoteRegistrationManager;
 import com.jekz.stepitup.ui.login.LoginActivity;
 
 import butterknife.BindView;
@@ -29,7 +31,7 @@ public class SignupActivity extends Activity implements SignupContract.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-        presenter = new SignupPresenter();
+        presenter = new SignupPresenter(new RemoteRegistrationManager());
     }
 
     @Override
@@ -60,6 +62,11 @@ public class SignupActivity extends Activity implements SignupContract.View {
         startActivity(intent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick({R.id.button_signup, R.id.link_login})

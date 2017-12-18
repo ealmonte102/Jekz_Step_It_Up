@@ -1,17 +1,22 @@
 package com.jekz.stepitup.ui.signup;
 
 
+import com.jekz.stepitup.data.register.RegisterRequest;
+import com.jekz.stepitup.data.register.RegistrationManager;
+
 /**
  * Created by evanalmonte on 12/18/17.
  */
 
-public class SignupPresenter implements SignupContract.Presenter {
+public class SignupPresenter implements SignupContract.Presenter, RegisterRequest
+        .RegisterRequestCallback {
     private static final String TAG = SignupPresenter.class.getName();
+    private final RegistrationManager registrationManager;
 
     SignupContract.View view;
 
-    public SignupPresenter() {
-
+    public SignupPresenter(RegistrationManager registrationManager) {
+        this.registrationManager = registrationManager;
     }
 
     @Override
@@ -36,11 +41,28 @@ public class SignupPresenter implements SignupContract.Presenter {
             emptyString = true;
         }
         if (emptyString) { return; }
+        registrationManager.register(username, password, this);
     }
 
     @Override
     public void login() {
         if (view == null) { return; }
         view.navigateToLogin();
+    }
+
+    @Override
+    public void processRegistration(RegisterResult result) {
+        switch (result) {
+            case NETWORK_ERROR:
+                view.showMessage("Error connecting with server, Please try again");
+                break;
+            case SUCCESSFUL:
+                view.showMessage("You have successfully registered");
+                view.navigateToLogin();
+                break;
+            case USERNAME_TAKEN:
+                view.showUsernameError("Username is already taken");
+                break;
+        }
     }
 }
