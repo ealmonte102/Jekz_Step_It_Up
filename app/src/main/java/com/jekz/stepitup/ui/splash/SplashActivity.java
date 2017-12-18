@@ -3,12 +3,17 @@ package com.jekz.stepitup.ui.splash;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.jekz.stepitup.data.SharedPrefsManager;
+import com.jekz.stepitup.data.register.RegisterRequest;
+import com.jekz.stepitup.data.register.RegistrationManager;
+import com.jekz.stepitup.data.register.RemoteRegistrationManager;
 import com.jekz.stepitup.data.request.CookieRequest;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.data.request.LoginRequest;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
+import com.jekz.stepitup.ui.home.HomeActivity;
 import com.jekz.stepitup.ui.login.LoginActivity;
 
 public class SplashActivity extends Activity {
@@ -20,15 +25,12 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         SharedPrefsManager manager = SharedPrefsManager.getInstance(getApplicationContext());
         loginManager = new RemoteLoginModel(manager);
-
         Intent intent;
-        intent = new Intent(this, LoginActivity.class);
-        /*
         if (loginManager.isLoggedIn()) {
             intent = new Intent(this, HomeActivity.class);
         } else {
             intent = new Intent(this, LoginActivity.class);
-        }*/
+        }
         startActivity(intent);
         finish();
     }
@@ -58,5 +60,15 @@ public class SplashActivity extends Activity {
             }
         });
         cookieRequest.execute("https://jekz.herokuapp.com/");
+    }
+
+    public void testRegister() {
+        RegistrationManager manager = new RemoteRegistrationManager();
+        manager.register("Dodecahedron", "123", new RegisterRequest.RegisterRequestCallback() {
+            @Override
+            public void processRegistration(RegisterResult result) {
+                Log.d(TAG, result.name());
+            }
+        });
     }
 }
