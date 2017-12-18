@@ -33,13 +33,13 @@ public class FriendsListRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         Friend.FriendType type = Friend.FriendType.values()[viewType];
         switch (type) {
             case PENDING:
-                itemView = inflater.inflate(R.layout.friend_pending_row_layout, parent, false);
+                itemView = inflater.inflate(R.layout.viewholder_friend_pending, parent, false);
                 return new PendingFriendViewHolder(itemView);
             case CONFIRMED:
-                itemView = inflater.inflate(R.layout.friend_confirmed_row_layout, parent, false);
+                itemView = inflater.inflate(R.layout.viewholder_friend_confirmed, parent, false);
                 return new ConfirmedFriendViewHolder(itemView);
             case SEARCHED:
-                itemView = inflater.inflate(R.layout.friend_search_row_layout, parent, false);
+                itemView = inflater.inflate(R.layout.viewholder_friend_search, parent, false);
                 return new SearchFriendViewHolder(itemView);
             default:
                 return null;

@@ -76,7 +76,7 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
         SharedPrefsManager manager = SharedPrefsManager.getInstance(getApplicationContext());
         LoginManager loginManager = new RemoteLoginModel(manager);
         shopPresenter = new ShopPresenter(ItemInteractor.getInstance(getResources()), loginManager);
-        setContentView(R.layout.activity_shop_layout);
+        setContentView(R.layout.activity_shop);
         ButterKnife.bind(this);
         initRecyclerView();
     }

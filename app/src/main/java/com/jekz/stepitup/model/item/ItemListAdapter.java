@@ -44,13 +44,13 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         ItemOwned type = ItemOwned.values()[viewType];
         switch (type) {
             case OWNED:
-                itemView = inflater.inflate(R.layout.layout_owned_item, parent, false);
+                itemView = inflater.inflate(R.layout.viewholder_shop_owneditem, parent, false);
                 return new OwnedItemViewHolder(itemView);
             case NOT_OWNED:
-                itemView = inflater.inflate(R.layout.layout_unowned_item, parent, false);
+                itemView = inflater.inflate(R.layout.viewholder_shop_unowneditem, parent, false);
                 return new UnownedItemViewHolder(itemView);
             case EQUIPPED:
-                itemView = inflater.inflate(R.layout.layout_equipped_item, parent, false);
+                itemView = inflater.inflate(R.layout.viewholder_shop_equippeditem, parent, false);
                 return new EquippedItemViewHolder(itemView);
         }
         return null;

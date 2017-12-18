@@ -103,7 +103,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categories"
-        tools:listitem="@layout/layout_owned_item" />
+        tools:listitem="@layout/viewholder_shop_owneditem" />
 
     <RadioGroup
         android:id="@+id/categories"

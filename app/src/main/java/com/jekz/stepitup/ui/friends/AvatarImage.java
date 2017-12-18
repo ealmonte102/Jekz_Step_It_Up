@@ -33,7 +33,7 @@ public class AvatarImage extends ConstraintLayout {
     public AvatarImage(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        layoutInflater.inflate(R.layout.layout_avatar, this);
+        layoutInflater.inflate(R.layout.view_avatarimage, this);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AvatarImage);
         int modelId = a.getResourceId(R.styleable.AvatarImage_avatar, 0);
         int avatarHatId = a.getResourceId(R.styleable.AvatarImage_hat, 0);

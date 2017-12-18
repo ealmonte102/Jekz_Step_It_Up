@@ -26,7 +26,7 @@ public class LifeStatText extends ConstraintLayout {
         super(context, attrs);
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        layoutInflater.inflate(R.layout.layout_lifetime_stats, this);
+        layoutInflater.inflate(R.layout.view_graph_lifestattext, this);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LifeStatText);
 
         String topText = a.getString(R.styleable.LifeStatText_toptext);

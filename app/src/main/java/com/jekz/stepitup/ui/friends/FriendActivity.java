@@ -49,7 +49,7 @@ public class FriendActivity extends Activity implements FriendContract.View {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friend_layout);
+        setContentView(R.layout.activity_friend);
         ButterKnife.bind(this);
         FriendPresenter presenter = new FriendPresenter(
                 new RemoteLoginModel(SharedPrefsManager.getInstance(getApplicationContext())),
