@@ -7,11 +7,11 @@ import com.jekz.stepitup.data.request.RemoteLoginModel;
  * Created by evanalmonte on 12/8/17.
  */
 
-class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, LoginManager
+class LoginPresenter implements LoginContract.Presenter, LoginManager.LoginCallback, LoginManager
         .LogoutCallback {
     private static final String TAG = RemoteLoginModel.class.getName();
 
-    private LoginMVP.View loginView;
+    private LoginContract.View view;
     private LoginManager loginManager;
 
 
@@ -20,45 +20,49 @@ class LoginPresenter implements LoginMVP.Presenter, LoginManager.LoginCallback, 
     }
 
     @Override
-    public void onViewAttached(LoginMVP.View loginView) {
-        this.loginView = loginView;
+    public void onViewAttached(LoginContract.View loginView) {
+        this.view = loginView;
     }
 
     @Override
     public void onViewDetached() {
-        loginView = null;
+        view = null;
     }
 
     @Override
     public void login(String username, String password) {
-        if (username.isEmpty() || password.isEmpty()) {
-            loginView.showMessage("Please enter both username and password");
+        if (username.isEmpty()) {
+            view.showUsernameError("Username cannot be empty");
+        }
+        if (password.isEmpty()) {
+            view.showPasswordError("Password cannot be empty");
         } else {
-            loginView.showProgress();
+            view.showProgress();
             loginManager.login(username, password, this);
         }
     }
 
     @Override
     public void signup() {
-        loginView.startSignUpActivity();
+        view.navigateToSignup();
     }
 
     @Override
     public void loginResult(LoginResult result) {
-        if (loginView == null) { return; }
-        loginView.hideProgress();
+        if (view == null) { return; }
+        view.hideProgress();
         switch (result) {
             case SUCCESS:
-                loginView.showMessage("Login Successful!");
-                loginView.startHomeActivity();
+                view.showMessage("Login Successful!");
+                view.navigateToHome();
                 break;
             case INVALID_CREDENTIALS:
-                loginView.showMessage("Username and password do not match");
+                view.showMessage("Username and password do not match! Try again");
+                view.showPasswordError("Password and username don't match");
+                view.showUsernameError("Username and password don't match");
                 break;
             case NETWORK_ERROR:
-                loginView.showMessage("Could not connect, please try again with internet " +
-                                      "connection");
+                view.showMessage("Error connecting with server, Please try again");
                 break;
         }
     }

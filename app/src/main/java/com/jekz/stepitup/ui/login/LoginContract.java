@@ -9,7 +9,7 @@ import com.jekz.stepitup.ui.BasePresenter;
 /**
  * Contract for Login MVP
  */
-interface LoginMVP {
+interface LoginContract {
     /**
      * Interface representing a view
      */
@@ -24,20 +24,24 @@ interface LoginMVP {
         /**
          * Navigate to home activity
          */
-        void startHomeActivity();
+        void navigateToHome();
 
-        void startSignUpActivity();
+        void navigateToSignup();
 
         void showProgress();
 
         void hideProgress();
+
+        void showUsernameError(String message);
+
+        void showPasswordError(String message);
     }
 
     /**
      * Interface representing a presenter
      */
-    interface Presenter extends BasePresenter<LoginMVP.View> {
-        void onViewAttached(LoginMVP.View view);
+    interface Presenter extends BasePresenter<LoginContract.View> {
+        void onViewAttached(LoginContract.View view);
 
         void onViewDetached();
 

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -19,12 +21,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends Activity implements LoginMVP.View {
+public class LoginActivity extends Activity implements LoginContract.View {
     @BindView(R.id.edittext_username)
-    EditText usernameText;
+    EditText usernameEditText;
 
     @BindView(R.id.edittext_password)
-    EditText passwordText;
+    EditText passwordEditText;
 
 
     @BindView(R.id.button_login)
@@ -34,7 +36,7 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     ProgressBar progressBar;
 
 
-    LoginMVP.Presenter loginPresenter;
+    LoginContract.Presenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +73,8 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     public void onButtonClicked(View view) {
         switch (view.getId()) {
             case R.id.button_login:
-                loginPresenter.login(usernameText.getText().toString(), passwordText.getText()
-                        .toString());
+                loginPresenter.login(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString());
                 break;
             case R.id.link_signup:
                 loginPresenter.signup();
@@ -81,14 +83,14 @@ public class LoginActivity extends Activity implements LoginMVP.View {
     }
 
     @Override
-    public void startHomeActivity() {
+    public void navigateToHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
 
     @Override
-    public void startSignUpActivity() {
+    public void navigateToSignup() {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -107,6 +109,20 @@ public class LoginActivity extends Activity implements LoginMVP.View {
         progressBar.setVisibility(View.GONE);
         loginButton.setEnabled(true);
         loginButton.setAlpha(1);
+    }
+
+    @Override
+    public void showUsernameError(String message) {
+        usernameEditText.setError(message);
+        Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+        usernameEditText.startAnimation(shake);
+    }
+
+    @Override
+    public void showPasswordError(String message) {
+        passwordEditText.setError(message);
+        Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+        passwordEditText.startAnimation(shake);
     }
 
     @Override
