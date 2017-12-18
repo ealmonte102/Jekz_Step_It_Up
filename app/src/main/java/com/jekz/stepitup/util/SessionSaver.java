@@ -31,26 +31,38 @@ public final class SessionSaver {
         String sessionString = session.toString();
         switch (dayFormat.format(startDate)) {
             case "Mon":
-                preferences.put(SharedPrefsManager.Key.STEP_DATA_MON, sessionString);
+                saveToDate(SharedPrefsManager.Key.STEP_DATA_MON, sessionString, preferences);
                 break;
             case "Tue":
-                preferences.put(SharedPrefsManager.Key.STEP_DATA_TUE, sessionString);
+                saveToDate(SharedPrefsManager.Key.STEP_DATA_TUE, sessionString, preferences);
                 break;
             case "Wed":
-                preferences.put(SharedPrefsManager.Key.STEP_DATA_WED, sessionString);
+                saveToDate(SharedPrefsManager.Key.STEP_DATA_WED, sessionString, preferences);
                 break;
             case "Thu":
-                preferences.put(SharedPrefsManager.Key.STEP_DATA_THU, sessionString);
+                saveToDate(SharedPrefsManager.Key.STEP_DATA_THU, sessionString, preferences);
                 break;
             case "Fri":
-                preferences.put(SharedPrefsManager.Key.STEP_DATA_FRI, sessionString);
+                saveToDate(SharedPrefsManager.Key.STEP_DATA_FRI, sessionString, preferences);
                 break;
             case "Sat":
-                preferences.put(SharedPrefsManager.Key.STEP_DATA_SAT, sessionString);
+                saveToDate(SharedPrefsManager.Key.STEP_DATA_SAT, sessionString, preferences);
                 break;
             case "Sun":
-                preferences.put(SharedPrefsManager.Key.STEP_DATA_SUN, sessionString);
+                saveToDate(SharedPrefsManager.Key.STEP_DATA_SUN, sessionString, preferences);
                 break;
         }
+    }
+
+    private static void saveToDate(SharedPrefsManager.Key dateKey, String sessionString,
+                                   LoginPreferences preferences) {
+        if (sessionString.isEmpty()) { return; }
+        String stepData = preferences.getString(dateKey, "");
+        if (stepData.isEmpty()) {
+            stepData = sessionString;
+        } else {
+            stepData = stepData + ";" + sessionString;
+        }
+        preferences.put(dateKey, stepData);
     }
 }
