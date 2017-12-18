@@ -7,7 +7,7 @@ import com.jekz.stepitup.ui.BasePresenter;
  * Created by evanalmonte on 12/10/17.
  */
 
-interface HomeMVP {
+interface HomeContract {
     interface View extends AvatarView {
         void setCurrency(String currency);
 
@@ -30,7 +30,7 @@ interface HomeMVP {
         void enableSession();
     }
 
-    interface Presenter extends BasePresenter<HomeMVP.View> {
+    interface Presenter extends BasePresenter<HomeContract.View> {
         void loadAvatar();
 
         void accessShop();
@@ -39,7 +39,7 @@ interface HomeMVP {
 
         void accessGraphs();
 
-        void onViewAttached(HomeMVP.View view);
+        void onViewAttached(HomeContract.View view);
 
         void onViewDetached();
 

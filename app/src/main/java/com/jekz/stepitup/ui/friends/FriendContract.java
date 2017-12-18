@@ -7,7 +7,7 @@ import com.jekz.stepitup.ui.BasePresenter;
  * Created by evanalmonte on 12/13/17.
  */
 
-interface FriendMVP {
+interface FriendContract {
     interface View extends AvatarView {
         void reloadFriendsList();
 

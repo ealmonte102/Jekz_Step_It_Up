@@ -22,12 +22,13 @@ import static com.jekz.stepitup.adapter.FriendsListRecyclerAdapter.FriendsListPr
  * Created by Evan and Kevin
  */
 
-public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresenter, AsyncResponse {
+public class FriendPresenter implements FriendContract.Presenter, FriendsListPresenter,
+        AsyncResponse {
     private static final String TAG = FriendPresenter.class.getName();
 
     private HashSet<Friend> friendList = new HashSet<>();
 
-    private FriendMVP.View view;
+    private FriendContract.View view;
 
     private LoginManager loginManager;
 
@@ -40,7 +41,7 @@ public class FriendPresenter implements FriendMVP.Presenter, FriendsListPresente
     }
 
     @Override
-    public void onViewAttached(FriendMVP.View view) {
+    public void onViewAttached(FriendContract.View view) {
         this.view = view;
     }
 

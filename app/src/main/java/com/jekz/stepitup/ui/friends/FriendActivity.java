@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
-public class FriendActivity extends Activity implements FriendMVP.View {
+public class FriendActivity extends Activity implements FriendContract.View {
     @BindView(R.id.recycler_view_friends)
     RecyclerView friendsRecyclerView;
 
@@ -41,7 +41,7 @@ public class FriendActivity extends Activity implements FriendMVP.View {
     @BindView(R.id.search_friends_radio_button)
     RadioButton searchRadio;
 
-    FriendMVP.Presenter presenter;
+    FriendContract.Presenter presenter;
     FriendsListRecyclerAdapter.FriendsListPresenter friendsListPresenter;
 
     FriendsListRecyclerAdapter adapter;

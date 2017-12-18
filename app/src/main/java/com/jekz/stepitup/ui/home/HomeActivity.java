@@ -33,7 +33,7 @@ import butterknife.OnClick;
 
 import static com.jekz.stepitup.ui.friends.AvatarImage.AvatarPart;
 
-public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
+public class HomeActivity extends AppCompatActivity implements HomeContract.View {
 
     @BindView(R.id.toolbar_home)
     Toolbar toolbar;
@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity implements HomeMVP.View {
     @BindView(R.id.button_session)
     ToggleButton sessionButton;
 
-    HomeMVP.Presenter presenter;
+    HomeContract.Presenter presenter;
     private CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton
             .OnCheckedChangeListener() {
 

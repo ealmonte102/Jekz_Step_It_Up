@@ -28,13 +28,14 @@ import java.text.NumberFormat;
  * Created by evanalmonte on 12/10/17.
  */
 
-public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.shop.AsyncResponse,
+public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.ui.shop
+        .AsyncResponse,
         SessionStepCounter.SessionListener {
     private static final String TAG = HomePresenter.class.getName();
     private ItemInteractor itemInteractor;
     private AvatarRepo repo;
     private Avatar avatar;
-    private HomeMVP.View view;
+    private HomeContract.View view;
 
     private LoginManager loginManager;
     private ManualStepCounter stepCounter;
@@ -142,7 +143,7 @@ public class HomePresenter implements HomeMVP.Presenter, com.jekz.stepitup.ui.sh
     }
 
     @Override
-    public void onViewAttached(HomeMVP.View view) {
+    public void onViewAttached(HomeContract.View view) {
         this.view = view;
         view.setCurrency("x" + NumberFormat.getInstance().format(avatar.getCurrency()));
         view.setUsername(loginManager.getUsername());
