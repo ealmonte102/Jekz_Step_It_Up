@@ -20,10 +20,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LoginActivity extends Activity implements LoginMVP.View {
-    @BindView(R.id.username)
+    @BindView(R.id.edittext_username)
     EditText usernameText;
 
-    @BindView(R.id.password)
+    @BindView(R.id.edittext_password)
     EditText passwordText;
 
 

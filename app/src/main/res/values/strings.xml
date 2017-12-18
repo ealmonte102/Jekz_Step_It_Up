@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StepItUp</string>
+    <string name="app_name">Step It Up</string>
     <string name="animate">animate</string>
     <string name="title_activity_character">CharacterActivity</string>
     <string name="action_settings">Settings</string>
@@ -29,4 +29,6 @@
     <string name="pending">Pending</string>
     <string name="add_friends">Add Friends</string>
     <string name="sign_up">Sign Up</string>
+    <string name="login">Log In</string>
+    <string name="signup_message">Don\'t have an account? Sign Up</string>
 </resources>

@@ -1,31 +1,34 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@drawable/login_background"
-    android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true"
-    android:gravity="center_vertical|center_horizontal"
-    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:paddingBottom="@dimen/default_container_margin"
     android:paddingLeft="@dimen/default_container_margin"
     android:paddingRight="@dimen/default_container_margin"
-    android:paddingTop="@dimen/default_container_margin"
-    tools:context=".ui.login.LoginActivity">
+    android:paddingTop="@dimen/default_container_margin">
 
     <LinearLayout
         android:id="@+id/ll1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center_vertical|center_horizontal">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/ll2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="1">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="STEP IT UP"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffffff"
             android:textSize="30dp" />
@@ -35,11 +38,16 @@
 
     <LinearLayout
         android:id="@+id/ll2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center_vertical|center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/ll3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll1"
+        app:layout_constraintVertical_weight="1.2">
 
         <ProgressBar
             android:id="@+id/login_progress"
@@ -48,59 +56,65 @@
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
-            <LinearLayout
-                android:id="@+id/login_form"
+        <LinearLayout
+            android:id="@+id/login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
 
-                <AutoCompleteTextView
-                    android:id="@+id/username"
+                <EditText
+                    android:id="@+id/edittext_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:hint="Username"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
+                    android:inputType="textCapWords"
                     android:textColor="#ffffffff"
                     android:textColorHint="#ffffffff" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/edittext_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:hint="Password"
-                    android:imeActionLabel="Sign In"
-                    android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
-                    android:maxLines="1"
                     android:singleLine="true"
                     android:textColor="#ffffffff"
                     android:textColorHint="#ffffffff" />
-
-            </LinearLayout>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/ll3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="bottom|center_horizontal"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll2">
+        app:layout_constraintTop_toBottomOf="@+id/ll2"
+        app:layout_constraintVertical_weight="1">
 
         <Button
             android:id="@+id/button_login"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="@string/sign_up"
+            android:text="@string/login"
             android:textColor="#ffffffff"
             android:textStyle="bold" />
 
@@ -112,7 +126,7 @@
             android:layout_marginStart="8dp"
             android:autoLink="web"
             android:gravity="center"
-            android:text="Don't have an account? Sign Up"
+            android:text="@string/signup_message"
             android:textColor="#ffffffff"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -121,4 +135,4 @@
             app:layout_constraintTop_toBottomOf="@id/button_login"
             app:layout_constraintVertical_bias="0.13" />
     </android.support.constraint.ConstraintLayout>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
