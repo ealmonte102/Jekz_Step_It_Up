@@ -61,10 +61,10 @@ public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequest
         try {
             Log.d(TAG, "Checking local cookie");
             String localCookie = loginPreferences.getString(SharedPrefsManager.Key.EXPIRE_DATE,
-                    "Does not exist");
+                    "No expire date stored");
             Log.d(TAG, "Current local cookie: " + localCookie);
             Date date = simpleDateFormat.parse(loginPreferences.getString(SharedPrefsManager.Key
-                    .EXPIRE_DATE, ""));
+                    .EXPIRE_DATE, "No cookie stored"));
             Date current = new Date(System.currentTimeMillis());
             Log.d(TAG, "Parsed date: " + date.toString());
             Log.d(TAG, "Current date: " + current.toString());
@@ -90,8 +90,11 @@ public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequest
 
     @Override
     public void onProcessLogin(String cookie, String username) {
-        Log.d(TAG, "Success");
-        loginPreferences.put(SharedPrefsManager.Key.SESSION, cookie);
+        String[] cookieheader = cookie.split(";");
+        String sessionID = cookieheader[0];
+        String expirationDate = cookieheader[2].split("=")[1];
+        loginPreferences.put(SharedPrefsManager.Key.SESSION, sessionID);
+        loginPreferences.put(SharedPrefsManager.Key.EXPIRE_DATE, expirationDate);
         loginPreferences.put(SharedPrefsManager.Key.USERNAME, username);
         callback.loginResult(LoginCallback.LoginResult.SUCCESS);
     }
