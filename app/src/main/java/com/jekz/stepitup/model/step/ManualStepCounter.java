@@ -74,13 +74,13 @@ public class ManualStepCounter implements SessionStepCounter, SensorEventListene
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
-            notifyStepsIncreased((int) sensorEvent.values[0]);
             if (baseSteps < 1) {
                 baseSteps = (int) sensorEvent.values[0];
                 startSteps = baseSteps;
                 mostRecentSteps = baseSteps;
             } else if (sessionActive) {
                 mostRecentSteps = (int) sensorEvent.values[0] - stepOffset;
+                notifyStepsIncreased(mostRecentSteps - startSteps);
             } else {
                 stepOffset = (int) sensorEvent.values[0] - mostRecentSteps;
             }
