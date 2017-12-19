@@ -2,11 +2,11 @@ package com.jekz.stepitup.util;
 
 import android.util.Log;
 
-import com.jekz.stepitup.AvatarRepo;
 import com.jekz.stepitup.data.LoginPreferences;
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.RequestString;
 import com.jekz.stepitup.data.request.SessionRequest;
+import com.jekz.stepitup.model.avatar.AvatarRepo;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.SessionStepCounter;
 

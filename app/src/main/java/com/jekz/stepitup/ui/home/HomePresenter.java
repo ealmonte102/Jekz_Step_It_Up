@@ -3,11 +3,11 @@ package com.jekz.stepitup.ui.home;
 import android.util.Log;
 import android.util.Pair;
 
-import com.jekz.stepitup.AvatarRepo;
 import com.jekz.stepitup.customview.AvatarImage;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.data.request.RequestString;
 import com.jekz.stepitup.model.avatar.Avatar;
+import com.jekz.stepitup.model.avatar.AvatarRepo;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.ManualStepCounter;
@@ -58,7 +58,7 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
         Item pants = avatar.getPants();
         Item shoes = avatar.getShoes();
 
-        String model = avatar.isMale() ? "male" : "female";
+        String model = avatar.getModel();
         if (hat != null) {
             view.setAvatarImagePart(AvatarImage.AvatarPart.HAT, itemInteractor.getItem(hat.getId()
             ).second);
@@ -201,8 +201,6 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
                     case "user_data": {
                         String model = q.getString("gender");
                         int modelID = itemInteractor.getModel(model);
-                        view.setAvatarImagePart(AvatarImage.AvatarPart.MODEL, modelID);
-                        view.animateAvatarImagePart(AvatarImage.AvatarPart.MODEL, true);
                         int hatid = q.getInt("hat");
                         int shirtid = q.getInt("shirt");
                         int pantsid = q.getInt("pants");
@@ -215,7 +213,9 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
                         avatar.wearItem(shirt.first);
                         avatar.wearItem(pants.first);
                         avatar.wearItem(shoes.first);
-                        avatar.setMale(model);
+                        avatar.setModel(model);
+                        view.setAvatarImagePart(AvatarImage.AvatarPart.MODEL, modelID);
+                        view.animateAvatarImagePart(AvatarImage.AvatarPart.MODEL, true);
                         view.setAvatarImagePart(AvatarImage.AvatarPart.HAT, hat.second);
                         view.animateAvatarImagePart(AvatarImage.AvatarPart.HAT, true);
                         view.setAvatarImagePart(AvatarImage.AvatarPart.SHIRT, shirt.second);

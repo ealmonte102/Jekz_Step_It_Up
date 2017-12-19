@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Avatar {
-    private boolean isMale = true;
+    private static final String DEFAULT_MODEL = "male";
+
+    private String model = DEFAULT_MODEL;
     private Item hat;
     private Item shirt;
     private Item pants;
@@ -14,18 +16,12 @@ public class Avatar {
     private Set<Item> inventory = new HashSet<>();
     private int currency;
 
-    public boolean isMale() {
-        return isMale;
+    public String getModel() {
+        return model;
     }
 
-    public void setMale(String gender) {
-        if (gender.equals("male")) {
-            isMale = true;
-        }
-        if (gender.equals("female")) {
-            isMale = false;
-        }
-
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public Item getHat() {

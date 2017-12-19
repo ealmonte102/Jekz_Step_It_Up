@@ -1,6 +1,4 @@
-package com.jekz.stepitup;
-
-import com.jekz.stepitup.model.avatar.Avatar;
+package com.jekz.stepitup.model.avatar;
 
 /**
  * Created by evanalmonte on 12/10/17.

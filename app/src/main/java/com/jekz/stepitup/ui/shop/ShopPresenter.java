@@ -2,11 +2,11 @@ package com.jekz.stepitup.ui.shop;
 
 import android.util.Log;
 
-import com.jekz.stepitup.AvatarRepo;
 import com.jekz.stepitup.customview.AvatarImage;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.data.request.RequestString;
 import com.jekz.stepitup.model.avatar.Avatar;
+import com.jekz.stepitup.model.avatar.AvatarRepo;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
 
@@ -42,7 +42,7 @@ public class ShopPresenter implements Presenter,
         Item shirt = avatar.getShirt();
         Item pants = avatar.getPants();
         Item shoes = avatar.getShoes();
-        String model = avatar.isMale() ? "male" : "female";
+        String model = avatar.getModel();
 
         if (hat != null) {
             shopView.setAvatarImagePart(AvatarImage.AvatarPart.HAT, itemInteractor.getItem(hat
@@ -152,12 +152,8 @@ public class ShopPresenter implements Presenter,
     }
 
     void changeGender() {
-        boolean isMale = avatar.isMale();
-        if (isMale) {
-            updateItem(0, "gender", 0, 0, 0, 0, "female");
-        } else {
-            updateItem(0, "gender", 0, 0, 0, 0, "male");
-        }
+        String model = avatar.getModel().equals("male") ? "female" : "male";
+        updateItem(0, "gender", 0, 0, 0, 0, model);
     }
 
     int resourceRequested(Item item) {
@@ -292,7 +288,7 @@ public class ShopPresenter implements Presenter,
                         if (succeed) {
                             String gender = r.getString("gender");
                             if (gender.equals("male") || gender.equals("female")) {
-                                avatar.setMale(gender);
+                                avatar.setModel(gender);
                                 int modelID = itemInteractor.getModel(gender);
                                 shopView.setAvatarImagePart(AvatarImage.AvatarPart.MODEL, modelID);
                                 reloadAnimations();
