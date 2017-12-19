@@ -65,7 +65,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         mChart2 = findViewById(R.id.second_chart);
         mChart3 = findViewById(R.id.third_chart);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_settings);
         durationText = findViewById(R.id.lifestat_duration);
         stepsText = findViewById(R.id.lifestat_steps);
         caloriesText = findViewById(R.id.lifestat_calories);
