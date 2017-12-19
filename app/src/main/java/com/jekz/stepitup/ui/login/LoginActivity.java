@@ -129,4 +129,9 @@ public class LoginActivity extends Activity implements LoginContract.View {
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onBackPressed() {
+        //Intentionally left empty to disable bypassing login
+    }
 }
