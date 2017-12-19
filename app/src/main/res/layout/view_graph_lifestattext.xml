@@ -26,7 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center_horizontal|top"
-        android:maxLines="1"
+        android:maxLines="2"
         app:autoSizePresetSizes="@array/stat_sizes"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"

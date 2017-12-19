@@ -1,5 +1,7 @@
 package com.jekz.stepitup.graphtest;
 
+import com.jekz.stepitup.data.request.RequestString;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -7,6 +9,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -16,7 +19,7 @@ public class GetData {
     static String url1 = "https://jekz.herokuapp.com/db/session";
     static String url2 = "http://localhost:3000/test";
     static URL url;
-    static HttpsURLConnection conn = null;
+    static HttpURLConnection conn;
 
     public static void main(String[] args) {
         connection();
@@ -26,7 +29,11 @@ public class GetData {
     public static void connection() {
         try {
             url = new URL(url1);
-            conn = (HttpsURLConnection) url.openConnection();
+            if (RequestString.isLocalMode()) {
+                conn = (HttpURLConnection) url.openConnection();
+            } else {
+                conn = (HttpsURLConnection) url.openConnection();
+            }
             conn.setDoOutput(true);
             conn.setDoInput(true);
             conn.setRequestMethod("POST");
