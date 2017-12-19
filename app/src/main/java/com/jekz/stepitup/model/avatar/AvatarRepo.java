@@ -23,4 +23,12 @@ public class AvatarRepo {
     public void resetAvatar() {
         avatar = new Avatar();
     }
+
+    public void addRepoObserver(Avatar.AvatarObserver observer) {
+        avatar.addAvatarObserver(observer);
+    }
+
+    public void removeRepoObserver(Avatar.AvatarObserver observer) {
+        avatar.removeObserver(observer);
+    }
 }

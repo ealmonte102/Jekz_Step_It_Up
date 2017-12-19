@@ -2,6 +2,7 @@ package com.jekz.stepitup.model.avatar;
 
 import com.jekz.stepitup.model.item.Item;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,8 @@ public class Avatar {
     private Item shoes;
     private Set<Item> inventory = new HashSet<>();
     private int currency;
+
+    private ArrayList<AvatarObserver> observers;
 
     public String getModel() {
         return model;
@@ -50,6 +53,13 @@ public class Avatar {
 
     public void setCurrency(int x) {
         currency = x;
+        notifyCurrencyChange();
+    }
+
+    private void notifyCurrencyChange() {
+        for (AvatarObserver observer : observers) {
+            observer.onCurrencyChanged();
+        }
     }
 
     public void addCurrency(int x) {
@@ -117,5 +127,19 @@ public class Avatar {
                 return item.equals(shoes);
         }
         return false;
+    }
+
+    public void addAvatarObserver(AvatarObserver observer) {
+        if (!observers.contains(observer)) {
+            observers.add(observer);
+        }
+    }
+
+    public void removeObserver(AvatarObserver observer) {
+        observers.remove(observer);
+    }
+
+    public interface AvatarObserver {
+        void onCurrencyChanged();
     }
 }
