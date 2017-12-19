@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 import static com.jekz.stepitup.adapter.FriendsListRecyclerAdapter.FriendRowView;
 import static com.jekz.stepitup.adapter.FriendsListRecyclerAdapter.FriendsListPresenter;
@@ -36,6 +37,7 @@ public class FriendPresenter implements FriendContract.Presenter, FriendsListPre
 
     private ItemInteractor itemInteractor;
 
+    private CurrentList currentList = CurrentList.FRIEND;
 
     FriendPresenter(LoginManager loginManager, ItemInteractor itemInteractor) {
         this.loginManager = loginManager;
@@ -57,6 +59,7 @@ public class FriendPresenter implements FriendContract.Presenter, FriendsListPre
         friendList.clear();
         view.showSearch(true);
         view.reloadFriendsList();
+        currentList = CurrentList.SEARCH;
         doSearchRequest(username);
     }
 
@@ -65,6 +68,7 @@ public class FriendPresenter implements FriendContract.Presenter, FriendsListPre
         friendList.clear();
         retrieveFriends("pending_friends");
         view.reloadFriendsList();
+        currentList = CurrentList.PENDING;
         view.showSearch(false);
     }
 
@@ -73,6 +77,7 @@ public class FriendPresenter implements FriendContract.Presenter, FriendsListPre
         friendList.clear();
         retrieveFriends("friends");
         view.reloadFriendsList();
+        currentList = CurrentList.FRIEND;
         view.showSearch(false);
     }
 
@@ -197,6 +202,11 @@ public class FriendPresenter implements FriendContract.Presenter, FriendsListPre
             String actionType = returnObject.getString("return_data");
             Log.d(TAG, output.toString());
             Log.d(TAG, "Action type: " + actionType);
+            // Prevent user from clicking a different column and the asynchronous results
+            // "appearing" under the wrong tab.
+            if ((actionType.equals("friends") && currentList != CurrentList.FRIEND) ||
+                (actionType.equals("pending_friends") && currentList != CurrentList.PENDING) ||
+                (actionType.equals("search_user") && currentList != CurrentList.SEARCH)) { return; }
             for (int i = 0; i < output.length(); i++) {
                 JSONObject q = output.getJSONObject(i);
                 switch (actionType) {
@@ -282,10 +292,18 @@ public class FriendPresenter implements FriendContract.Presenter, FriendsListPre
     }
 
     private void removeFriendFromList(int id) {
-        for (Friend friend : friendList) {
+        Iterator<Friend> iterator = friendList.iterator();
+        while (iterator.hasNext()) {
+            Friend friend = iterator.next();
             if (friend.getId() == id) {
-                friendList.remove(friend);
+                iterator.remove();
+                return;
             }
         }
+    }
+
+
+    private enum CurrentList {
+        SEARCH, FRIEND, PENDING
     }
 }

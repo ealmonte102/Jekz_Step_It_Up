@@ -50,7 +50,7 @@
     <style name="FriendTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/shop_background</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@android:color/black</item>
         <item name="android:colorBackground">@color/shop_background</item>
         <item name="android:textColorPrimaryInverse">@color/shop_background</item>
@@ -65,6 +65,10 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="ButtonRipple" parent="Widget.AppCompat.Button.Borderless">
+
+    </style>
+
     <style name="Home.LogoutButton" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/friends_button</item>
         <item name="android:textColor">@color/black</item>
@@ -73,7 +77,7 @@
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/home_status</item>
         <item name="colorAccent">@color/accent</item>
 
         <item name="android:windowBackground">@color/colorPrimary</item>
@@ -86,8 +90,19 @@
         <item name="colorButtonNormal">@color/colorPrimary</item>
     </style>
 
-
+    <!-- Sign Up Theme -->
     <style name="AppTheme.Dark.Gray" parent="AppTheme.Dark">
         <item name="colorPrimaryDark">#93aebd</item>
+    </style>
+
+    <!--Home Theme -->
+    <style name="HomeTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/shop_background</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/shop_inventory_background</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:colorBackground">@color/shop_background</item>
+        <item name="android:textColorPrimaryInverse">@color/iron</item>
+        <item name="android:textColorHint">#b14b4b4b</item>
     </style>
 </resources>

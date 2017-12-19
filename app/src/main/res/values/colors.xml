@@ -24,4 +24,6 @@
     <color name="accent">#ffffff</color>
     <color name="iron">#CCCCCC</color>
     <color name="colorPrimaryDarker">#00328b</color>
+    <color name="home_status">#77afd2</color>
+    <color name="dark_light_blue">#c0e5f5</color>
 </resources>

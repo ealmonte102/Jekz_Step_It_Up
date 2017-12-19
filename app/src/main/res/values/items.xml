@@ -6,333 +6,333 @@
         <item>"Blue Cap"</item>
         <item>hat</item>
         <item>false</item>
-        <item>150</item>
+        <item>5</item>
 
         <item>@drawable/cowboy_0</item>
         <item>"Cowboy Hat"</item>
         <item>hat</item>
         <item>false</item>
-        <item>100</item>
+        <item>10</item>
 
         <item>@drawable/heli_animation</item>
         <item>"Helihat"</item>
         <item>hat</item>
         <item>true</item>
-        <item>800</item>
+        <item>15</item>
 
         <item>@drawable/paperbag_0</item>
         <item>"Paper Bag"</item>
         <item>hat</item>
         <item>false</item>
-        <item>120</item>
+        <item>20</item>
 
         <item>@drawable/santa_0</item>
         <item>"Santa Hat"</item>
         <item>hat</item>
         <item>false</item>
-        <item>300</item>
+        <item>25</item>
 
         <item>@drawable/snorkel_animation</item>
         <item>"Snorkel"</item>
         <item>hat</item>
         <item>true</item>
-        <item>100</item>
+        <item>30</item>
 
         <item>@drawable/jesterhat_0</item>
         <item>"Jester Hat"</item>
         <item>hat</item>
         <item>false</item>
-        <item>100</item>
+        <item>10</item>
 
         <item>@drawable/skullcapred_0</item>
         <item>"Red Skullcap"</item>
         <item>hat</item>
         <item>false</item>
-        <item>100</item>
+        <item>40</item>
 
         <item>@drawable/skullcapblue_0</item>
         <item>"Blue Skullcap"</item>
         <item>hat</item>
         <item>false</item>
-        <item>100</item>
+        <item>45</item>
 
         <item>@drawable/skullcapgreen_0</item>
         <item>"Green Skullcap"</item>
         <item>hat</item>
         <item>false</item>
-        <item>100</item>
+        <item>50</item>
 
         <item>@drawable/skullcapsanta_0</item>
         <item>"Santa Skullcap"</item>
         <item>hat</item>
         <item>false</item>
-        <item>100</item>
+        <item>55</item>
 
         <item>@drawable/spotpjshirtpink_animation</item>
         <item>"Pink Spotted PJ's"</item>
         <item>shirt</item>
         <item>true</item>
-        <item>300</item>
+        <item>60</item>
 
 
         <item>@drawable/spotpjshirtyellow_animation</item>
         <item>"Yellow Spotted PJ's</item>
         <item>shirt</item>
         <item>true</item>
-        <item>1500</item>
+        <item>65</item>
 
         <item>@drawable/spotpjshirtblue_animation</item>
         <item>"Blue Spotted PJ's</item>
         <item>shirt</item>
         <item>true</item>
-        <item>1000</item>
+        <item>70</item>
 
         <item>@drawable/blackdeviltshirt_animation</item>
         <item>"Black Devil T-Shirt</item>
         <item>shirt</item>
         <item>true</item>
-        <item>3200</item>
+        <item>75</item>
 
 
         <item>@drawable/bluesuntshirt_animation</item>
         <item>"Blue Sun T-Shirt</item>
         <item>shirt</item>
         <item>true</item>
-        <item>3200</item>
+        <item>80</item>
 
         <item>@drawable/dressshirt_animation</item>
         <item>"Dress Shirt</item>
         <item>shirt</item>
         <item>true</item>
-        <item>5000</item>
+        <item>10</item>
 
         <item>@drawable/stripepjshirtblue_animation</item>
         <item>"Striped Blue PJ's</item>
         <item>shirt</item>
         <item>true</item>
-        <item>1200</item>
+        <item>90</item>
 
         <item>@drawable/stripepjshirtpink_animation</item>
         <item>"Striped Pink PJ's</item>
         <item>shirt</item>
         <item>true</item>
-        <item>900</item>
+        <item>95</item>
 
         <item>@drawable/stripepjshirtyellow_animation</item>
         <item>"Striped Yellow PJ's</item>
         <item>shirt</item>
         <item>true</item>
-        <item>900</item>
+        <item>100</item>
 
         <item>@drawable/whitetshirt_animation</item>
         <item>"White Shirt</item>
         <item>shirt</item>
         <item>true</item>
-        <item>900</item>
+        <item>105</item>
 
         <item>@drawable/dressred_animation</item>
         <item>"Red Ribbon Dress</item>
         <item>shirt</item>
         <item>true</item>
-        <item>900</item>
+        <item>110</item>
 
         <item>@drawable/dressorange_animation</item>
         <item>"Orange Dress</item>
         <item>shirt</item>
         <item>true</item>
-        <item>900</item>
+        <item>10</item>
 
         <item>@drawable/dressgreen_animation</item>
         <item>"Green Flower Dress</item>
         <item>shirt</item>
         <item>true</item>
-        <item>900</item>
+        <item>120</item>
 
         <item>@drawable/dresspurple_animation</item>
         <item>"Purple Ribbon Dress</item>
         <item>shirt</item>
         <item>true</item>
-        <item>900</item>
+        <item>10</item>
 
         <item>@drawable/spotpjpantspink_0</item>
         <item>"Pink Spotted PJ's"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>130</item>
 
         <item>@drawable/stripepjpantspink_0</item>
         <item>"Pink Striped PJ's"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>135</item>
 
         <item>@drawable/spotpjpantsblue_0</item>
         <item>"Blue Spotted PJ's"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>140</item>
 
         <item>@drawable/stripepjpantsblue_0</item>
         <item>"Blue Stripedd PJ's"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>145</item>
 
         <item>@drawable/spotpjpantsyellow_0</item>
         <item>"Beige Spotted PJ's"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>150</item>
 
         <item>@drawable/stripepjpantsyellow_0</item>
         <item>"Beige Striped PJ's"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>155</item>
 
         <item>@drawable/jeans_0</item>
         <item>"Blue Jeans"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>160</item>
 
         <item>@drawable/dresspants_0</item>
         <item>"Dress Pants"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>10</item>
 
         <item>@drawable/runningshortsblue_0</item>
         <item>"Blue Running Shorts"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>170</item>
 
         <item>@drawable/runningshortsgray_0</item>
         <item>"Gray Running Shorts"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>175</item>
 
         <item>@drawable/sweatpantsblue_0</item>
         <item>"Blue Sweat Pants"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>10</item>
 
         <item>@drawable/sweatpantsgray_0</item>
         <item>"Gray Sweat Pants"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>190</item>
 
         <item>@drawable/sweatpantsred_0</item>
         <item>"Red Sweat Pants"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>195</item>
 
         <item>@drawable/sweatpantsbrown_0</item>
         <item>"Brown Sweat Pants"</item>
         <item>pants</item>
         <item>false</item>
-        <item>300</item>
+        <item>200</item>
 
         <item>@drawable/boots_0</item>
         <item>"Boots"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>300</item>
+        <item>205</item>
 
         <item>@drawable/sandal_0</item>
         <item>"Sandals"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>300</item>
+        <item>210</item>
 
         <item>@drawable/flipflop_0</item>
         <item>"Blue Flip Flops"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>300</item>
+        <item>215</item>
 
         <item>@drawable/stocking_0</item>
         <item>"Stockings"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>300</item>
+        <item>220</item>
 
         <item>@drawable/sneaker_0</item>
         <item>"Sneakers"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>300</item>
+        <item>225</item>
 
         <item>@drawable/slipperblue_0</item>
         <item>"Blue Slippers"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>300</item>
+        <item>230</item>
 
         <item>@drawable/slipperred_0</item>
         <item>"Red Slippers"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>300</item>
+        <item>235</item>
 
         <item>@drawable/slippergreen_0</item>
         <item>"Green Slippers"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>300</item>
+        <item>240</item>
 
         <item>@drawable/slippershark_0</item>
         <item>"Shark Slippers"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>300</item>
+        <item>245</item>
 
         <item>@drawable/slipperduck_0</item>
         <item>"Duck Slippers"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>300</item>
+        <item>250</item>
 
         <item>@drawable/slipperbunny_0</item>
         <item>"Bunny Slippers"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>300</item>
+        <item>255</item>
 
         <item>@drawable/highheels_0</item>
         <item>"High Heels"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>400</item>
+        <item>260</item>
 
         <item>@drawable/catears_0</item>
         <item>"Cat Ears"</item>
         <item>hat</item>
         <item>false</item>
-        <item>400</item>
+        <item>265</item>
 
         <item>@drawable/bunnyears_0</item>
         <item>"Bunny Ears"</item>
         <item>hat</item>
         <item>false</item>
-        <item>400</item>
+        <item>10</item>
 
         <item>@drawable/raceshoesred_0</item>
         <item>"Red Racing Shoes"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>400</item>
+        <item>275</item>
 
         <item>@drawable/raceshoesblue_0</item>
         <item>"Blue Racing Shoes"</item>
         <item>shoes</item>
         <item>false</item>
-        <item>400</item>
+        <item>280</item>
     </array>
     <array name="misc">
         <item>0</item>
