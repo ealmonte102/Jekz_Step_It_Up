@@ -106,7 +106,6 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
     @Override
     public void logout() {
         endSession();
-
         loginManager.logout(new LoginManager.LogoutCallback() {
             @Override
             public void onLogout(boolean logoutSuccessful) {
@@ -153,6 +152,7 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
 
     @Override
     public void onViewDetached() {
+        sessionSaver.sendStoredSessions();
         stepCounter.removeSessionListener(this);
         this.view = null;
     }
