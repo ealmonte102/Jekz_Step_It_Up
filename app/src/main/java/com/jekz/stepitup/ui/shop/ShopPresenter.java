@@ -3,11 +3,12 @@ package com.jekz.stepitup.ui.shop;
 import android.util.Log;
 
 import com.jekz.stepitup.AvatarRepo;
+import com.jekz.stepitup.customview.AvatarImage;
 import com.jekz.stepitup.data.request.LoginManager;
+import com.jekz.stepitup.data.request.RequestString;
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
-import com.jekz.stepitup.ui.friends.AvatarImage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -372,8 +373,7 @@ public class ShopPresenter implements Presenter,
         Log.d(TAG, "Current session cookie: " + session);
         ShopRequest shopRequest = new ShopRequest(postData, session);
         shopRequest.delegate = this;
-        shopRequest.execute("https://jekz.herokuapp.com/api/db/update");
+        shopRequest.execute(RequestString.getURL() + "/api/db/update");
     }
-
 
 }

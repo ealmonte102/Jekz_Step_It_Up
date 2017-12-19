@@ -3,6 +3,8 @@ package com.jekz.stepitup.ui.shop;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.jekz.stepitup.data.request.RequestString;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +16,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by Owner on 12/3/2017.
@@ -40,57 +44,113 @@ public class ShopRequest extends AsyncTask<String, Void, JSONObject> {
             URL url = new URL(params[0]);
 
             // Create the urlConnection
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            if (RequestString.isLocal()) {
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-            urlConnection.setDoInput(true);
-            urlConnection.setDoOutput(true);
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
 
-            urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Cookie", session);
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestProperty("Cookie", session);
 
-            // Send the post body
-            if (this.postData != null) {
-                OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
-                writer.write(postData.toString());
-                writer.flush();
-            }
-
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
-            //receives bytes from server
-            LinkedList<Byte> bytes = new LinkedList<Byte>();
-            int len;
-            byte[] buffer = new byte[4096];
-            while (-1 != (len = in.read(buffer))) {
-                for (int i = 0; i < len; i++) {
-                    bytes.add(buffer[i]);
+                // Send the post body
+                if (this.postData != null) {
+                    OutputStreamWriter writer = new OutputStreamWriter(urlConnection
+                            .getOutputStream());
+                    writer.write(postData.toString());
+                    writer.flush();
                 }
+
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                //receives bytes from server
+                LinkedList<Byte> bytes = new LinkedList<Byte>();
+                int len;
+                byte[] buffer = new byte[4096];
+                while (-1 != (len = in.read(buffer))) {
+                    for (int i = 0; i < len; i++) {
+                        bytes.add(buffer[i]);
+                    }
+                }
+
+                //convert byte arraylist to array
+                int size = bytes.size();
+                byte[] b = new byte[size];
+                for (int i = 0; i < size; i++) {
+                    b[i] = bytes.removeFirst();
+                }
+
+                String jsonStr = new String(b, StandardCharsets.UTF_8);
+
+                JSONArray resultArray;
+                JSONObject resultObject;
+
+                try {
+                    //resultArray = new JSONArray(jsonStr);
+                    resultObject = new JSONObject(jsonStr);
+                } catch (JSONException e) {
+                    //resultArray = new JSONArray("[" + jsonStr + "]")
+                    resultObject = new JSONObject(jsonStr);
+                }
+
+
+                return resultObject;
+                //return resultArray;
+            } else {
+                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
+
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestProperty("Cookie", session);
+
+                // Send the post body
+                if (this.postData != null) {
+                    OutputStreamWriter writer = new OutputStreamWriter(urlConnection
+                            .getOutputStream());
+                    writer.write(postData.toString());
+                    writer.flush();
+                }
+
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                //receives bytes from server
+                LinkedList<Byte> bytes = new LinkedList<Byte>();
+                int len;
+                byte[] buffer = new byte[4096];
+                while (-1 != (len = in.read(buffer))) {
+                    for (int i = 0; i < len; i++) {
+                        bytes.add(buffer[i]);
+                    }
+                }
+
+                //convert byte arraylist to array
+                int size = bytes.size();
+                byte[] b = new byte[size];
+                for (int i = 0; i < size; i++) {
+                    b[i] = bytes.removeFirst();
+                }
+
+                String jsonStr = new String(b, StandardCharsets.UTF_8);
+
+                JSONArray resultArray;
+                JSONObject resultObject;
+
+                try {
+                    //resultArray = new JSONArray(jsonStr);
+                    resultObject = new JSONObject(jsonStr);
+                } catch (JSONException e) {
+                    //resultArray = new JSONArray("[" + jsonStr + "]")
+                    resultObject = new JSONObject(jsonStr);
+                }
+
+
+                return resultObject;
+                //return resultArray;
             }
-
-            //convert byte arraylist to array
-            int size = bytes.size();
-            byte[] b = new byte[size];
-            for (int i = 0; i < size; i++) {
-                b[i] = bytes.removeFirst();
-            }
-
-            String jsonStr = new String(b, StandardCharsets.UTF_8);
-
-            JSONArray resultArray;
-            JSONObject resultObject;
-
-            try {
-                //resultArray = new JSONArray(jsonStr);
-                resultObject = new JSONObject(jsonStr);
-            } catch (JSONException e) {
-                //resultArray = new JSONArray("[" + jsonStr + "]")
-                resultObject = new JSONObject(jsonStr);
-            }
-
-
-            return resultObject;
-            //return resultArray;
 
 
         } catch (Exception e) {

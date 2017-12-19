@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:lifestattext="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -42,8 +41,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            lifestattext:bottomtext="1:05:32"
-            lifestattext:toptext="Duration" />
+            app:toptext="Total Time" />
 
         <com.jekz.stepitup.customview.LifeStatText
             android:id="@+id/lifestat_steps"
@@ -55,8 +53,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/lifestat_duration"
             app:layout_constraintTop_toTopOf="parent"
-            lifestattext:bottomtext="22,000"
-            lifestattext:toptext="Steps" />
+            app:toptext="Total Steps" />
 
         <com.jekz.stepitup.customview.LifeStatText
             android:id="@+id/lifestat_calories"
@@ -68,8 +65,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/lifestat_steps"
             app:layout_constraintTop_toTopOf="parent"
-            lifestattext:bottomtext="15,000"
-            lifestattext:toptext="Calories" />
+            app:toptext="Total Calories" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -101,7 +97,7 @@
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/second_chart"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="600dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/third_chart"
@@ -110,7 +106,7 @@
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/third_chart"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="600dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"

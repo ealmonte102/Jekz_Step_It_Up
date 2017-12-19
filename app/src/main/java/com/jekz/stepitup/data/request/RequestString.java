@@ -6,7 +6,7 @@ package com.jekz.stepitup.data.request;
 
 public class RequestString {
 
-    private static final String BASE_URL = "localhost:3000";
+    private static final String BASE_URL = "http://10.0.3.2:3000";
     private static final String BASE_HEROKU_URL = "https://jekz.herokuapp.com";
     private static boolean localMode = false;
 
@@ -14,11 +14,7 @@ public class RequestString {
         return localMode ? BASE_URL : BASE_HEROKU_URL;
     }
 
-    public static boolean isLocalMode() {
+    public static boolean isLocal() {
         return localMode;
-    }
-
-    public static void switchMode() {
-        localMode = !localMode;
     }
 }

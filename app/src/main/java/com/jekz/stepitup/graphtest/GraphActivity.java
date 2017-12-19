@@ -20,6 +20,7 @@ import com.jekz.stepitup.customview.LifeStatText;
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
+import com.jekz.stepitup.data.request.RequestString;
 import com.jekz.stepitup.ui.home.HomeActivity;
 import com.jekz.stepitup.ui.shop.AsyncResponse;
 import com.jekz.stepitup.ui.shop.ShopRequest;
@@ -57,6 +58,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
         mChart = findViewById(R.id.first_chart);
@@ -84,7 +86,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
             //postData.put("userid", 1);
         } catch (JSONException e) {e.printStackTrace();}
         ShopRequest user_data = new ShopRequest(postData, session);
-        user_data.execute("https://jekz.herokuapp.com/api/db/retrieve");
+        user_data.execute(RequestString.getURL() + "/api/db/retrieve");
 
         user_data.delegate = new AsyncResponse() {
             //user_data.delegate = new AsyncResponse() {
@@ -167,7 +169,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
             postData2.put("date", currentDateandTime);
         } catch (JSONException e) {e.printStackTrace();}
         ShopRequest session_data = new ShopRequest(postData2, session);
-        session_data.execute("https://jekz.herokuapp.com/api/db/retrieve");
+        session_data.execute(RequestString.getURL() + "/api/db/retrieve");
 
         session_data.delegate = new AsyncResponse() {
             //session_data.delegate = new AsyncResponse() {
@@ -417,7 +419,6 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
 
     protected void writeTotalTimeToTextView(int total_time, int total_sessions) {
 
-        durationText.setTopText("Total Time");
         if (total_time == 0 || total_sessions == 0) {
             durationText.setBottomText(
                     "Lifetime total: 0 minutes" + "\n" + "Lifetime average: 0 minutes");
@@ -430,7 +431,6 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
 
     protected void writeStepsToTextView(int total_steps, int total_sessions) {
 
-        stepsText.setTopText("Total steps");
 
         if (total_steps == 0 || total_sessions == 0) {
             stepsText.setBottomText("Lifetime total: 0 steps" + "\n" + "Lifetime average: 0 steps");
@@ -443,7 +443,6 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
 
     protected void writeCaloriesToTextView(int weight, int total_time, int total_sessions) {
 
-        caloriesText.setTopText("Total Calories");
 
         if (total_time == 0 || total_sessions == 0) {
             caloriesText.setBottomText("Estimated lifetime total: 0 calories" + "\n" +

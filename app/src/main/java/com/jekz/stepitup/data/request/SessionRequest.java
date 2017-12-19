@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -43,33 +44,64 @@ public class SessionRequest extends AsyncTask<String, Integer, String> {
         try {
             URL url = new URL(strings[0]);
 
-            HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-            urlConnection.setDoOutput(true);
-            urlConnection.setDoInput(true);
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            urlConnection.setRequestProperty("Cookie", sessionId);
-            //printHttpsCert(urlConnection);
-            OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream());
-            JSONObject data = new JSONObject();
-            data.put("action", "sessions");
-            data.put("start_time", startTime);
-            data.put("end_time", endTime);
-            data.put("steps", steps);
-            out.write(data.toString());
-            out.flush();
-            out.close();
+            if (RequestString.isLocal()) {
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setDoOutput(true);
+                urlConnection.setDoInput(true);
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                urlConnection.setRequestProperty("Cookie", sessionId);
+                //printHttpsCert(urlConnection);
+                OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream());
+                JSONObject data = new JSONObject();
+                data.put("action", "sessions");
+                data.put("start_time", startTime);
+                data.put("end_time", endTime);
+                data.put("steps", steps);
+                out.write(data.toString());
+                out.flush();
+                out.close();
 
 
-            StringBuilder builder = new StringBuilder();
-            InputStream is;
-            is = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String inputLine;
-            while ((inputLine = br.readLine()) != null) {
-                builder.append(inputLine).append("\n");
+                StringBuilder builder = new StringBuilder();
+                InputStream is;
+                is = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
+                    builder.append(inputLine).append("\n");
+                }
+                return builder.toString();
+            } else {
+                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+                urlConnection.setDoOutput(true);
+                urlConnection.setDoInput(true);
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                urlConnection.setRequestProperty("Cookie", sessionId);
+                //printHttpsCert(urlConnection);
+                OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream());
+                JSONObject data = new JSONObject();
+                data.put("action", "sessions");
+                data.put("start_time", startTime);
+                data.put("end_time", endTime);
+                data.put("steps", steps);
+                out.write(data.toString());
+                out.flush();
+                out.close();
+
+
+                StringBuilder builder = new StringBuilder();
+                InputStream is;
+                is = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
+                    builder.append(inputLine).append("\n");
+                }
+                return builder.toString();
             }
-            return builder.toString();
+
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }

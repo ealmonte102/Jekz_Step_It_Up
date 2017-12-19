@@ -1,4 +1,4 @@
-package com.jekz.stepitup.ui.friends;
+package com.jekz.stepitup.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,15 +10,13 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 
 import com.jekz.stepitup.R;
-import com.jekz.stepitup.model.item.Item;
-import com.jekz.stepitup.ui.shop.ShopPresenter;
 
 /**
  * Created by evanalmonte on 12/13/17.
  */
 
 public class AvatarImage extends ConstraintLayout {
-    private static final String TAG = ShopPresenter.class.getName();
+    private static final String TAG = AvatarImage.class.getName();
 
     ImageView modelImage;
     ImageView hatImage;
@@ -57,25 +55,6 @@ public class AvatarImage extends ConstraintLayout {
 
     public AvatarImage(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public static AvatarPart getFromItem(Item.Item_Type type) {
-        AvatarPart part = null;
-        switch (type) {
-            case HAT:
-                part = AvatarPart.HAT;
-                break;
-            case SHIRT:
-                part = AvatarPart.SHIRT;
-                break;
-            case PANTS:
-                part = AvatarPart.PANTS;
-                break;
-            case SHOES:
-                part = AvatarPart.SHOES;
-        }
-
-        return part;
     }
 
     public void setAvatarPartImage(AvatarPart part, int partID) {

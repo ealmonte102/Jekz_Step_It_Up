@@ -82,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/topCL"
         app:layout_constraintVertical_weight="10">
 
-        <com.jekz.stepitup.ui.friends.AvatarImage
+        <com.jekz.stepitup.customview.AvatarImage
             android:id="@+id/avatar_image_home"
             android:layout_width="117dp"
             android:layout_height="match_parent"

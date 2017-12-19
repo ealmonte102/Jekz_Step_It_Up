@@ -16,13 +16,13 @@ import android.widget.ToggleButton;
 
 import com.jekz.stepitup.JekzApplication;
 import com.jekz.stepitup.R;
+import com.jekz.stepitup.customview.AvatarImage;
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.graphtest.GraphActivity;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.ManualStepCounter;
-import com.jekz.stepitup.ui.friends.AvatarImage;
 import com.jekz.stepitup.ui.friends.FriendActivity;
 import com.jekz.stepitup.ui.login.LoginActivity;
 import com.jekz.stepitup.ui.shop.ShopActivity;
@@ -32,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.jekz.stepitup.ui.friends.AvatarImage.AvatarPart;
+import static com.jekz.stepitup.customview.AvatarImage.AvatarPart;
 
 public class HomeActivity extends AppCompatActivity implements HomeContract.View {
 

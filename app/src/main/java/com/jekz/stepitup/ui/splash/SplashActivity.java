@@ -13,6 +13,7 @@ import com.jekz.stepitup.data.request.CookieRequest;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.data.request.LoginRequest;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
+import com.jekz.stepitup.data.request.RequestString;
 import com.jekz.stepitup.ui.home.HomeActivity;
 import com.jekz.stepitup.ui.login.LoginActivity;
 
@@ -56,10 +57,10 @@ public class SplashActivity extends Activity {
 
                             }
                         });
-                request.execute("https://jekz.herokuapp.com/login");
+                request.execute(RequestString.getURL() + "/login");
             }
         });
-        cookieRequest.execute("https://jekz.herokuapp.com/");
+        cookieRequest.execute(RequestString.getURL() + "/");
     }
 
     public void testRegister() {

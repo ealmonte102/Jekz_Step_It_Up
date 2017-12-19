@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.jekz.stepitup.R;
 import com.jekz.stepitup.adapter.FriendsListRecyclerAdapter;
+import com.jekz.stepitup.customview.AvatarImage;
 import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.model.item.ItemInteractor;

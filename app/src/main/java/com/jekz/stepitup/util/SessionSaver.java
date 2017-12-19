@@ -5,6 +5,7 @@ import android.util.Log;
 import com.jekz.stepitup.AvatarRepo;
 import com.jekz.stepitup.data.LoginPreferences;
 import com.jekz.stepitup.data.SharedPrefsManager;
+import com.jekz.stepitup.data.request.RequestString;
 import com.jekz.stepitup.data.request.SessionRequest;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.SessionStepCounter;
@@ -81,9 +82,12 @@ public final class SessionSaver implements SessionStepCounter.SessionListener {
 
     public void sendStoredSessions() {
         String sessions = sharedPrefs.getString(SharedPrefsManager.Key.STEP_DATA);
-        if (sessions == null || sessions.isEmpty()) { return; }
+        if (sessions == null || sessions.isEmpty()) {
+            Log.d(TAG, "No stored sessions to save");
+            return;
+        }
         String[] sessionArray = sessions.split(";");
-        Log.d(TAG, "Stored sessions: " + sessions);
+        Log.d(TAG, "Session list(Before): " + sessions);
         String[] splitSession;
         String startDate;
         String endDate;
@@ -114,18 +118,20 @@ public final class SessionSaver implements SessionStepCounter.SessionListener {
                                 Log.d(TAG, "Error, please check formatting of request");
                                 break;
                             case NETWORK_ERROR:
-                                Log.d(TAG, "Network error, saving session");
+                                Log.d(TAG, "Network error, could not save session");
                                 break;
                         }
                     }
                 });
-        request.execute("https://jekz.herokuapp.com/api/db/update");
+        request.execute(RequestString.getURL() + "/api/db/update");
     }
 
     private void removeSessionFromPrefs(String sessionToRemove) {
         String session = sharedPrefs.getString(SharedPrefsManager.Key.STEP_DATA);
         String newStoredSessions = session.replaceFirst(Pattern.quote(sessionToRemove + ";"), "");
-        Log.d(TAG, newStoredSessions);
         sharedPrefs.put(SharedPrefsManager.Key.STEP_DATA, newStoredSessions);
+
+        Log.d(TAG, "Session list(After): " + sharedPrefs.getString(SharedPrefsManager.Key
+                .STEP_DATA));
     }
 }

@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequestCallback {
     private static final String TAG = RemoteLoginModel.class.getName();
-    private final static String COOKIE_URL = "https://jekz.herokuapp.com";
+    private final static String COOKIE_URL = RequestString.getURL();
     private final static String LOGIN_URL = COOKIE_URL + "/login";
     private LoginPreferences loginPreferences;
     private LoginCallback callback;

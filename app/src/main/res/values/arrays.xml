@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="title_sizes">
-        <item>10sp</item>
-        <item>12sp</item>
-        <item>15sp</item>
+        <item>17sp</item>
         <item>18sp</item>
     </array>
     <array name="stat_sizes">
-        <item>8sp</item>
-        <item>9sp</item>
         <item>10sp</item>
         <item>12sp</item>
         <item>15sp</item>

@@ -3,7 +3,9 @@ package com.jekz.stepitup.ui.friends;
 import android.util.Log;
 
 import com.jekz.stepitup.R;
+import com.jekz.stepitup.customview.AvatarImage;
 import com.jekz.stepitup.data.request.LoginManager;
+import com.jekz.stepitup.data.request.RequestString;
 import com.jekz.stepitup.model.friend.Friend;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.ui.shop.AsyncResponse;
@@ -141,7 +143,7 @@ public class FriendPresenter implements FriendContract.Presenter, FriendsListPre
 
         ShopRequest asyncTask = new ShopRequest(postData, session);
         asyncTask.delegate = this;
-        asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
+        asyncTask.execute(RequestString.getURL() + "/api/db/retrieve");
     }
 
     private void doSearchRequest(String searchName) {
@@ -156,7 +158,7 @@ public class FriendPresenter implements FriendContract.Presenter, FriendsListPre
 
         ShopRequest asyncTask = new ShopRequest(postData, session);
         asyncTask.delegate = this;
-        asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
+        asyncTask.execute(RequestString.getURL() + "/api/db/retrieve");
     }
 
     private void adjustFriends(String type, int id) {
@@ -173,7 +175,7 @@ public class FriendPresenter implements FriendContract.Presenter, FriendsListPre
 
         ShopRequest asyncTask = new ShopRequest(postData, session);
         asyncTask.delegate = this;
-        asyncTask.execute("https://jekz.herokuapp.com/api/db/update");
+        asyncTask.execute(RequestString.getURL() + "/api/db/update");
     }
 
     private void retrieveFriendEquip(int id) {
@@ -185,7 +187,7 @@ public class FriendPresenter implements FriendContract.Presenter, FriendsListPre
 
         ShopRequest asyncTask = new ShopRequest(postData, null);
         asyncTask.delegate = this;
-        asyncTask.execute("https://jekz.herokuapp.com/api/db/retrieve");
+        asyncTask.execute(RequestString.getURL() + "/api/db/retrieve");
     }
 
     @Override

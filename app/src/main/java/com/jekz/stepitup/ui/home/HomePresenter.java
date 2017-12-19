@@ -4,14 +4,15 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.jekz.stepitup.AvatarRepo;
+import com.jekz.stepitup.customview.AvatarImage;
 import com.jekz.stepitup.data.request.LoginManager;
+import com.jekz.stepitup.data.request.RequestString;
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.ManualStepCounter;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.SessionStepCounter;
-import com.jekz.stepitup.ui.friends.AvatarImage;
 import com.jekz.stepitup.ui.shop.ShopRequest;
 import com.jekz.stepitup.util.SessionSaver;
 
@@ -167,7 +168,7 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
 
         ShopRequest asyncTask2 = new ShopRequest(postData, session);
         asyncTask2.delegate = this;
-        asyncTask2.execute("https://jekz.herokuapp.com/api/db/retrieve");
+        asyncTask2.execute(RequestString.getURL() + "/api/db/retrieve");
     }
 
 
