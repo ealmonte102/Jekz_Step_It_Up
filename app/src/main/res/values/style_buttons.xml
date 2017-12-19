@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ButtonRipple" parent="Widget.AppCompat.Button.Borderless" />
+
+    <style name="Home.LogoutButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/friends_button</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+</resources>

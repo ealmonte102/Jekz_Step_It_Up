@@ -159,15 +159,18 @@
 
     <ImageButton
         android:id="@+id/button_shop_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/back_arrow"
+        android:layout_width="44dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="false"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:cropToPadding="false"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_arrow"
         app:layout_constraintBottom_toBottomOf="@+id/text_title"
         app:layout_constraintEnd_toStartOf="@+id/text_title"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left_margin"
-        app:layout_constraintTop_toTopOf="@id/text_title"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/text_title" />
 
     <LinearLayout
         android:id="@+id/button_box"
