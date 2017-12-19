@@ -11,7 +11,7 @@ import java.util.TimeZone;
  */
 
 public class Session {
-    private static final DateFormat df = new SimpleDateFormat("yyyy-dd-MM hh:mm:ss ZZZZZ",
+    private static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss ZZZZZ",
             Locale.US);
 
     static {
