@@ -48,7 +48,7 @@ public class SettingsListRecylerAdapter extends RecyclerView.Adapter<RecyclerVie
 
 
     public enum SettingType {
-        HEIGHT, WEIGHT, NAME, STEP_GOAL, GENDER
+        NAME, GENDER, HEIGHT, WEIGHT, STEP_GOAL
     }
 
     public interface SettingsListPresenter {
