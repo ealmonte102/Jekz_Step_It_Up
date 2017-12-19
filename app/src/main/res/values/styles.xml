@@ -48,7 +48,7 @@
 
     <!-- Friend Theme -->
     <style name="FriendTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/shop_background</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@android:color/black</item>

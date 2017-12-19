@@ -107,6 +107,7 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
     @Override
     public void logout() {
         endSession();
+        sessionSaver.sendStoredSessions();
         loginManager.logout(new LoginManager.LogoutCallback() {
             @Override
             public void onLogout(boolean logoutSuccessful) {

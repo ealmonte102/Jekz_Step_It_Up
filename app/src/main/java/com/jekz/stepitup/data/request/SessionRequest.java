@@ -111,7 +111,7 @@ public class SessionRequest extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result) {
         Log.d(TAG, result);
-        if (result.equals(SessionRequestResult.NETWORK_ERROR)) {
+        if (result.equals(SessionRequestResult.NETWORK_ERROR.name())) {
             callback.processResultOfSessionRequest(SessionRequestResult.NETWORK_ERROR);
         } else if (result.contains("success")) {
             callback.processResultOfSessionRequest(SessionRequestResult.SESSION_SAVED);

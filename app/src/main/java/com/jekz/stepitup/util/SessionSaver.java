@@ -66,12 +66,13 @@ public final class SessionSaver implements SessionStepCounter.SessionListener {
         return sharedPrefs.getBoolean(SharedPrefsManager.Key.COUNTING, false);
     }
 
-    public void storeSteps(int stepsToStore) {
+    private void storeSteps(int stepsToStore) {
         sharedPrefs.put(SharedPrefsManager.Key.STEPS_COUNTED, stepsToStore);
     }
 
     @Override
     public void sessionEnded(Session session) {
+        Log.d(TAG, session.toString());
         saveSession(session);
     }
 
@@ -88,12 +89,15 @@ public final class SessionSaver implements SessionStepCounter.SessionListener {
         }
         String[] sessionArray = sessions.split(";");
         Log.d(TAG, "Session list(Before): " + sessions);
-        String[] splitSession;
+        String[] splitSession = {};
         String startDate;
         String endDate;
         int totalNumOfSteps;
         for (String aSessionArray : sessionArray) {
-            splitSession = aSessionArray.split(",");
+            Log.d(TAG, aSessionArray == null ? "NULL" : aSessionArray);
+            if (aSessionArray != null) {
+                splitSession = aSessionArray.split(",");
+            }
             startDate = splitSession[0];
             endDate = splitSession[1];
             totalNumOfSteps = Integer.parseInt(splitSession[2]);
@@ -103,9 +107,8 @@ public final class SessionSaver implements SessionStepCounter.SessionListener {
 
     private void sendRequest(String startDate, String endDate, int stepCount, final String
             sessionToRemove) {
-        final String session = sharedPrefs.getString(SharedPrefsManager.Key.SESSION);
-        if (session.isEmpty()) { return; }
-        SessionRequest request = new SessionRequest(session, startDate, endDate, stepCount, new
+        final String sessionID = sharedPrefs.getString(SharedPrefsManager.Key.SESSION);
+        SessionRequest request = new SessionRequest(sessionID, startDate, endDate, stepCount, new
                 SessionRequest.SessionRequestCallback() {
                     @Override
                     public void processResultOfSessionRequest(SessionRequest.SessionRequestResult
