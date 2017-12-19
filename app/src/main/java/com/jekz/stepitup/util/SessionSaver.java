@@ -125,6 +125,11 @@ public final class SessionSaver implements SessionStepCounter.SessionListener {
                                 break;
                         }
                     }
+
+                    @Override
+                    public void processCurrencyUpdate(int x) {
+                        avatarRepo.getAvatar().setCurrency(x);
+                    }
                 });
         request.execute(RequestString.getURL() + "/api/db/update");
     }
