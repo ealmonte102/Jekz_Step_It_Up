@@ -17,7 +17,7 @@ public class Avatar {
     private Set<Item> inventory = new HashSet<>();
     private int currency;
 
-    private ArrayList<AvatarObserver> observers;
+    private ArrayList<AvatarObserver> observers = new ArrayList<>();
 
     public String getModel() {
         return model;
@@ -53,12 +53,12 @@ public class Avatar {
 
     public void setCurrency(int x) {
         currency = x;
-        notifyCurrencyChange();
+        notifyCurrencyChange(x);
     }
 
-    private void notifyCurrencyChange() {
+    private void notifyCurrencyChange(int x) {
         for (AvatarObserver observer : observers) {
-            observer.onCurrencyChanged();
+            observer.onCurrencyChanged(x);
         }
     }
 
@@ -140,6 +140,6 @@ public class Avatar {
     }
 
     public interface AvatarObserver {
-        void onCurrencyChanged();
+        void onCurrencyChanged(int x);
     }
 }

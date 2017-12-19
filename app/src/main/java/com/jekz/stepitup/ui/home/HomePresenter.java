@@ -13,6 +13,7 @@ import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.ManualStepCounter;
 import com.jekz.stepitup.model.step.Session;
 import com.jekz.stepitup.model.step.SessionStepCounter;
+import com.jekz.stepitup.ui.shop.AsyncResponse;
 import com.jekz.stepitup.ui.shop.ShopRequest;
 import com.jekz.stepitup.util.SessionSaver;
 
@@ -22,14 +23,15 @@ import org.json.JSONObject;
 
 import java.text.NumberFormat;
 
+import static com.jekz.stepitup.util.Formatter.formatSteps;
+
 
 /**
  * Created by evanalmonte on 12/10/17.
  */
 
-public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.ui.shop
-        .AsyncResponse,
-        SessionStepCounter.SessionListener {
+public class HomePresenter implements HomeContract.Presenter, AsyncResponse,
+        SessionStepCounter.SessionListener, Avatar.AvatarObserver {
     private static final String TAG = HomePresenter.class.getName();
     private ItemInteractor itemInteractor;
     private AvatarRepo repo = AvatarRepo.getInstance();
@@ -141,6 +143,7 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
     public void onViewAttached(HomeContract.View view) {
         this.view = view;
         stepCounter.addSessionListener(this);
+        repo.addRepoObserver(this);
         view.setCurrency("x" + NumberFormat.getInstance().format(repo.getAvatar().getCurrency()));
         view.setUsername(loginManager.getUsername());
         view.setSteps(formatSteps(sessionSaver.getCurrentSteps()));
@@ -156,6 +159,7 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
     public void onViewDetached() {
         sessionSaver.sendStoredSessions();
         stepCounter.removeSessionListener(this);
+        repo.removeRepoObserver(this);
         this.view = null;
     }
 
@@ -249,7 +253,11 @@ public class HomePresenter implements HomeContract.Presenter, com.jekz.stepitup.
         }
     }
 
-    private String formatSteps(int steps) {
-        return NumberFormat.getInstance().format(steps) + " steps";
+    @Override
+    public void onCurrencyChanged(int steps) {
+        if (view == null) { return; }
+        view.setCurrency(formatSteps(steps));
     }
+
+
 }

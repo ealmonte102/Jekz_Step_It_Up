@@ -21,12 +21,12 @@ import java.text.NumberFormat;
  */
 
 public class ShopPresenter implements Presenter,
-        com.jekz.stepitup.ui.shop.AsyncResponse {
+        AsyncResponse, Avatar.AvatarObserver {
     private static final String TAG = ShopPresenter.class.getName();
 
     private ItemInteractor itemInteractor;
     private ShopView shopView;
-    private Avatar avatar;
+    private AvatarRepo repo = AvatarRepo.getInstance();
     private LoginManager loginManager;
     private NumberFormat numberFormat = NumberFormat.getInstance();
 
@@ -34,10 +34,10 @@ public class ShopPresenter implements Presenter,
     ShopPresenter(ItemInteractor instance, LoginManager loginManager) {
         this.itemInteractor = instance;
         this.loginManager = loginManager;
-        avatar = AvatarRepo.getInstance().getAvatar();
     }
 
     void reloadImages() {
+        Avatar avatar = repo.getAvatar();
         Item hat = avatar.getHat();
         Item shirt = avatar.getShirt();
         Item pants = avatar.getPants();
@@ -67,6 +67,7 @@ public class ShopPresenter implements Presenter,
     }
 
     void reloadAnimations() {
+        Avatar avatar = repo.getAvatar();
         Item hat = avatar.getHat();
         Item shirt = avatar.getShirt();
         Item pants = avatar.getPants();
@@ -110,10 +111,11 @@ public class ShopPresenter implements Presenter,
     }
 
     boolean checkForItem(Item item) {
-        return avatar.hasItem(item);
+        return repo.getAvatar().hasItem(item);
     }
 
     void equipItem(Item item) {
+        Avatar avatar = repo.getAvatar();
         Item hat = avatar.getHat();
         Item shirt = avatar.getShirt();
         Item pants = avatar.getPants();
@@ -152,7 +154,7 @@ public class ShopPresenter implements Presenter,
     }
 
     void changeGender() {
-        String model = avatar.getModel().equals("male") ? "female" : "male";
+        String model = repo.getAvatar().getModel().equals("male") ? "female" : "male";
         updateItem(0, "gender", 0, 0, 0, 0, model);
     }
 
@@ -161,6 +163,7 @@ public class ShopPresenter implements Presenter,
     }
 
     void unequipItem(Item item) {
+        Avatar avatar = repo.getAvatar();
         Item hat = avatar.getHat();
         Item shirt = avatar.getShirt();
         Item pants = avatar.getPants();
@@ -201,22 +204,24 @@ public class ShopPresenter implements Presenter,
     @Override
     public void onViewAttached(ShopView view) {
         this.shopView = view;
-        shopView.setCurrencyText("x" + numberFormat.format(avatar.getCurrency()));
+        shopView.setCurrencyText("x" + numberFormat.format(repo.getAvatar().getCurrency()));
+        repo.addRepoObserver(this);
     }
 
     @Override
     public void onViewDetached() {
         this.shopView = null;
+        repo.removeRepoObserver(this);
     }
 
     boolean isItemEquipped(Item item) {
-        return avatar.isItemEquipped(item);
+        return repo.getAvatar().isItemEquipped(item);
     }
 
 
     @Override
     public void processFinish(JSONObject returnObject) {
-
+        Avatar avatar = repo.getAvatar();
         try {
             JSONArray output = returnObject.getJSONArray("rows");
             for (int i = 0; i < output.length(); i++) {
@@ -372,4 +377,8 @@ public class ShopPresenter implements Presenter,
         shopRequest.execute(RequestString.getURL() + "/api/db/update");
     }
 
+    @Override
+    public void onCurrencyChanged(int x) {
+        shopView.setCurrencyText("x" + numberFormat.format(x));
+    }
 }
