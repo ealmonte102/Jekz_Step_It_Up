@@ -11,7 +11,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.jekz.stepitup.R;
@@ -177,7 +176,6 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
 
     @OnClick(R.id.button_shop_back)
     public void backButtonClicked() {
-        Toast.makeText(this, "Back Button Pressed", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
