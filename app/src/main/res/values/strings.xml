@@ -35,4 +35,5 @@
     <string name="start_session">Start Session</string>
     <string name="end_session">End Session</string>
     <string name="profile">Profile</string>
+    <string name="graphs">Weekly Statistics</string>
 </resources>
