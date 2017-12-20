@@ -21,14 +21,6 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <!-- Shop screen theme. -->
-    <style name="ShopTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/shop_inventory_background</item>
-        <item name="colorPrimaryDark">@color/shop_dark_background</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@android:color/background_dark</item>
-    </style>
-
     <!-- Splash screen theme. -->
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
@@ -84,24 +76,13 @@
         <item name="colorPrimaryDark">#93aebd</item>
     </style>
 
-    <!--Home Theme -->
-    <style name="HomeTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/shop_inventory_background</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:colorBackground">@color/shop_background</item>
-        <item name="android:textColorPrimaryInverse">@color/iron</item>
-        <item name="android:textColorHint">#b14b4b4b</item>
-    </style>
-
     <style name="SettingsScreen" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/black</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:windowBackground">@color/shop_background</item>
-        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="colorControlNormal">@color/iron</item>
         <item name="colorControlActivated">@color/black</item>
         <item name="colorControlHighlight">@color/black</item>
