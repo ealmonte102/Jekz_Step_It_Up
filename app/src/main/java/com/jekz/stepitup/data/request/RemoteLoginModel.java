@@ -96,6 +96,7 @@ public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequest
         loginPreferences.put(SharedPrefsManager.Key.SESSION, sessionID);
         loginPreferences.put(SharedPrefsManager.Key.EXPIRE_DATE, expirationDate);
         loginPreferences.put(SharedPrefsManager.Key.USERNAME, username);
+        updateProfile(0, 0, 0, "male");
         callback.loginResult(LoginCallback.LoginResult.SUCCESS);
     }
 
@@ -109,5 +110,12 @@ public class RemoteLoginModel implements LoginManager, LoginRequest.LoginRequest
     public void networkError() {
         Log.d(TAG, "Network error");
         callback.loginResult(LoginCallback.LoginResult.NETWORK_ERROR);
+    }
+
+    private void updateProfile(int goal, int weight, int height, String gender) {
+        loginPreferences.put(SharedPrefsManager.Key.GOAL, goal);
+        loginPreferences.put(SharedPrefsManager.Key.WEIGHT, weight);
+        loginPreferences.put(SharedPrefsManager.Key.HEIGHT, height);
+        loginPreferences.put(SharedPrefsManager.Key.GENDER, gender);
     }
 }
