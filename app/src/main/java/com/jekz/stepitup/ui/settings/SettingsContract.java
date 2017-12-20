@@ -22,9 +22,20 @@ public interface SettingsContract {
 
         void showGoalPicker();
 
+        void showGenderPicker();
+
+        void reloadProfile();
     }
 
     interface Presenter extends BasePresenter<View> {
         void goBack();
+
+        void saveWeight(int weight);
+
+        void saveHeight(int feet, int inches);
+
+        void saveHeight(int cm);
+
+        void saveGoal(int goal);
     }
 }

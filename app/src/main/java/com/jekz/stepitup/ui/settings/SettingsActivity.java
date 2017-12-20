@@ -44,6 +44,14 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
     @BindView(R.id.numberpicker_settings_cm)
     NumberPicker centimeterNumberPicker;
 
+    @BindView(R.id.numberpicker_settings_goal)
+    NumberPicker goalNumberPicker;
+
+    @BindView(R.id.numberpicker_settings_weight)
+    NumberPicker weightNumberPicker;
+
+    SettingsListRecylerAdapter recylerAdapter;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -64,7 +72,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
         SettingsPresenter presenter = new SettingsPresenter(SharedPrefsManager.getInstance
                 (getApplicationContext()));
         this.presenter = presenter;
-        SettingsListRecylerAdapter recylerAdapter = new SettingsListRecylerAdapter(presenter);
+        recylerAdapter = new SettingsListRecylerAdapter(presenter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recylerAdapter);
         inchesNumberPicker.setMaxValue(12);
@@ -73,8 +81,14 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
         feetNumberPicker.setMaxValue(9);
         centimeterNumberPicker.setMaxValue(250);
         centimeterNumberPicker.setMinValue(0);
+        goalNumberPicker.setMaxValue(200000);
+        weightNumberPicker.setMaxValue(400);
+        weightNumberPicker.setMinValue(1);
+
         feetNumberPicker.setWrapSelectorWheel(false);
         inchesNumberPicker.setWrapSelectorWheel(false);
+        goalNumberPicker.setWrapSelectorWheel(false);
+        weightNumberPicker.setWrapSelectorWheel(false);
     }
 
 
@@ -121,13 +135,23 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
         goalLayout.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void showGenderPicker() {
+
+    }
+
+    @Override
+    public void reloadProfile() {
+        recylerAdapter.notifyDataSetChanged();
+    }
+
     private void useMetricHeight() {
         heightLayoutImperial.setVisibility(View.INVISIBLE);
         heightLayoutMetric.setVisibility(View.VISIBLE);
     }
 
     @OnClick({R.id.button_settings_tometric, R.id.button_settings_toimperial})
-    public void buttonClicked(View view) {
+    public void switchMetric(View view) {
         switch (view.getId()) {
             case R.id.button_settings_tometric:
                 useMetricHeight();
@@ -135,6 +159,25 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
             case R.id.button_settings_toimperial:
                 heightLayoutMetric.setVisibility(View.INVISIBLE);
                 heightLayoutImperial.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    @OnClick({R.id.button_settings_save_goal, R.id.button_settings_save_imperial, R.id
+            .button_settings_save_weight, R.id.button_settings_save_metric})
+    public void saveProfile(View view) {
+        switch (view.getId()) {
+            case R.id.button_settings_save_goal:
+                presenter.saveGoal(goalNumberPicker.getValue());
+                break;
+            case R.id.button_settings_save_imperial:
+                presenter.saveHeight(feetNumberPicker.getValue(), inchesNumberPicker.getValue());
+                break;
+            case R.id.button_settings_save_weight:
+                presenter.saveWeight(weightNumberPicker.getValue());
+                break;
+            case R.id.button_settings_save_metric:
+                presenter.saveHeight(centimeterNumberPicker.getValue());
                 break;
         }
     }

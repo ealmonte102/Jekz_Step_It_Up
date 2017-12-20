@@ -90,6 +90,6 @@ public class SharedPrefsManager implements LoginPreferences {
         EXPIRE_DATE,
         COUNTING,
         STEPS_COUNTED,
-        STEP_DATA
+        WEIGHT, HEIGHT, GOAL, GENDER, STEP_DATA
     }
 }
