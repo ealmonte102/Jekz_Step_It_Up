@@ -49,7 +49,7 @@
 
         <activity
             android:name=".ui.settings.SettingsActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/SettingsTheme">
         </activity>
     </application>
 

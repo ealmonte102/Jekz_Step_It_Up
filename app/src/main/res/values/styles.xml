@@ -78,4 +78,19 @@
         <item name="colorButtonNormal">@color/colorPrimary</item>
     </style>
 
+    <style name="SettingsTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:windowBackground">@color/shop_background</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="colorControlNormal">@color/iron</item>
+        <item name="colorControlActivated">@color/black</item>
+        <item name="colorControlHighlight">@color/black</item>
+        <item name="android:textColorHint">@color/iron</item>
+
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
+
 </resources>
