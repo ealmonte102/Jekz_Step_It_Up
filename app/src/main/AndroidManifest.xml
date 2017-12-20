@@ -35,7 +35,7 @@
         <activity
             android:name=".ui.friends.FriendActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/FriendTheme" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.shop.ShopActivity"
             android:theme="@style/AppTheme" />

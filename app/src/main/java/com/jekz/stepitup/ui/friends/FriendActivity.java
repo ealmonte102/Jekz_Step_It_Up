@@ -105,7 +105,7 @@ public class FriendActivity extends Activity implements FriendContract.View {
         }
     }
 
-    @OnClick(R.id.button_shop_back)
+    @OnClick(R.id.button_friend_back)
     public void backButtonClicked() {
         Toast.makeText(this, "Back Button Pressed", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, HomeActivity.class);

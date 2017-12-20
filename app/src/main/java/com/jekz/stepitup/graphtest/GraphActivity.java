@@ -263,8 +263,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         BarDataSet barDataSet = new BarDataSet(barEntries, "Session Length (Hours)");
 
         //bar formatting
-        barDataSet.setColor(Color.GREEN);
-        barDataSet.setValueTextColor(Color.GREEN);
+        barDataSet.setColor(Color.BLUE);
+        barDataSet.setValueTextColor(Color.BLACK);
 
         BarData barData = new BarData(barDataSet);
 
@@ -325,8 +325,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         BarDataSet barDataSet = new BarDataSet(barEntries, "Number of Steps");
 
         //bar formatting
-        barDataSet.setColor(Color.GREEN);
-        barDataSet.setValueTextColor(Color.GREEN);
+        barDataSet.setColor(Color.BLUE);
+        barDataSet.setValueTextColor(Color.BLACK);
 
         BarData barData = new BarData(barDataSet);
 
@@ -390,8 +390,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         BarDataSet barDataSet = new BarDataSet(barEntries, "Calories Burned");
 
         //bar formatting
-        barDataSet.setColor(Color.GREEN);
-        barDataSet.setValueTextColor(Color.GREEN);
+        barDataSet.setColor(Color.BLUE);
+        barDataSet.setValueTextColor(Color.BLACK);
 
         BarData barData = new BarData(barDataSet);
 
