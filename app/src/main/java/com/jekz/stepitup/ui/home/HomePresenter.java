@@ -4,6 +4,8 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.jekz.stepitup.customview.AvatarImage;
+import com.jekz.stepitup.data.LoginPreferences;
+import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.LoginManager;
 import com.jekz.stepitup.data.request.RequestString;
 import com.jekz.stepitup.model.avatar.Avatar;
@@ -40,13 +42,16 @@ public class HomePresenter implements HomeContract.Presenter, AsyncResponse,
     private LoginManager loginManager;
     private ManualStepCounter stepCounter;
     private SessionSaver sessionSaver;
+    private LoginPreferences loginPreferences;
 
     public HomePresenter(ItemInteractor itemInteractor, LoginManager loginManager,
-                         ManualStepCounter stepCounter, SessionSaver sessionSaver) {
+                         ManualStepCounter stepCounter, SessionSaver sessionSaver,
+                         LoginPreferences preferences) {
         this.itemInteractor = itemInteractor;
         this.loginManager = loginManager;
         this.stepCounter = stepCounter;
         this.sessionSaver = sessionSaver;
+        this.loginPreferences = preferences;
         stepCounter.addSessionListener(this);
         retrieveItem("get_items");
         retrieveItem("user_data");
@@ -214,6 +219,16 @@ public class HomePresenter implements HomeContract.Presenter, AsyncResponse,
                         int shirtid = q.getInt("shirt");
                         int pantsid = q.getInt("pants");
                         int shoesid = q.getInt("shoes");
+                        String height = q.getString("height");
+                        String weight = q.getString("height");
+                        String dailyGoal = q.getString("daily_goal");
+                        loginPreferences.put(SharedPrefsManager.Key.HEIGHT, height);
+                        loginPreferences.put(SharedPrefsManager.Key.WEIGHT, weight);
+                        if (dailyGoal != null) {
+                            loginPreferences.put(SharedPrefsManager.Key.GOAL,
+                                    dailyGoal);
+                        }
+                        loginPreferences.put(SharedPrefsManager.Key.GENDER, model);
                         Pair<Item, Integer> hat = itemInteractor.getItem(hatid);
                         Pair<Item, Integer> shirt = itemInteractor.getItem(shirtid);
                         Pair<Item, Integer> pants = itemInteractor.getItem(pantsid);

@@ -12,7 +12,7 @@ public interface SettingsContract {
 
         void hidesProgress();
 
-        void showMessage();
+        void showMessage(String s);
 
         void showHeightPicker();
 

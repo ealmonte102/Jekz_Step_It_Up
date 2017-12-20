@@ -108,7 +108,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
     }
 
     @Override
-    public void showMessage() {
+    public void showMessage(String s) {
 
     }
 

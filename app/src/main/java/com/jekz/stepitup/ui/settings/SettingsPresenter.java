@@ -30,12 +30,6 @@ public class SettingsPresenter implements SettingsContract.Presenter, SettingsLi
                                              SharedPrefsManager.Key.GOAL};
 
     public SettingsPresenter(LoginPreferences preferences) {
-        preferences.put(SharedPrefsManager.Key.USERNAME, "evanalmonte");
-        preferences.put(SharedPrefsManager.Key.GENDER, "male");
-        preferences.put(SharedPrefsManager.Key.HEIGHT, 67);
-        preferences.put(SharedPrefsManager.Key.WEIGHT, 145);
-        preferences.put(SharedPrefsManager.Key.GOAL, 20000);
-
         this.preferences = preferences;
     }
 
@@ -46,25 +40,25 @@ public class SettingsPresenter implements SettingsContract.Presenter, SettingsLi
 
     @Override
     public void saveWeight(int weight) {
-        preferences.put(SharedPrefsManager.Key.WEIGHT, weight);
+        preferences.put(SharedPrefsManager.Key.WEIGHT, String.valueOf(weight));
         view.reloadProfile();
     }
 
     @Override
     public void saveHeight(int feet, int inches) {
-        preferences.put(SharedPrefsManager.Key.HEIGHT, 12 * feet + inches);
+        preferences.put(SharedPrefsManager.Key.HEIGHT, String.valueOf(12 * feet + inches));
         view.reloadProfile();
     }
 
     @Override
     public void saveHeight(int cm) {
-        preferences.put(SharedPrefsManager.Key.HEIGHT, (int) (cm * .39));
+        preferences.put(SharedPrefsManager.Key.HEIGHT, String.valueOf((int) (cm * .39)));
         view.reloadProfile();
     }
 
     @Override
     public void saveGoal(int goal) {
-        preferences.put(SharedPrefsManager.Key.GOAL, goal);
+        preferences.put(SharedPrefsManager.Key.GOAL, String.valueOf(goal));
         view.reloadProfile();
     }
 
@@ -79,7 +73,7 @@ public class SettingsPresenter implements SettingsContract.Presenter, SettingsLi
         JSONObject postData = new JSONObject();
         try {
             postData.put("action", "set_daily_goal");
-            postData.put("daily_goal", preferences.getInt(SharedPrefsManager.Key.GOAL));
+            postData.put("daily_goal", preferences.getString(SharedPrefsManager.Key.GOAL, null));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -98,8 +92,8 @@ public class SettingsPresenter implements SettingsContract.Presenter, SettingsLi
         JSONObject postData = new JSONObject();
         try {
             postData.put("action", "update_user_info");
-            postData.put("weight", preferences.getInt(SharedPrefsManager.Key.WEIGHT));
-            postData.put("height", preferences.getInt(SharedPrefsManager.Key.HEIGHT));
+            postData.put("weight", preferences.getString(SharedPrefsManager.Key.WEIGHT, "0"));
+            postData.put("height", preferences.getString(SharedPrefsManager.Key.HEIGHT, "0"));
             postData.put("gender", preferences.getString(SharedPrefsManager.Key.GENDER));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -107,9 +101,14 @@ public class SettingsPresenter implements SettingsContract.Presenter, SettingsLi
         ShopRequest shopRequest = new ShopRequest(postData, preferences.getString
                 (SharedPrefsManager.Key.SESSION));
         shopRequest.delegate = new AsyncResponse() {
+            boolean success = false;
             @Override
             public void processFinish(JSONObject output) {
                 Log.d(TAG, output.toString());
+                if (!success) {
+                    success = true;
+                    view.showMessage("Successfully synced you're profile");
+                }
             }
         };
         shopRequest.execute(RequestString.getURL() + "/api/db/update");
@@ -148,25 +147,16 @@ public class SettingsPresenter implements SettingsContract.Presenter, SettingsLi
     public void onBindSettingsViewholderAtPosition(int position, SettingsListRecylerAdapter
             .SettingsRowView rowView) {
         Log.d("Type", DATA[position].name());
-        String data;
+        String data = String.valueOf(preferences.getString(DATA[position], "N/A"));
         switch (DATA[position]) {
-            case GENDER:
-                data = preferences.getString(DATA[position], "N/A");
-                break;
-            case USERNAME:
-                data = preferences.getString(DATA[position], "N/A");
-                break;
             case HEIGHT:
-                data = String.valueOf(preferences.getInt(DATA[position], 0));
-            {
-                if (data != "N/A") {
+                if (!data.equals("N/A")) {
                     int height = Integer.parseInt(data);
                     data = getFromattedHeight(height);
                 }
                 break;
-            }
-            default:
-                data = String.valueOf(preferences.getInt(DATA[position]));
+            case WEIGHT:
+                data = data + " lbs";
         }
         rowView.setDescriptionText(data);
         rowView.setTitleText(TITLES[position]);

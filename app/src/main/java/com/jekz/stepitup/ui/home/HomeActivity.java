@@ -82,12 +82,13 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
         ManualStepCounter stepCounter = ((JekzApplication) (getApplication())).getStepCounter();
         SessionSaver sessionSaver = ((JekzApplication) (getApplication())).getSessionSaver();
-        LoginManager loginManager = new RemoteLoginModel(SharedPrefsManager.getInstance
-                (getApplicationContext()));
+        SharedPrefsManager manager = SharedPrefsManager.getInstance(getApplicationContext());
+        LoginManager loginManager = new RemoteLoginModel(manager);
         presenter = new HomePresenter(ItemInteractor.getInstance(getResources()),
                 loginManager,
                 stepCounter,
-                sessionSaver);
+                sessionSaver,
+                manager);
         sessionButton.setOnCheckedChangeListener(checkedChangeListener);
     }
 
