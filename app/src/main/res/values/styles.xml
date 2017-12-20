@@ -86,8 +86,8 @@
 
     <!--Home Theme -->
     <style name="HomeTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/shop_background</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/shop_inventory_background</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:colorBackground">@color/shop_background</item>
@@ -97,7 +97,7 @@
 
     <style name="SettingsScreen" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">#93aebd</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/black</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:windowBackground">@color/shop_background</item>
