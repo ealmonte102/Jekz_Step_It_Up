@@ -107,6 +107,8 @@ public class RegisterRequest extends AsyncTask<String, Integer, String> {
             callback.processRegistration(RegisterResult.NETWORK_ERROR);
         } else if (result.contains("Error signing up")) {
             callback.processRegistration(RegisterResult.USERNAME_TAKEN);
+        } else if (result.contains("Username can only contain letters and digits")) {
+            callback.processRegistration(RegisterResult.INVALID_USERNAME);
         } else {
             callback.processRegistration(RegisterResult.SUCCESSFUL);
         }
@@ -117,6 +119,7 @@ public class RegisterRequest extends AsyncTask<String, Integer, String> {
 
         enum RegisterResult {
             USERNAME_TAKEN,
+            INVALID_USERNAME,
             SUCCESSFUL,
             NETWORK_ERROR
         }

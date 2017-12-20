@@ -65,6 +65,8 @@ public class SignupPresenter implements SignupContract.Presenter, RegisterReques
             case USERNAME_TAKEN:
                 view.showUsernameError("Username is already taken");
                 break;
+            case INVALID_USERNAME:
+                view.showUsernameError("Username can only contain letters and digits");
         }
     }
 }
