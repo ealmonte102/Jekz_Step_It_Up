@@ -31,17 +31,17 @@
             android:theme="@style/AppTheme.Dark.Gray" />
         <activity
             android:name=".graphtest.GraphActivity"
-            android:theme="@style/SettingsScreen" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.friends.FriendActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FriendTheme" />
         <activity
             android:name=".ui.shop.ShopActivity"
-            android:theme="@style/SettingsScreen" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.home.HomeActivity"
-            android:theme="@style/SettingsScreen" />
+            android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -49,7 +49,7 @@
 
         <activity
             android:name=".ui.settings.SettingsActivity"
-            android:theme="@style/SettingsScreen">
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 
