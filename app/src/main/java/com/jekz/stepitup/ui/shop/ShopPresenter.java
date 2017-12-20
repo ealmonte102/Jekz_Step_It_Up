@@ -3,7 +3,8 @@ package com.jekz.stepitup.ui.shop;
 import android.util.Log;
 
 import com.jekz.stepitup.customview.AvatarImage;
-import com.jekz.stepitup.data.request.LoginManager;
+import com.jekz.stepitup.data.LoginPreferences;
+import com.jekz.stepitup.data.SharedPrefsManager;
 import com.jekz.stepitup.data.request.RequestString;
 import com.jekz.stepitup.model.avatar.Avatar;
 import com.jekz.stepitup.model.avatar.AvatarRepo;
@@ -27,13 +28,13 @@ public class ShopPresenter implements Presenter,
     private ItemInteractor itemInteractor;
     private ShopView shopView;
     private AvatarRepo repo = AvatarRepo.getInstance();
-    private LoginManager loginManager;
+    private LoginPreferences preferences;
     private NumberFormat numberFormat = NumberFormat.getInstance();
 
 
-    ShopPresenter(ItemInteractor instance, LoginManager loginManager) {
+    ShopPresenter(ItemInteractor instance, LoginPreferences preferences) {
         this.itemInteractor = instance;
-        this.loginManager = loginManager;
+        this.preferences = preferences;
     }
 
     void reloadImages() {
@@ -363,14 +364,14 @@ public class ShopPresenter implements Presenter,
         if (type.equals("gender")) {
             try {
                 postData.put("action", "update_user_info");
-                postData.put("weight", 0);
-                postData.put("height", 0);
+                postData.put("weight", preferences.getString(SharedPrefsManager.Key.WEIGHT));
+                postData.put("height", preferences.getString(SharedPrefsManager.Key.HEIGHT));
                 postData.put("gender", gender);
 
             } catch (JSONException e) {e.printStackTrace();}
         }
 
-        String session = loginManager.getSession();
+        String session = preferences.getString(SharedPrefsManager.Key.SESSION);
         Log.d(TAG, "Current session cookie: " + session);
         ShopRequest shopRequest = new ShopRequest(postData, session);
         shopRequest.delegate = this;

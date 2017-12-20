@@ -17,8 +17,6 @@ import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.jekz.stepitup.R;
 import com.jekz.stepitup.customview.AvatarImage;
 import com.jekz.stepitup.data.SharedPrefsManager;
-import com.jekz.stepitup.data.request.LoginManager;
-import com.jekz.stepitup.data.request.RemoteLoginModel;
 import com.jekz.stepitup.model.item.Item;
 import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.item.ItemListAdapter;
@@ -74,8 +72,9 @@ public class ShopActivity extends Activity implements ItemListAdapter.ShopItemLi
         super.onCreate(savedInstanceState);
 
         SharedPrefsManager manager = SharedPrefsManager.getInstance(getApplicationContext());
-        LoginManager loginManager = new RemoteLoginModel(manager);
-        shopPresenter = new ShopPresenter(ItemInteractor.getInstance(getResources()), loginManager);
+        shopPresenter = new ShopPresenter(
+                ItemInteractor.getInstance(getResources()),
+                SharedPrefsManager.getInstance(getApplicationContext()));
         setContentView(R.layout.activity_shop);
         ButterKnife.bind(this);
         initRecyclerView();
