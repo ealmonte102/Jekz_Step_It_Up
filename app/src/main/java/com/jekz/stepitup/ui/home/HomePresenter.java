@@ -219,8 +219,9 @@ public class HomePresenter implements HomeContract.Presenter, AsyncResponse,
                         int shirtid = q.getInt("shirt");
                         int pantsid = q.getInt("pants");
                         int shoesid = q.getInt("shoes");
+
                         String height = q.getString("height");
-                        String weight = q.getString("height");
+                        String weight = q.getString("weight");
                         String dailyGoal = q.getString("daily_goal");
                         loginPreferences.put(SharedPrefsManager.Key.HEIGHT, height);
                         loginPreferences.put(SharedPrefsManager.Key.WEIGHT, weight);
