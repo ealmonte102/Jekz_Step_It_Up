@@ -6,7 +6,7 @@ package com.jekz.stepitup.data.request;
 
 public class RequestString {
 
-    private static final String BASE_URL = "http://10.0.3.2:3000";
+    private static final String BASE_URL = "http://10.0.2.2:3000";
     private static final String BASE_HEROKU_URL = "https://jekz.herokuapp.com";
     private static boolean localMode = false;
 
