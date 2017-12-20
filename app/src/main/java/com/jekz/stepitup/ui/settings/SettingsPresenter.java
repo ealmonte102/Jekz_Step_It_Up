@@ -102,12 +102,17 @@ public class SettingsPresenter implements SettingsContract.Presenter, SettingsLi
                 (SharedPrefsManager.Key.SESSION));
         shopRequest.delegate = new AsyncResponse() {
             boolean success = false;
+            boolean secondSuccess = false;
             @Override
             public void processFinish(JSONObject output) {
                 Log.d(TAG, output.toString());
                 if (!success) {
                     success = true;
-                    view.showMessage("Successfully synced you're profile");
+                    view.showMessage("Successfully synced your height and weight");
+                }
+                if (success && !secondSuccess) {
+                    secondSuccess = true;
+                    view.showMessage("Successfully synced your daily goal");
                 }
             }
         };
@@ -146,22 +151,20 @@ public class SettingsPresenter implements SettingsContract.Presenter, SettingsLi
     @Override
     public void onBindSettingsViewholderAtPosition(int position, SettingsListRecylerAdapter
             .SettingsRowView rowView) {
-        Log.d("Type", DATA[position].name());
-        String data = String.valueOf(preferences.getString(DATA[position], "N/A"));
+        String data = preferences.getString(DATA[position]);
+        Log.d(TAG, data);
         switch (DATA[position]) {
             case HEIGHT:
-                if (!data.equals("N/A")) {
-                    int height = Integer.parseInt(data);
-                    data = getFromattedHeight(height);
-                }
+                int height = Integer.parseInt(data);
+                data = getFromattedHeight(height);
                 break;
             case WEIGHT:
                 data = data + " lbs";
         }
+
         rowView.setDescriptionText(data);
         rowView.setTitleText(TITLES[position]);
     }
-
     @Override
     public void onViewAttached(SettingsContract.View view) {
         this.view = view;

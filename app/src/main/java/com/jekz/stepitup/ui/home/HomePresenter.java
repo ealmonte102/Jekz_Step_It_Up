@@ -223,13 +223,11 @@ public class HomePresenter implements HomeContract.Presenter, AsyncResponse,
                         String height = q.getString("height");
                         String weight = q.getString("weight");
                         String dailyGoal = q.getString("daily_goal");
-                        loginPreferences.put(SharedPrefsManager.Key.HEIGHT, height);
-                        loginPreferences.put(SharedPrefsManager.Key.WEIGHT, weight);
-                        if (dailyGoal != null) {
-                            loginPreferences.put(SharedPrefsManager.Key.GOAL,
-                                    dailyGoal);
-                        }
-                        loginPreferences.put(SharedPrefsManager.Key.GENDER, model);
+                        saveToPrefs(height, SharedPrefsManager.Key.HEIGHT);
+                        saveToPrefs(weight, SharedPrefsManager.Key.WEIGHT);
+                        saveToPrefs(dailyGoal, SharedPrefsManager.Key.GOAL);
+                        saveToPrefs(model, SharedPrefsManager.Key.GENDER);
+
                         Pair<Item, Integer> hat = itemInteractor.getItem(hatid);
                         Pair<Item, Integer> shirt = itemInteractor.getItem(shirtid);
                         Pair<Item, Integer> pants = itemInteractor.getItem(pantsid);
@@ -258,6 +256,11 @@ public class HomePresenter implements HomeContract.Presenter, AsyncResponse,
                 }
             }
         } catch (JSONException ignored) {}
+    }
+
+    private void saveToPrefs(String value, SharedPrefsManager.Key key) {
+        if (value.equals("null")) { value = "0"; }
+        loginPreferences.put(key, value);
     }
 
     @Override

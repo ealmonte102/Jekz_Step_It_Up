@@ -201,9 +201,9 @@
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="2"
             android:text="@string/add_friends"
             android:textColor="#ffffffff"
-            android:textStyle="bold"
             android:theme="@style/CustomAccentOverlay"
             app:layout_constraintEnd_toEndOf="@+id/button_box"
             app:layout_constraintStart_toStartOf="@+id/button_box" />

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import com.jekz.stepitup.R;
 import com.jekz.stepitup.adapter.SettingsListRecylerAdapter;
@@ -109,7 +110,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
 
     @Override
     public void showMessage(String s) {
-
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
