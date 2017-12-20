@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
@@ -36,6 +37,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 public class GraphActivity extends AppCompatActivity implements AsyncResponse {
 
@@ -45,6 +49,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
     protected static int total_time = 0;
     protected static int total_sessions = 0;
     protected static int daily_goal = 0;
+
+
     BarChart mChart;
 
     //ShopRequest user_data = new ShopRequest(null);
@@ -56,11 +62,12 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
     LifeStatText caloriesText;
     private LoginManager loginManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+        ButterKnife.bind(this);
         mChart = findViewById(R.id.first_chart);
         mChart2 = findViewById(R.id.second_chart);
         mChart3 = findViewById(R.id.third_chart);
@@ -459,7 +466,12 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //Intentionally left blank to disable back button
+    }
+
+
+    @OnClick(R.id.button_graph_back)
+    void onBackClicked(View view) {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();

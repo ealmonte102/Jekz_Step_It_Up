@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/button_settings_back"
+        android:id="@+id/button_graph_back"
         android:layout_width="62dp"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
