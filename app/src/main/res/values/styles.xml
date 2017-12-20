@@ -28,11 +28,16 @@
     <!-- Friend Theme -->
     <style name="FriendTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/shop_background</item>
-        <item name="colorPrimaryDark">@color/shop_background</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/accent</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/iron</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="android:textColorHint">@color/iron</item>
+        <item name="colorButtonNormal">@color/shop_background</item>
         <item name="android:textColorPrimary">@android:color/black</item>
         <item name="android:colorBackground">@color/shop_background</item>
-        <item name="android:textColorHint">#b14b4b4b</item>
     </style>
 
     <style name="SearchDialog" parent="Theme.AppCompat.Light.Dialog">
@@ -93,4 +98,7 @@
         <item name="colorButtonNormal">@color/colorPrimary</item>
     </style>
 
+    <style name="CustomAccentOverlay" parent="ThemeOverlay.AppCompat">
+        <item name="colorButtonNormal">@color/friends_button</item>
+    </style>
 </resources>
