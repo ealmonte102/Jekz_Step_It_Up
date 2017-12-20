@@ -34,4 +34,5 @@
     <string name="log_out">Log Out</string>
     <string name="start_session">Start Session</string>
     <string name="end_session">End Session</string>
+    <string name="profile">Profile</string>
 </resources>

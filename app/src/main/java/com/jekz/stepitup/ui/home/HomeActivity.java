@@ -25,6 +25,7 @@ import com.jekz.stepitup.model.item.ItemInteractor;
 import com.jekz.stepitup.model.step.ManualStepCounter;
 import com.jekz.stepitup.ui.friends.FriendActivity;
 import com.jekz.stepitup.ui.login.LoginActivity;
+import com.jekz.stepitup.ui.settings.SettingsActivity;
 import com.jekz.stepitup.ui.shop.ShopActivity;
 import com.jekz.stepitup.util.SessionSaver;
 
@@ -131,6 +132,8 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             case R.id.friends_menu:
                 presenter.accessFriends();
                 return true;
+            case R.id.profile_menu:
+                presenter.accessProfile();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -177,6 +180,17 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     }
 
     @Override
+    public void navigateToProfile() {
+        navigateToActivity(this, SettingsActivity.class);
+    }
+
+    private void navigateToActivity(Context context, Class<?> activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     public void showMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
@@ -193,12 +207,6 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         sessionButton.setOnCheckedChangeListener(null);
         sessionButton.setChecked(false);
         sessionButton.setOnCheckedChangeListener(checkedChangeListener);
-    }
-
-    private void navigateToActivity(Context context, Class<?> activity) {
-        Intent intent = new Intent(this, activity);
-        startActivity(intent);
-        finish();
     }
 
     @Override

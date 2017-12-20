@@ -140,6 +140,11 @@ public class HomePresenter implements HomeContract.Presenter, AsyncResponse,
     }
 
     @Override
+    public void accessProfile() {
+        view.navigateToProfile();
+    }
+
+    @Override
     public void onViewAttached(HomeContract.View view) {
         this.view = view;
         stepCounter.addSessionListener(this);

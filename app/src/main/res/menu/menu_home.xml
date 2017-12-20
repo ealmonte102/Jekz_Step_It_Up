@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_shop"
         android:title="@string/menu_shop_title"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/profile_menu"
+        android:title="@string/profile"
+        app:showAsAction="never" />
 </menu>

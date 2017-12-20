@@ -192,6 +192,11 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        //Intentionally left empty to disable back button
+    }
+
     private void showSaveButton() {
         goalLayout.setVisibility(View.INVISIBLE);
         heightLayoutMetric.setVisibility(View.INVISIBLE);

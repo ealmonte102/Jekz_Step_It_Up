@@ -30,6 +30,8 @@ interface HomeContract {
         void disableSession();
 
         void enableSession();
+
+        void navigateToProfile();
     }
 
     interface Presenter extends BasePresenter<HomeContract.View> {
@@ -54,6 +56,8 @@ interface HomeContract {
         void endSession();
 
         void startSession();
+
+        void accessProfile();
     }
 
     interface Model {
