@@ -105,7 +105,7 @@ public class RegisterRequest extends AsyncTask<String, Integer, String> {
         Log.d(TAG, result);
         if (result.equals(RegisterResult.NETWORK_ERROR.toString())) {
             callback.processRegistration(RegisterResult.NETWORK_ERROR);
-        } else if (result.contains("Error signing up")) {
+        } else if (result.contains("already exists.\",\"where\":\"SQL statement")) {
             callback.processRegistration(RegisterResult.USERNAME_TAKEN);
         } else if (result.contains("Username can only contain letters and digits")) {
             callback.processRegistration(RegisterResult.INVALID_USERNAME);
