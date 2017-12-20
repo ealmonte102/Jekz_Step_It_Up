@@ -22,7 +22,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!-- Shop screen theme. -->
-    <style name="ShopTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="ShopTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/shop_inventory_background</item>
         <item name="colorPrimaryDark">@color/shop_dark_background</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -49,7 +49,7 @@
     <!-- Friend Theme -->
     <style name="FriendTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/shop_background</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/shop_background</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@android:color/black</item>
         <item name="android:colorBackground">@color/shop_background</item>

@@ -8,6 +8,48 @@
     app:layout_constraintTop_toBottomOf="@+id/model"
     tools:layout_editor_absoluteY="25dp">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_settings2"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/button_shop_back"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/back_arrow_white"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_settings2"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_settings2"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_settings2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="casual"
+        android:text="@string/customize"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="26sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/avatar_top"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right_equip_start"
+        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <FrameLayout
         android:id="@+id/frame_layout_hat"
         android:layout_width="0dp"
@@ -257,6 +299,7 @@
         android:fontFamily="casual"
         android:gravity="center|start"
         android:textAlignment="viewStart"
+        android:textColor="@color/white"
         android:typeface="normal"
         app:autoSizeMaxTextSize="19sp"
         app:autoSizeMinTextSize="14sp"
@@ -333,24 +376,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.73" />
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/text_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="casual"
-        android:text="@string/customize"
-        android:textAlignment="center"
-        android:textColor="#000"
-        android:textSize="26sp"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/avatar_top"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right_equip_start"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline_title_top"
-        app:layout_constraintVertical_bias="1.0" />
-
     <android.support.constraint.Guideline
         android:id="@+id/guideline_title_top"
         android:layout_width="wrap_content"
@@ -374,23 +399,6 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="@+id/model"
         app:layout_constraintTop_toTopOf="@+id/model" />
-
-    <ImageButton
-        android:id="@+id/button_shop_back"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="8dp"
-        android:adjustViewBounds="false"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:cropToPadding="false"
-        android:scaleType="fitCenter"
-        android:src="@drawable/back_arrow"
-        app:layout_constraintBottom_toBottomOf="@+id/text_title"
-        app:layout_constraintEnd_toStartOf="@+id/text_title"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left_margin"
-        app:layout_constraintTop_toTopOf="@id/text_title"
-        app:layout_constraintVertical_bias="0.35000002" />
 
 
 </android.support.constraint.ConstraintLayout>
