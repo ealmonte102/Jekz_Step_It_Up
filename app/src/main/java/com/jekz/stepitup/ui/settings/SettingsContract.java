@@ -14,15 +14,11 @@ public interface SettingsContract {
 
         void showMessage();
 
-        void showWeightError();
-
         void showHeightPicker();
 
         void showWeightPicker();
 
         void showGoalPicker();
-
-        void showGenderPicker();
 
         void reloadProfile();
     }
@@ -37,5 +33,7 @@ public interface SettingsContract {
         void saveHeight(int cm);
 
         void saveGoal(int goal);
+
+        void saveToDB();
     }
 }

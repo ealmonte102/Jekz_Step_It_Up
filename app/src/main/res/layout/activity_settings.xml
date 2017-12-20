@@ -37,6 +37,18 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.74" />
 
+    <Button
+        android:id="@+id/button_settings_save_db"
+        android:layout_width="132dp"
+        android:layout_height="68dp"
+        android:text="Save"
+        android:textColor="@color/accent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintlayout_settings_goal"
         android:layout_width="0dp"
@@ -312,5 +324,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/button_settings_back"
+        android:layout_width="62dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_arrow"
+        app:layout_constraintBottom_toTopOf="@+id/recylerview_settings"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_settings"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

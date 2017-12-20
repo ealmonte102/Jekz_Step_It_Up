@@ -5,6 +5,12 @@ import android.util.Log;
 import com.jekz.stepitup.adapter.SettingsListRecylerAdapter;
 import com.jekz.stepitup.data.LoginPreferences;
 import com.jekz.stepitup.data.SharedPrefsManager;
+import com.jekz.stepitup.data.request.RequestString;
+import com.jekz.stepitup.ui.shop.AsyncResponse;
+import com.jekz.stepitup.ui.shop.ShopRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by evanalmonte on 12/20/17.
@@ -12,7 +18,7 @@ import com.jekz.stepitup.data.SharedPrefsManager;
 
 public class SettingsPresenter implements SettingsContract.Presenter, SettingsListRecylerAdapter
         .SettingsListPresenter {
-
+    private static final String TAG = SettingsPresenter.class.getName();
     private static final String[] TITLES = {"Username", "Gender", "Height", "Weight", "Daily Step" +
                                                                                       " Goal"};
     LoginPreferences preferences;
@@ -63,8 +69,54 @@ public class SettingsPresenter implements SettingsContract.Presenter, SettingsLi
     }
 
     @Override
+    public void saveToDB() {
+        saveUserInfo();
+        saveDailyGoal();
+
+    }
+
+    private void saveDailyGoal() {
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("action", "set_daily_goal");
+            postData.put("daily_goal", preferences.getInt(SharedPrefsManager.Key.GOAL));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ShopRequest shopRequest = new ShopRequest(postData, preferences.getString
+                (SharedPrefsManager.Key.SESSION));
+        shopRequest.delegate = new AsyncResponse() {
+            @Override
+            public void processFinish(JSONObject output) {
+                Log.d(TAG, output.toString());
+            }
+        };
+        shopRequest.execute(RequestString.getURL() + "/api/db/update");
+    }
+
+    private void saveUserInfo() {
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("action", "update_user_info");
+            postData.put("weight", preferences.getInt(SharedPrefsManager.Key.WEIGHT));
+            postData.put("height", preferences.getInt(SharedPrefsManager.Key.HEIGHT));
+            postData.put("gender", preferences.getString(SharedPrefsManager.Key.GENDER));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ShopRequest shopRequest = new ShopRequest(postData, preferences.getString
+                (SharedPrefsManager.Key.SESSION));
+        shopRequest.delegate = new AsyncResponse() {
+            @Override
+            public void processFinish(JSONObject output) {
+                Log.d(TAG, output.toString());
+            }
+        };
+        shopRequest.execute(RequestString.getURL() + "/api/db/update");
+    }
+
+    @Override
     public void onSettingsClicked(SettingsListRecylerAdapter.SettingType type) {
-        Log.d("Test", type.name());
         switch (type) {
             case NAME:
                 break;
