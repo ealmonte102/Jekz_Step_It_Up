@@ -38,7 +38,7 @@ class LoginPresenter implements LoginContract.Presenter, LoginManager.LoginCallb
             view.showPasswordError("Password cannot be empty");
         } else {
             view.showProgress();
-            loginManager.login(username, password, this);
+            loginManager.login(username.trim(), password, this);
         }
     }
 
