@@ -81,7 +81,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
         recylerAdapter = new SettingsListRecylerAdapter(presenter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recylerAdapter);
-        inchesNumberPicker.setMaxValue(12);
+        inchesNumberPicker.setMaxValue(11);
         inchesNumberPicker.setMinValue(0);
         feetNumberPicker.setMinValue(0);
         feetNumberPicker.setMaxValue(9);

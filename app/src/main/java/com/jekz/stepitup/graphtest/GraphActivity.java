@@ -358,7 +358,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncResponse {
         //y-axis
         YAxis yAxis = barChart.getAxisLeft();
         LimitLine dailyGoal = new LimitLine((float) daily_goal, "Daily Step Goal");
-        dailyGoal.setLineColor(Color.BLACK);
+        dailyGoal.setLineColor(Color.YELLOW);
         dailyGoal.setLineWidth(4f);
         yAxis.addLimitLine(dailyGoal);
 
