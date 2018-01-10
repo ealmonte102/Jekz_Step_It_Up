@@ -15,6 +15,9 @@ Please see the [Android Deployment Instructions](https://drive.google.com/open?i
 # Using Step It Up
 Step by step instructions can be found in the [User Manual](https://drive.google.com/open?id=1OAeTEgDcjiCbnpv2b5Pd900dho4BIzshMQJXSqwSX3U).
 
+# Screenshots
+![Login Image](https://github.com/ealmonte102/Jekz_Step_It_Up/blob/master/Screenshots/Login.png)
+
 # Deployment
 ## Client
 Please see the [Android Deployment Instructions](https://drive.google.com/open?id=1rUV-d9kwLSpuGnH4tSWGxF2wg1W1BV-uCo99mLdDssk) for instructions on how to install Step It Up on a mobile device or run on a virtual device.
