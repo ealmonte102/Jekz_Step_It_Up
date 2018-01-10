@@ -16,7 +16,11 @@ Please see the [Android Deployment Instructions](https://drive.google.com/open?i
 Step by step instructions can be found in the [User Manual](https://drive.google.com/open?id=1OAeTEgDcjiCbnpv2b5Pd900dho4BIzshMQJXSqwSX3U).
 
 # Screenshots
-
+![Login Image](https://github.com/ealmonte102/Jekz_Step_It_Up/blob/master/Screenshots/Login.png)
+![Home Image](https://github.com/ealmonte102/Jekz_Step_It_Up/blob/master/Screenshots/Home.png)
+![Friends Image](https://github.com/ealmonte102/Jekz_Step_It_Up/blob/master/Screenshots/Friends%20List.png)
+![Shop Image](https://github.com/ealmonte102/Jekz_Step_It_Up/blob/master/Screenshots/Shop.png)
+![Graph Image](https://github.com/ealmonte102/Jekz_Step_It_Up/blob/master/Screenshots/Graph.png)
 
 # Deployment
 ## Client
