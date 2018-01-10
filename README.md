@@ -17,6 +17,7 @@ Step by step instructions can be found in the [User Manual](https://drive.google
 
 # Screenshots
 ![Login Image](https://github.com/ealmonte102/Jekz_Step_It_Up/blob/master/Screenshots/Login.png)
+![Friends Image](https://github.com/ealmonte102/Jekz_Step_It_Up/blob/master/Screenshots/Friends%20List.png)
 
 # Deployment
 ## Client
