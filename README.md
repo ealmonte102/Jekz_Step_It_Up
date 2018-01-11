@@ -27,7 +27,7 @@ Step by step instructions can be found in the [User Manual](https://drive.google
 Please see the [Android Deployment Instructions](https://drive.google.com/open?id=1rUV-d9kwLSpuGnH4tSWGxF2wg1W1BV-uCo99mLdDssk) for instructions on how to install Step It Up on a mobile device or run on a virtual device.
 
 ## Server
-Please see the [Server Installation Instructions](https://drive.google.com/open?id=1DEqYObP_cV1qagua2KQA6GM9_t9xmPpX5VNvClkxBLo) for instructions on how to recreate the server locally.
+Please see the [Server Installation Instructions](https://drive.google.com/open?id=1DEqYObP_cV1qagua2KQA6GM9_t9xmPpX5VNvClkxBLo) for instructions on how to recreate the server locally. This document, along with the appropriate files, can be found at [this](https://drive.google.com/open?id=1sxSRebfsllBIG_3JwIOFXRMi9E3IQwqa) URL
 
 # Built With
 * [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
